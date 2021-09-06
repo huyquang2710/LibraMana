@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+ xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+ layout:decorator="~{admin/admin-layout.html}" >
+
+<head>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+	<script src="/admin/common/common-js.js" ></script>
+</head>
+
+<body>
+
+    <!--main content start-->
+    <section id="main-content" layout:fragment="content">
+		<section class="wrapper">
+			<!--overview start-->
+			<div class="row">
+				<div class="col-lg-12">
+					<h3 class="page-header">
+						<i class="fa fa-laptop"></i>Tác Giả
+					</h3>
+					<ol class="breadcrumb">
+						<li><i class="fa fa-home"></i>trang chủ</li>
+						<li><i class="fa fa-laptop"></i>tác giả</li>
+					</ol>
+				</div>
+			</div>
+
+			<!-- page start-->
+			
+			<ul class="nav top-menu">
+				<!-- add btn -->
+				<li><a type="button" th:href="@{/authors/create}" class="btn btn-primary">Thêm Mới</a></li>
+				<li>
+				<!--  search form start -->
+					
+				</li>
+			</ul>
+
+			<table class="table">
+				<thead>
+					<tr>
+						<!-- th:href="@{authors?field=id}"  -->
+						<th>Hình Ảnh</th>
+						<th>ID </th>
+						<th>Tên </th>
+						<th>Năm Sinh </th>
+						<th>Điện Thoại </th>
+						<th>Email</th>
+						<th>Địa Chỉ</th>
+						<th>Action</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td></td>
+						<td ></td>
+						<td ></td>
+						<td ></td>
+						<td ></td>
+						<td ></td>
+						<td ></td>
+						<td>
+							<div class="btn-group">
+								<!-- edit btn -->
+								<a th:href="@{/authors/findById/{id}(id=${author.id})}"
+									class="btn btn-primary editButton"><i
+									class="icon_pencil-edit"></i></a>
+								<!-- delete btn -->
+								<a th:href="@{/authors/delete/{id}(id=${author.id})}"
+									class="btn btn-danger" id="deleteButton"><i
+									class="icon_close_alt2"></i></a>
+							</div>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+			<!-- Tổng dòng -->
+		
+			<!-- Phân trang -->
+
+			<!-- Phân trang end -->
+		</section>
+
+	</section>	
+    
+    <!--main content end-->
+
+
+</body>
+
+</html>
