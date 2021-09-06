@@ -38,16 +38,23 @@ import lombok.NoArgsConstructor;
 })
 public class User implements Serializable{
 
+	public User(String name, String username, String email, String password) {
+		this.name = name; 
+		this.username = username;
+		this.email = email;
+		this.password = password;
+	}
+
 	private static final long serialVersionUID = 8168125831658828544L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	
-	@Column(name = "fullname")
+	@Column(name = "name")
 	@Size(min = 5, max = 50, message = "Độ dài tên trong khoảng từ 5 đến 50 ký tự!!")
 	@NotBlank(message = "Yêu cầu nhập tên đầy đủ!!")
-	private String fullName;
+	private String name;
 	
 	@Size(min = 2, max = 20, message = "Độ dài tên trong khoảng từ 2 đến 20 ký tự!!")
 	@NotBlank(message = "Yêu cầu nhập tên!!")
@@ -71,7 +78,6 @@ public class User implements Serializable{
 	@Column(length = 100) 
 	private int year;
 	
-	@Pattern(regexp="(^$|[0-9]{10})")
 	private int phone;
 	
 	@ManyToMany(fetch = FetchType.LAZY)
