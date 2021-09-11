@@ -1,10 +1,11 @@
-package com.libra.core.enity;
+package com.libra.core.entities;
 
 import java.io.Serializable;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -21,7 +22,7 @@ import javax.persistence.TemporalType;
 import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Pattern;
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -37,39 +38,31 @@ import lombok.NoArgsConstructor;
 		@UniqueConstraint(columnNames = "email")
 })
 public class User implements Serializable{
-
-	public User(String name, String username, String email, String password) {
-		this.name = name; 
-		this.username = username;
-		this.email = email;
-		this.password = password;
-	}
-
 	private static final long serialVersionUID = 8168125831658828544L;
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer id;
 	
-	@Column(name = "name")
-	@Size(min = 5, max = 50, message = "Độ dài tên trong khoảng từ 5 đến 50 ký tự!!")
 	@NotBlank(message = "Yêu cầu nhập tên đầy đủ!!")
+	@Size(min = 2, max = 30, message = "Độ dài từ 2 đến 30 ký tự!!")
 	private String name;
 	
-	@Size(min = 2, max = 20, message = "Độ dài tên trong khoảng từ 2 đến 20 ký tự!!")
 	@NotBlank(message = "Yêu cầu nhập tên!!")
+	@Size(min = 2, max = 20, message = "Độ dài từ 2 đến 20 ký tự!!")
 	private String username;
 	
 	@Email(message = "Định dạng email")
-	@NotBlank(message = "Yêu cầu nhập email !!")
+	@NotEmpty(message = "Nhập email")
 	private String email;
 	
 	@NotBlank(message = "Không được để trống")
 	@JsonIgnore
 	private String password;
-	
 
 	private String address;
+	
+	private boolean enabled;
 	
 	
 	@Lob // tao ra nhung chuoi van ban dai
@@ -80,7 +73,7 @@ public class User implements Serializable{
 	
 	private int phone;
 	
-	@ManyToMany(fetch = FetchType.LAZY)
+	@ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@JoinTable(name = "user_roles", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
 	private Set<Role> roles = new HashSet<>();
 	

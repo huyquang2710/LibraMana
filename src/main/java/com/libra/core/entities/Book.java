@@ -1,3 +1,4 @@
+package com.libra.core.entities;
 //package com.libra.core.enity;
 //import java.io.Serializable;
 //import java.util.ArrayList;

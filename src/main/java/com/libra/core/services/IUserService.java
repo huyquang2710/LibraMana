@@ -2,21 +2,25 @@ package com.libra.core.services;
 
 import java.util.Optional;
 
-import com.libra.core.enity.User;
+import org.springframework.data.repository.query.Param;
+
+import com.libra.core.entities.User;
+import com.libra.web.dto.SignUpDTO;
 
 public interface IUserService {
-	// param username
-		// return User
-		Optional<User> findByUsername(String username);
+		
+		User getUsernameByUsername(@Param("username") String username);
 		
 		// param username
 		// return boolean
-		Boolean existsByUsername(String username);
+		Optional<User> existsByUsername(String username);
+		boolean userExists(String user);
 		
 		// param email
 		// return boolean
-		Boolean existsByEmail(String email);
+		Optional<User> existsByEmail(String email);
+		boolean emailExists(String email);
 		
-		//Save
-		User save(User user);
+		//register
+		User register(SignUpDTO user);
 }

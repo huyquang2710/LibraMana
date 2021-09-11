@@ -1,14 +1,14 @@
-package com.libra.web.dto.request;
+package com.libra.web.dto;
 
-public class SignInForm {
+public class SignInDTO {
 	private String username;
 	private String password;
 	
 	
-	public SignInForm() {
+	public SignInDTO() {
 		super();
 	}
-	public SignInForm(String username, String password) {
+	public SignInDTO(String username, String password) {
 		super();
 		this.username = username;
 		this.password = password;
