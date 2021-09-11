@@ -5,6 +5,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -54,10 +55,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		// Trang /user yêu cầu phải login với vai trò ROLE_USER hoặc ROLE_ADMIN.
 		// Nếu chưa login, nó sẽ redirect tới trang /login.sau Mình dung hasAnyRole để
 		// cho phép ai được quyền vào
-		http.authorizeRequests().antMatchers("/user").access("hasAnyRole('ROLE_USER', 'ROLE_ADMIN')");
+		http.authorizeRequests().antMatchers("/user").access("hasAnyRole('USER', 'ADMIN')");
 
 		// Trang chỉ dành cho ADMIN
-		http.authorizeRequests().antMatchers("/admin").access("hasRole('ROLE_ADMIN')");
+		http.authorizeRequests().antMatchers("/admin").access("hasRole('ADMIN')");
 		 // Khi ng dung cố tình vào trang admin
         http.authorizeRequests().and().exceptionHandling().accessDeniedPage("/403");
         // Cấu hình cho Login Form.
@@ -65,7 +66,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		// Submit URL của trang login
 				.loginProcessingUrl("/check_login") // action của nó là j_spring_security_check
 				.loginPage("/login")//
-				.defaultSuccessUrl("/userAccountInfo")// đây Khi đăng nhập thành công thì vào trang này. userAccountInfo
+				.defaultSuccessUrl("/home")// đây Khi đăng nhập thành công thì vào trang này. userAccountInfo
 				// sẽ được khai báo trong controller để hiển thị trang view
 				// tương ứng
 				.failureUrl("/login?error=true")// Khi đăng nhập sai username và password thì nhập lại
@@ -74,5 +75,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 				// Cấu hình cho Logout Page. Khi logout mình trả về trang
 				.and().logout().logoutUrl("/logout").logoutSuccessUrl("/logoutSuccessful");
 	   
+	}
+	@Override
+	public void configure(WebSecurity web) throws Exception {
+		web.ignoring().antMatchers("/resources/**", "/static/**","/css/**", "/js/**", "/images/**");
 	}
 }

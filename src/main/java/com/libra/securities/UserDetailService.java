@@ -1,11 +1,17 @@
 package com.libra.securities;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+import com.libra.core.entities.Role;
 import com.libra.core.entities.User;
 import com.libra.core.services.IUserService;
 
@@ -16,10 +22,15 @@ public class UserDetailService implements UserDetailsService{
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		User user = userService.getUsernameByUsername(username);
-		if(user == null) {
-			throw new UsernameNotFoundException("Count not find user");
+//		if(user == null) {
+//			throw new UsernameNotFoundException("Count not find user");
+//		}
+//		return new MyUserDetails(user);
+		Set<GrantedAuthority> grantedAuthorities = new HashSet<GrantedAuthority>();
+		for(Role role: user.getRoles()) {
+			grantedAuthorities.add(new SimpleGrantedAuthority(role.getName()));
 		}
-		return new MyUserDetails(user);
+		return new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(), grantedAuthorities);
 	}
 
 }

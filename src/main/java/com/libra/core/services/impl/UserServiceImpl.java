@@ -19,6 +19,7 @@ import com.libra.core.services.IUserService;
 import com.libra.web.dto.SignUpDTO;
 
 @Service
+@Transactional
 public class UserServiceImpl implements IUserService{
 	
 	@Autowired
@@ -60,6 +61,7 @@ public class UserServiceImpl implements IUserService{
 	//dang ky moi
 	@Transactional
 	public User save(User user) {
+		
 		return userRepo.save(user);
 	}
 	@Override
@@ -73,12 +75,13 @@ public class UserServiceImpl implements IUserService{
 		user.setEnabled(true);
 		
 		//set role
-		Set<Role> role = new HashSet<Role>();
+		Set<Role> role = new HashSet<>();
 		role.add(roleRepo.findByName("USER"));
-		
 		user.setRoles(role);
+		
 		//chuyen Dto sang entity
 		modelMapper.map(userDTO, user);
+		System.out.println(user.toString());
 		return save(user);
 	}
 
