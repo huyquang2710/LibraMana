@@ -1,5 +1,6 @@
 package com.libra.core.config;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
@@ -12,12 +13,16 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
+import com.libra.securities.AccountAuthenticationSuccessHandler;
 import com.libra.securities.UserDetailService;
 
 @Configuration
 @EnableWebSecurity
 @EnableTransactionManagement
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
+	
+	@Autowired
+	private AccountAuthenticationSuccessHandler successHandler;
 
 	@Bean
 	public UserDetailsService userDetailsService() {
@@ -64,7 +69,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         
         
         // Cấu hình cho Login Form.
-		http.authorizeRequests().and().formLogin()//
+		http.authorizeRequests().and().formLogin().successHandler(successHandler)// điều hướng 
 		// Submit URL của trang login
 				.loginProcessingUrl("/check_login")
 				.loginPage("/login")//
