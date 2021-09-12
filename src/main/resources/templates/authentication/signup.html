@@ -1,109 +1,111 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org"
- xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
-
+<html xmlns:th="http://www.thymeleaf.org/" th:replace="authentication/base::layout(~{::section})" >
 <head>
-  <meta charset="utf-8">
-  
-
-  <title th:text="${title}" ></title>
-
-  <!-- Bootstrap CSS -->
-  <link href="/admin/css/bootstrap.min.css" rel="stylesheet">
-  <!-- bootstrap theme -->
-  <link href="/admin/css/bootstrap-theme.css" rel="stylesheet">
-  <!--external css-->
-  <!-- font icon -->
-  <link href="/admin/css/elegant-icons-style.css" rel="stylesheet" />
-  <link href="/admin/css/font-awesome.css" rel="stylesheet" />
-  <!-- Custom styles -->
-  <link href="/admin/css/style.css" rel="stylesheet">
-  <link href="/admin/css/style-responsive.css" rel="stylesheet" />
-
+<meta charset="UTF-8" >
+<title th:text="${title}" ></title>
 </head>
-
-<body class="login-img3-body">
-	<!-- message -->
-	<div th:if="${session.message}"
-		th:classappend="${session.message.type}" class="alert" role="alert">
-		<p class="text-center" th:text="${session.message.content}"></p>
-		<th:block th:text="${#session.removeAttribute('message')}"></th:block>
-	</div>
-	<!-- message end -->
-	<div class="container">
-
-    <form novalidate class="login-form" th:action="@{/register}" method="post" th:object="${user}">
-      <div class="login-wrap">
-      <!-- name field -->
-        <div class="input-group">
-          <span class="input-group-addon"><i class="icon_profile"></i></span>
-          <input 
-          		type="text" 
-          		class="form-control" 
-          		placeholder="Họ Tên" 
-          		autofocus required="required" 
-          		name="name" 
-          		th:value="${user.name}"
-          		th:classappend="${#fields.hasErrors('name') ? 'is-invalid':''}" >
-          
-          <!-- validation -->
-			<div id="validationServerUsernameFeedback" class="invalid-feedback" th:each="e : ${#fields.errors('name')}" th:text="${e}" ></div>
-        </div>
-       <!-- username field -->
-        <div class="input-group">
-          <span class="input-group-addon"><i class="icon_profile"></i></span>
-          <input 
-          		type="text" 
-          		class="form-control" 
-          		placeholder="Tên Tài Khoản" 
-          		required="required" 
-          		name="username" 
-          		th:value="${user.username}"
-          		th:classappend="${#fields.hasErrors('username') ? 'is-invalid':''}" >
-          <!-- validation -->
-			<div class="invalid-feedback" th:each="e : ${#fields.errors('username')}" th:text="${e}" ></div>
-        </div>
-       <!-- email field -->
-         <div class="input-group">
-          <span class="input-group-addon"><i>@</i></span>
-          <input 
-          		type="email" 
-          		class="form-control" 
-          		placeholder="Email" 
-          		required="required" 
-          		name="email" 
-          		th:value="${user.email}"
-          		th:classappend="${#fields.hasErrors('email') ? 'is-invalid':''}">
-          	
-          	<!-- validation -->
-			<div class="invalid-feedback" th:each="e : ${#fields.errors('email')}" th:text="${e}" ></div>
-        </div>
-        
-        <!-- pass field -->
-         <div class="input-group">
-          <span class="input-group-addon"><i class="icon_key_alt"></i></span>
-          <input 
-          		type="password" 
-          		class="form-control" 
-          		placeholder="Password" 
-          		required="required" 
-          		name="password" 
-          		th:value="${user.password}"
-          		th:classappend="${#fields.hasErrors('password') ? 'is-invalid':''}" >
-          	
-          	<!-- validation -->
-			<div class="invalid-feedback" th:each="e : ${#fields.errors('password')}" th:text="${e}" ></div>
-        </div>
-        <label class="checkbox">
-                <input type="checkbox" value="remember-me"> nhớ tài khoản
-                <span class="pull-right"> <a th:href="@{/login}">Đăng nhập</a></span>
-            </label>
-        <button class="btn btn-primary btn-lg btn-block" type="submit">Đăng Ký</button>
-      </div>
-    </form>
-  </div>
-
-
+<body>
+	<section class="ftco-section">
+		<div class="container mb-10">
+		 <!-- message -->
+     		<div class="row justify-content-center" >
+			   <div th:if="${session.message}" th:classappend="${session.message.type}" class="alert" role="alert">
+				<p class="text-center" th:text="${session.message.content}"></p>
+				<th:block th:text="${#session.removeAttribute('message')}"></th:block>
+			</div>
+		 </div>
+			<div class="row justify-content-center">
+				<div class="col-md-6 col-lg-5">
+					<div class="login-wrap p-4 p-md-5">
+		      	<div class="icon d-flex align-items-center justify-content-center">
+		      		<span class="fa fa-user-o"></span>
+		      	</div>
+		      	<h3 class="text-center mb-4">Đăng Ký</h3>
+				<form  th:action="@{/register}" th:object="${user}" class="login-form" method="post">
+				 	<!-- name field -->
+		      		<div class="form-group">
+		      			<input 
+		      				type="text" 
+		      				class="form-control rounded-left" 
+		      				name="name" 
+		      				th:value="${user.name}"
+		      				placeholder="Nhập Tên !!!" 
+		      				required
+		      				th:classappend="${#fields.hasErrors('name') ? 'is-invalid':''}">
+		      				
+		      				<!-- validation -->
+						<div id="validationServerUsernameFeedback" 
+							 class="invalid-feedback" 
+							 th:each="e : ${#fields.errors('name')}"
+							  th:text="${e}" ></div>
+		      		</div>
+		      		<br />
+		      		<!-- username field -->
+		      		<div class="form-group">
+		      			<input 
+		      				type="text" 
+		      				class="form-control rounded-left" 
+		      				name="username" 
+		      				th:value="${user.username}"
+		      				placeholder="Tài Khoản" 
+		      				required
+		      				th:classappend="${#fields.hasErrors('username') ? 'is-invalid':''}">
+		      				
+		      				<!-- validation -->
+						<div id="validationServerUsernameFeedback" 
+							 class="invalid-feedback" 
+							 th:each="e : ${#fields.errors('username')}"
+							  th:text="${e}" ></div>
+		      		</div>
+		      		<br />
+		      		<!-- email field -->
+		      		<div class="form-group">
+		      			<input 
+		      				type="text" 
+		      				class="form-control rounded-left" 
+		      				name="email" 
+		      				th:value="${user.email}"
+		      				placeholder="Email" 
+		      				required
+		      				th:classappend="${#fields.hasErrors('email') ? 'is-invalid':''}">
+		      				
+		      				<!-- validation -->
+						<div id="validationServerUsernameFeedback" 
+							 class="invalid-feedback" 
+							 th:each="e : ${#fields.errors('email')}"
+							  th:text="${e}" ></div>
+		      		</div>
+		      		<br />
+		      		<!-- password field -->
+		      		<div class="form-group">
+		      			<input 
+		      				type="password" 
+		      				class="form-control rounded-left" 
+		      				name="password" 
+		      				th:value="${user.password}"
+		      				placeholder="Mật Khẩu" 
+		      				required
+		      				th:classappend="${#fields.hasErrors('password') ? 'is-invalid':''}">
+		      				
+		      				<!-- validation -->
+						<div id="validationServerUsernameFeedback" 
+							 class="invalid-feedback" 
+							 th:each="e : ${#fields.errors('password')}"
+							  th:text="${e}" ></div>
+		      		</div>
+				
+	            <div class="form-group d-md-flex">
+	            	<div class="w-50"> <a th:href="@{/login}">Quay về Đăng Nhập</a></div>
+					<div class="form-group ">
+	            	<button type="submit" class="btn btn-primary rounded ml-6">Đăng Ký</button>
+	            </div>
+	            </div>
+	            
+	          </form>
+	        </div>
+				</div>
+			</div>
+		</div>
+	</section>
 </body>
-
 </html>

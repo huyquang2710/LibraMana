@@ -1,56 +1,47 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org"
- xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
-
+<html xmlns:th="http://www.thymeleaf.org/" th:replace="authentication/base::layout(~{::section})" >
 <head>
-  <meta charset="utf-8">
-  
-
-  <title th:text="${title}" ></title>
-
-  <!-- Bootstrap CSS -->
-  <link href="/admin/css/bootstrap.min.css" rel="stylesheet">
-  <!-- bootstrap theme -->
-  <link href="/admin/css/bootstrap-theme.css" rel="stylesheet">
-  <!--external css-->
-  <!-- font icon -->
-  <link href="/admin/css/elegant-icons-style.css" rel="stylesheet" />
-  <link href="/admin/css/font-awesome.css" rel="stylesheet" />
-  <!-- Custom styles -->
-  <link href="/admin/css/style.css" rel="stylesheet">
-  <link href="/admin/css/style-responsive.css" rel="stylesheet" />
-
+<meta charset="UTF-8" >
+<title th:text="${title}" ></title>
 </head>
+<body>
 
-<body class="login-img3-body">
-
-  <div class="container">
-    <!-- message -->
-       <div th:if="${param.error}" class="alert alert-danger " >Tài khoản hoặc mật khẩu không đúng!!</div>
-       <div th:if="${param.logout}" class="alert alert-success " >Bạn đã đăng xuất!!</div>
-      <!--  --><div th:if="${param.change}" class="alert alert-success " ><p th:text="${param.change}" ></p></div>
-
-    <form class="login-form" th:action="@{/check_login}" method="post">
-      <div class="login-wrap">
-        <p class="login-img"><i class="icon_lock_alt"></i></p>
-        <div class="input-group">
-          <span class="input-group-addon"><i class="icon_profile"></i></span>
-          <input type="text" name="username" class="form-control" placeholder="Username" autofocus required="required">
-        </div>
-        <div class="input-group">
-          <span class="input-group-addon"><i class="icon_key_alt"></i></span>
-          <input type="password" name="password" class="form-control" placeholder="Password" required="required">
-        </div>
-        <label class="checkbox">
-                <span class="pull-left"> <a th:href="@{/register}">Đăng ký</a></span>
-                <span class="pull-right"> <a href="#"> Quên mật khẩu</a></span>
-            </label>
-        <button class="btn btn-primary btn-lg btn-block" type="submit">Đăng Nhập</button>
-      </div>
-    </form>
-  </div>
-
-
+	<section class="ftco-section">
+		<div class="container">
+		 <!-- message -->
+     		<div class="row justify-content-center" >
+		    <header >
+		       <div th:if="${param.error}" class="alert alert-danger " >Tài khoản hoặc mật khẩu không đúng!!</div>
+		       <div th:if="${param.logout}" class="alert alert-success " >Bạn đã đăng xuất!!</div>
+		       <div th:if="${param.change}" class="alert alert-success " ><p th:text="${param.change}" ></p></div>
+     		</header>
+		 </div>
+			<div class="row justify-content-center">
+				<div class="col-md-6 col-lg-5">
+					<div class="login-wrap p-4 p-md-5">
+		      	<div class="icon d-flex align-items-center justify-content-center">
+		      		<span class="fa fa-user-o"></span>
+		      	</div>
+		      	<h3 class="text-center mb-4">Đăng Nhập</h3>
+				<form th:action="@{/check_login}" class="login-form" method="post">
+		      		<div class="form-group">
+		      			<input type="text" class="form-control rounded-left" name="username" placeholder="Tài Khoản" required>
+		      		</div>
+	            <div class="form-group d-flex">
+	              <input type="password" class="form-control rounded-left" name="password" placeholder="Mật Khẩu" required>
+	            </div>
+	            <div class="form-group d-md-flex">
+	            	<div class="w-50"> <a th:href="@{/register}">Đăng Ký</a></div>
+					<div class="w-50 text-md-right"><a href="#">Forgot Password ?</a></div>
+	            </div>
+	            <div class="form-group">
+	            	<button type="submit" class="btn btn-primary rounded submit p-3 px-5">Bắt Đầu</button>
+	            </div>
+	          </form>
+	        </div>
+				</div>
+			</div>
+		</div>
+	</section>
 </body>
-
 </html>

@@ -55,25 +55,28 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		// Trang /user yêu cầu phải login với vai trò ROLE_USER hoặc ROLE_ADMIN.
 		// Nếu chưa login, nó sẽ redirect tới trang /login.sau Mình dung hasAnyRole để
 		// cho phép ai được quyền vào
-		http.authorizeRequests().antMatchers("/user").access("hasAnyRole('USER', 'ADMIN')");
+		http.authorizeRequests().antMatchers("/user/**").access("hasAnyRole('USER', 'ADMIN')");
 
 		// Trang chỉ dành cho ADMIN
-		http.authorizeRequests().antMatchers("/admin").access("hasRole('ADMIN')");
+		http.authorizeRequests().antMatchers("/admin/**").access("hasRole('ADMIN')");
 		 // Khi ng dung cố tình vào trang admin
         http.authorizeRequests().and().exceptionHandling().accessDeniedPage("/403");
+        
+        
         // Cấu hình cho Login Form.
 		http.authorizeRequests().and().formLogin()//
 		// Submit URL của trang login
-				.loginProcessingUrl("/check_login") // action của nó là j_spring_security_check
+				.loginProcessingUrl("/check_login")
 				.loginPage("/login")//
-				.defaultSuccessUrl("/home")// đây Khi đăng nhập thành công thì vào trang này. userAccountInfo
+				//.defaultSuccessUrl("/home")// đây Khi đăng nhập thành công thì vào trang này. userAccountInfo
 				// sẽ được khai báo trong controller để hiển thị trang view
 				// tương ứng
 				.failureUrl("/login?error=true")// Khi đăng nhập sai username và password thì nhập lại
 				.usernameParameter("username")// tham số này nhận từ form login input name='username'
 				.passwordParameter("password")// tham số này nhận từ form login input name='password'
 				// Cấu hình cho Logout Page. Khi logout mình trả về trang
-				.and().logout().logoutUrl("/logout").logoutSuccessUrl("/login?logout");
+				.and().logout().logoutUrl("/logout")
+				.logoutSuccessUrl("/login?logout");
 	   
 	}
 	@Override
