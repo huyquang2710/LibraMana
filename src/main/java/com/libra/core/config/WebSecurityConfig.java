@@ -67,7 +67,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		 // Khi ng dung cố tình vào trang admin
         http.authorizeRequests().and().exceptionHandling().accessDeniedPage("/403");
         
-        
         // Cấu hình cho Login Form.
 		http.authorizeRequests().and().formLogin().successHandler(successHandler)// điều hướng 
 		// Submit URL của trang login
@@ -82,6 +81,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 				// Cấu hình cho Logout Page. Khi logout mình trả về trang
 				.and().logout().logoutUrl("/logout")
 				.logoutSuccessUrl("/login?logout");
+		
+		// Cấu hình remember me, thời gian là 1296000 giây
+	    http.rememberMe().key("uniqueAndSecret").tokenValiditySeconds(1296000);
 	   
 	}
 	@Override
