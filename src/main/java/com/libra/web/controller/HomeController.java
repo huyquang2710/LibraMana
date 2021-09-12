@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -59,7 +58,9 @@ public class HomeController {
 //			}
 			//Kiem tra sai cu phap
 			if(bindingResult.hasErrors()) {
-				return "authentication/login";
+				System.out.println("Error: " + bindingResult.toString());
+				model.addAttribute("user", signUpDTO);
+				return "authentication/signup";
 			}
 			model.addAttribute("title", "Đăng Ký");
 			model.addAttribute("user", new SignUpDTO());
@@ -69,7 +70,7 @@ public class HomeController {
 			session.setAttribute("message", new MessageResponse("Đăng ký thành công!!", "alert-success"));
 			
 			System.out.println(signUpDTO.toString());
-			return "authentication/login";
+			return "authentication/signup";
 		} catch (Exception e) {
 			e.printStackTrace();
 			model.addAttribute("user", signUpDTO);
