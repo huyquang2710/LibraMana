@@ -1,7 +1,6 @@
 package com.libra.core.services.impl;
 
 import java.util.HashSet;
-import java.util.Optional;
 import java.util.Set;
 
 import javax.transaction.Transactional;
@@ -38,25 +37,27 @@ public class UserServiceImpl implements IUserService{
 	}
 
 
-	//check user 
-	@Override
-	@Transactional
-	public Optional<User> existsByUsername(String username) {
-	
-		return userRepo.existsByUsername(username);
-	}	
-	public boolean userExists(String user) {
-		return existsByUsername(user).isPresent();
-	}
-	//check email ton tai
-	@Override
-	@Transactional
-	public Optional<User> existsByEmail(String email) {
-		return userRepo.existsByEmail(email);
-	}
-	public boolean emailExists(String email) {
-		return existsByEmail(email).isPresent();
-	}
+//	//check user 
+////	@Override
+////	@Transactional
+////	public Optional<User> findByUsername(String username) {
+////	
+////		return userRepo.findByUsername(username);
+////	}	
+//	@Override
+//	public boolean userExists(String username) {
+//		return userRepo.findByUsername(username);
+//	}
+//	//check email ton tai
+//	@Override
+//	@Transactional
+//	public Optional<User> findByEmail(String email) {
+//		return userRepo.findUser
+//	}
+//	@Override
+//	public boolean emailExists(String email) {
+//		return findUserByEmail(email).isPresent();
+//	}
 	
 	//dang ky moi
 	@Transactional
@@ -82,6 +83,28 @@ public class UserServiceImpl implements IUserService{
 		modelMapper.map(userDTO, user);
 		
 		return save(user);
+	}
+
+
+//	@Override
+//	public User findByUsername(String username) {
+//		return userRepo.findByUsername(username);
+//	}
+//
+//
+//	@Override
+//	public User findByEmail(String email) {
+//		return userRepo.findByEmail(email);
+//	}
+
+	//check username va email
+	@Override
+	public boolean userExists(String username) {
+		return userRepo.findExistByname(username);
+	}
+	@Override
+	public boolean emailExists(String email) {
+		return userRepo.findExistByemail(email);
 	}
 
 }

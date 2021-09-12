@@ -1,7 +1,5 @@
 package com.libra.core.repositoies;
 
-import java.util.Optional;
-
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -18,9 +16,16 @@ public interface UserRepository extends JpaRepository<User, Integer>{
 	
 	// param username
 	// return boolean
-	Optional<User> existsByUsername(String username);
+	//Optional<User> findByUsername(String username);
+	//User findByUsername(String username);
 	
 	// param email
 	// return boolean
-	Optional<User> existsByEmail(String email);
+	//Optional<User> findByEmail(String email);
+	//User findByEmail(String email);
+	
+	@Query("select count(p) = 1 from User p where username = ?1")
+	public boolean findExistByname(String name);
+	@Query("select count(p) = 1 from User p where email = ?1")
+	public boolean findExistByemail(String email);
 }

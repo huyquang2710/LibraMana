@@ -1,7 +1,5 @@
 package com.libra.core.services;
 
-import java.util.Optional;
-
 import org.springframework.data.repository.query.Param;
 
 import com.libra.core.entities.User;
@@ -13,12 +11,17 @@ public interface IUserService {
 		
 		// param username
 		// return boolean
-		Optional<User> existsByUsername(String username);
-		boolean userExists(String user);
+		//Optional<User> findByUsername(String username);
+	
+		//User findByUsername(String username);
 		
 		// param email
 		// return boolean
-		Optional<User> existsByEmail(String email);
+		//Optional<User> findByEmail(String email);
+		//boolean emailExists(String email);
+		//User findByEmail(String email);
+		
+		boolean userExists(String username);
 		boolean emailExists(String email);
 		
 		//register

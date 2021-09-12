@@ -16,15 +16,18 @@ import com.libra.core.services.IUserService;
 import com.libra.web.dto.SignUpDTO;
 import com.libra.web.message.MessageResponse;
 
+import lombok.AllArgsConstructor;
+
 @Controller
+@AllArgsConstructor
 public class HomeController {
 	@Autowired
-	private IUserService userService;
+	private final IUserService userService;
 	//home
 	@GetMapping("/")
 	public String home(Model model) {
-		model.addAttribute("title", "Library Management Admin ");
-		return "home/home";
+		model.addAttribute("title", "Trang Chủ");
+		return "user/home";
 	}
 	
 	//admin
@@ -51,9 +54,9 @@ public class HomeController {
 		try {
 			//Kiem tra usernamme
 			if(userService.userExists(signUpDTO.getUsername())) {
-				bindingResult.addError(new FieldError("signUpDTO", "username", "Tài khoản đã tồn tại"));
+				bindingResult.addError(new FieldError("user", "username", "Tài khoản đã tồn tại"));
 			}
-			//Kiem tra usernamme
+			//Kiem tra email
 			if(userService.emailExists(signUpDTO.getEmail())) {
 				bindingResult.addError(new FieldError("signUpDTO", "email", "Email đã tồn tại"));
 			}

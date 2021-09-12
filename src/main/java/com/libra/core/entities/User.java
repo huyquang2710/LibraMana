@@ -30,10 +30,10 @@ public class User implements Serializable{
 	
 	private String name;
 	
-	
+	@Column(unique=true)
 	private String username;
 	
-	
+	@Column(unique=true)
 	private String email;
 	
 	
