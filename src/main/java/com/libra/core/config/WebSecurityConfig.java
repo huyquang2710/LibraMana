@@ -73,7 +73,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 				.usernameParameter("username")// tham số này nhận từ form login input name='username'
 				.passwordParameter("password")// tham số này nhận từ form login input name='password'
 				// Cấu hình cho Logout Page. Khi logout mình trả về trang
-				.and().logout().logoutUrl("/logout").logoutSuccessUrl("/logoutSuccessful");
+				.and().logout().logoutUrl("/logout").logoutSuccessUrl("/login?logout");
 	   
 	}
 	@Override

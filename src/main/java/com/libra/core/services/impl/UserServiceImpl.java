@@ -61,7 +61,6 @@ public class UserServiceImpl implements IUserService{
 	//dang ky moi
 	@Transactional
 	public User save(User user) {
-		
 		return userRepo.save(user);
 	}
 	@Override
@@ -81,7 +80,7 @@ public class UserServiceImpl implements IUserService{
 		
 		//chuyen Dto sang entity
 		modelMapper.map(userDTO, user);
-		System.out.println(user.toString());
+		
 		return save(user);
 	}
 

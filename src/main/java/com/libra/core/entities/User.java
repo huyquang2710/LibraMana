@@ -15,14 +15,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.Lob;
 import javax.persistence.ManyToMany;
-import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import javax.persistence.UniqueConstraint;
-import javax.validation.constraints.Email;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.Size;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -31,11 +25,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Data
-@NoArgsConstructor @AllArgsConstructor
-@Table(name = "user", uniqueConstraints = {@UniqueConstraint(columnNames = "username"),
-		@UniqueConstraint(columnNames = "email")
-})
 public class User implements Serializable{
 	private static final long serialVersionUID = 8168125831658828544L;
 
@@ -43,19 +32,15 @@ public class User implements Serializable{
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer id;
 	
-	@NotBlank(message = "Yêu cầu nhập tên đầy đủ!!")
-	@Size(min = 2, max = 30, message = "Độ dài từ 2 đến 30 ký tự!!")
 	private String name;
 	
-	@NotBlank(message = "Yêu cầu nhập tên!!")
-	@Size(min = 2, max = 20, message = "Độ dài từ 2 đến 20 ký tự!!")
+	
 	private String username;
 	
-	@Email(message = "Định dạng email")
-	@NotEmpty(message = "Nhập email")
+	
 	private String email;
 	
-	@NotBlank(message = "Không được để trống")
+	
 	@JsonIgnore
 	private String password;
 
@@ -90,4 +75,144 @@ public class User implements Serializable{
 	@Temporal(TemporalType.DATE)
 	@Column(name = "modifiedat")
 	private Date modifiedAt;
+
+	public Integer getId() {
+		return id;
+	}
+
+	public void setId(Integer id) {
+		this.id = id;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public String getUsername() {
+		return username;
+	}
+
+	public void setUsername(String username) {
+		this.username = username;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
+	public String getAddress() {
+		return address;
+	}
+
+	public void setAddress(String address) {
+		this.address = address;
+	}
+
+	public boolean isEnabled() {
+		return enabled;
+	}
+
+	public void setEnabled(boolean enabled) {
+		this.enabled = enabled;
+	}
+
+	public String getImage() {
+		return image;
+	}
+
+	public void setImage(String image) {
+		this.image = image;
+	}
+
+	public int getYear() {
+		return year;
+	}
+
+	public void setYear(int year) {
+		this.year = year;
+	}
+
+	public int getPhone() {
+		return phone;
+	}
+
+	public void setPhone(int phone) {
+		this.phone = phone;
+	}
+
+	public Set<Role> getRoles() {
+		return roles;
+	}
+
+	public void setRoles(Set<Role> roles) {
+		this.roles = roles;
+	}
+
+	public Date getCreatedAt() {
+		return createdAt;
+	}
+
+	public void setCreatedAt(Date createdAt) {
+		this.createdAt = createdAt;
+	}
+
+	public Date getModifiedAt() {
+		return modifiedAt;
+	}
+
+	public void setModifiedAt(Date modifiedAt) {
+		this.modifiedAt = modifiedAt;
+	}
+
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
+
+	public User(Integer id, String name, String username, String email, String password, String address,
+			boolean enabled, String image, int year, int phone, Set<Role> roles, Date createdAt, Date modifiedAt) {
+		super();
+		this.id = id;
+		this.name = name;
+		this.username = username;
+		this.email = email;
+		this.password = password;
+		this.address = address;
+		this.enabled = enabled;
+		this.image = image;
+		this.year = year;
+		this.phone = phone;
+		this.roles = roles;
+		this.createdAt = createdAt;
+		this.modifiedAt = modifiedAt;
+	}
+
+	public User() {
+		super();
+	}
+
+	@Override
+	public String toString() {
+		return "User [id=" + id + ", name=" + name + ", username=" + username + ", email=" + email + ", password="
+				+ password + ", address=" + address + ", enabled=" + enabled + ", image=" + image + ", year=" + year
+				+ ", phone=" + phone + ", roles=" + roles + ", createdAt=" + createdAt + ", modifiedAt=" + modifiedAt
+				+ "]";
+	}
+	
+	
 }

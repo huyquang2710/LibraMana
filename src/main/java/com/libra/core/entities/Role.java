@@ -13,13 +13,7 @@ import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-
 @Entity
-@Data
-@NoArgsConstructor @AllArgsConstructor
 @Table(name = "role") 
 public class Role implements Serializable{
 
@@ -33,7 +27,52 @@ public class Role implements Serializable{
 	private String name;
 	
 	@JsonIgnore
-	@ManyToMany(mappedBy = "roles")
+	@ManyToMany(mappedBy = "roles")	
 	private Set<User> users;
+
+	public Integer getId() {
+		return id;
+	}
+
+	public void setId(Integer id) {
+		this.id = id;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public Set<User> getUsers() {
+		return users;
+	}
+
+	public void setUsers(Set<User> users) {
+		this.users = users;
+	}
+
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
+
+	public Role(Integer id, String name, Set<User> users) {
+		super();
+		this.id = id;
+		this.name = name;
+		this.users = users;
+	}
+
+	public Role() {
+		super();
+	}
+
+	@Override
+	public String toString() {
+		return "Role [id=" + id + ", name=" + name + ", users=" + users + "]";
+	}
+	
 	
 }
