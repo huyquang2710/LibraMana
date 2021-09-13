@@ -44,6 +44,7 @@ public class User implements Serializable{
 	
 	private boolean enabled;
 	
+	private String description;
 	
 	@Lob // tao ra nhung chuoi van ban dai
 	private String image;
@@ -71,6 +72,9 @@ public class User implements Serializable{
 	@Temporal(TemporalType.DATE)
 	@Column(name = "modifiedat")
 	private Date modifiedAt;
+	
+	@ManyToMany(mappedBy = "user")	
+	private Set<Borrow> borrow; 
 
 	public Integer getId() {
 		return id;
@@ -181,7 +185,8 @@ public class User implements Serializable{
 	}
 
 	public User(Integer id, String name, String username, String email, String password, String address,
-			boolean enabled, String image, int year, int phone, Set<Role> roles, Date createdAt, Date modifiedAt) {
+			boolean enabled, String description, String image, int year, int phone, Set<Role> roles, Date createdAt,
+			Date modifiedAt, Set<Borrow> borrow) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -190,25 +195,43 @@ public class User implements Serializable{
 		this.password = password;
 		this.address = address;
 		this.enabled = enabled;
+		this.description = description;
 		this.image = image;
 		this.year = year;
 		this.phone = phone;
 		this.roles = roles;
 		this.createdAt = createdAt;
 		this.modifiedAt = modifiedAt;
+		this.borrow = borrow;
 	}
 
 	public User() {
 		super();
 	}
 
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+	public Set<Borrow> getBorrow() {
+		return borrow;
+	}
+
+	public void setBorrow(Set<Borrow> borrow) {
+		this.borrow = borrow;
+	}
+
 	@Override
 	public String toString() {
 		return "User [id=" + id + ", name=" + name + ", username=" + username + ", email=" + email + ", password="
-				+ password + ", address=" + address + ", enabled=" + enabled + ", image=" + image + ", year=" + year
-				+ ", phone=" + phone + ", roles=" + roles + ", createdAt=" + createdAt + ", modifiedAt=" + modifiedAt
-				+ "]";
+				+ password + ", address=" + address + ", enabled=" + enabled + ", description=" + description
+				+ ", image=" + image + ", year=" + year + ", phone=" + phone + ", roles=" + roles + ", createdAt="
+				+ createdAt + ", modifiedAt=" + modifiedAt + ", borrow=" + borrow + "]";
 	}
-	
-	
+
+
 }
