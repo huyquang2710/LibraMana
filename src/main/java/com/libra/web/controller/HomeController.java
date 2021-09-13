@@ -11,10 +11,4 @@ public class HomeController {
 		model.addAttribute("title", "Trang Chủ");
 		return "user/home";
 	}
-
-	@GetMapping("/user")
-	public String user(Model model) {
-		model.addAttribute("title", "Người Dùng");
-		return "/user/user";
-	}
 }

@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org/" th:replace="authentication/base::layout(~{::section})" >
 <head>
 <meta charset="UTF-8" >
-<title th:text="${title}" ></title>
+<title th:text="${title}"></title>
 </head>
 <body>
 
@@ -13,7 +13,7 @@
 		    <header >
 		       <div th:if="${param.error}" class="alert alert-danger " >Tài khoản hoặc mật khẩu không đúng!!</div>
 		       <div th:if="${param.logout}" class="alert alert-success " >Bạn đã đăng xuất!!</div>
-		        <div th:if="${param.accessDenied}" class="alert alert-success " >Bạn không đủ quyền truy cập!!</div>
+		        <div th:if="${param.accessDenied}" class="alert alert-danger " >Bạn không đủ quyền truy cập!!</div>
 		       <div th:if="${param.change}" class="alert alert-success " ><p th:text="${param.change}" ></p></div>
      		</header>
 		 </div>
@@ -24,7 +24,7 @@
 		      		<span class="fa fa-user-o"></span>
 		      	</div>
 		      	<h3 class="text-center mb-4">Đăng Nhập</h3>
-				<form th:action="@{/check_login}" class="login-form" method="post">
+				<form th:action="@{/login}" class="login-form" method="post">
 		      		<div class="form-group">
 		      			<input type="text" class="form-control rounded-left" name="username" placeholder="Tài Khoản" required>
 		      		</div>

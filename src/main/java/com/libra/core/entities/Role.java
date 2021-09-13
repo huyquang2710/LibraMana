@@ -29,7 +29,8 @@ public class Role implements Serializable{
 	@JsonIgnore
 	@ManyToMany(mappedBy = "roles")	
 	private Set<User> users;
-
+	
+	
 	public Integer getId() {
 		return id;
 	}
@@ -67,6 +68,10 @@ public class Role implements Serializable{
 
 	public Role() {
 		super();
+	}
+
+	public Role(String name) {
+		this.name = name;
 	}
 
 	@Override

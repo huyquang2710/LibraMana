@@ -40,7 +40,7 @@ public class LoginController {
 		return "/authentication/signup";
 	}
 	// error 403
-	@GetMapping("/access-denied")
+	@GetMapping("/403")
 	public String getAccessDenied() {
 		return "/authentication/403page";
 	}
@@ -54,7 +54,7 @@ public class LoginController {
 			}
 			//Kiem tra email
 			if(userService.emailExists(signUpDTO.getEmail())) {
-				bindingResult.addError(new FieldError("signUpDTO", "email", "Email đã tồn tại"));
+				bindingResult.addError(new FieldError("user", "email", "Email đã tồn tại"));
 			}
 			//Kiem tra sai cu phap
 			if(bindingResult.hasErrors()) {

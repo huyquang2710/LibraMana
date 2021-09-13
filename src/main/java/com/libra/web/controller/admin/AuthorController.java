@@ -14,4 +14,9 @@ public class AuthorController {
 		model.addAttribute("title", "Tác Giả");
 		return "admin/author/authorPage";
 	}
+	@GetMapping("/new")
+	public String authorNew(Model model) {
+		model.addAttribute("title", "Thêm Tác Giả");
+		return "admin/author/authorNew";
+	}
 }

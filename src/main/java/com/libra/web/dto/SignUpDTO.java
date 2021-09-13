@@ -13,8 +13,8 @@ import lombok.NoArgsConstructor;
 public class SignUpDTO {
 	
 
-	@NotBlank(message = "Yêu cầu nhập tên đầy đủ!!")
-	@Size(min = 2, max = 30, message = "Độ dài từ 2 đến 30 ký tự!!")
+	//@NotBlank(message = "Yêu cầu nhập tên đầy đủ!!")
+	//@Size(min = 2, max = 30, message = "Độ dài từ 2 đến 30 ký tự!!")
 	private String name;
 	
 	@NotBlank(message = "Yêu cầu nhập tên!!")

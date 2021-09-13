@@ -13,7 +13,7 @@ public interface UserRepository extends JpaRepository<User, Integer>{
 	@Query("SELECT u FROM User u WHERE u.username =:username")
 	User getUsernameByUsername(@Param("username") String username);
 	
-	
+	User findByUsername(String username);
 	// param username
 	// return boolean
 	//Optional<User> findByUsername(String username);
@@ -25,7 +25,8 @@ public interface UserRepository extends JpaRepository<User, Integer>{
 	//User findByEmail(String email);
 	
 	@Query("select count(p) = 1 from User p where username = ?1")
-	public boolean findExistByname(String name);
+	boolean findExistByname(String name);
 	@Query("select count(p) = 1 from User p where email = ?1")
-	public boolean findExistByemail(String email);
+	boolean findExistByemail(String email);
+	
 }

@@ -1,11 +1,13 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+ xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 <head>
 
 </head>
 
 <body>
    <h1>Home</h1>
+   Xin Chào: <span sec:authentication="name"></span>
   <a th:href="@{/register}">Dang Ky</a>
   <a th:href="@{/login}">Dang Nhap</a>
    <a th:href="@{/logout}">Dang thoat</a>

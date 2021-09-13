@@ -1,6 +1,7 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org"
- xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+ xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+ xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
 <body>
  	  
     <header th:fragment="header" class="header dark-bg">
@@ -34,7 +35,7 @@
                             <span class="profile-ava">
                                 <img alt="" src="/admin/img/avatar1_small.jpg">
                             </span>
-                            <span class="username">Jenifer Smith</span>
+							Xin Chào: <span sec:authentication="name"></span>
                             <b class="caret"></b>
                         </a>
             <ul class="dropdown-menu extended logout">

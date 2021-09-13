@@ -17,17 +17,20 @@ import com.libra.core.services.IUserService;
 
 @Service
 public class UserDetailService implements UserDetailsService{
+	
+	// tìm kiếm username password trong DB
 	@Autowired
 	private IUserService userService;
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		User user = userService.getUsernameByUsername(username);
-//		if(user == null) {
-//			throw new UsernameNotFoundException("Count not find user");
-//		}
+		if(user == null) {
+			throw new UsernameNotFoundException("Không tìm thấy user!!");
+		}
 //		return new MyUserDetails(user);
-		Set<GrantedAuthority> grantedAuthorities = new HashSet<GrantedAuthority>();
-		for(Role role: user.getRoles()) {
+		Set<GrantedAuthority> grantedAuthorities = new HashSet<>();
+		Set<Role> roles = user.getRoles();
+		for(Role role: roles) {
 			grantedAuthorities.add(new SimpleGrantedAuthority(role.getName()));
 		}
 		return new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(), grantedAuthorities);
