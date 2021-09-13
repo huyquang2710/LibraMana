@@ -1,0 +1,79 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org"
+ xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<body>
+      <div id="sidebar" class="nav-collapse " th:fragment="menu">
+     <!--sidebar start-->
+    <aside>
+      <div id="sidebar" class="nav-collapse ">
+        <!-- sidebar menu start-->
+        <ul class="sidebar-menu">
+          <li class="active">
+            <a class="" th:href="@{/book}">
+                          <i class="fa fa-book" aria-hidden="true"></i>
+                          <span>Sách</span>
+                          <span class="menu-arrow arrow_carrot-right"></span>
+                      </a>
+          </li>
+          <li >
+            <a th:href="@{/author}" class="">
+                          <i class="fa fa-pencil-square" aria-hidden="true"></i>
+                          <span>Tác Giả</span>
+                          <span class="menu-arrow arrow_carrot-right"></span>
+                      </a>
+          </li>
+          <li >
+            <a th:href="@{/category}" class="">
+                          <i class="fa fa-list-alt" aria-hidden="true"></i>
+                          <span>Thể Loại</span>
+                          <span class="menu-arrow arrow_carrot-right"></span>
+                      </a>
+          </li>
+          <li>
+            <a class="" th:href="@{/publisher}">
+                          <i class="fa fa-industry" aria-hidden="true"></i>
+                          <span>Nhà Xuất Bản</span>
+                          <span class="menu-arrow arrow_carrot-right"></span>
+                      </a>
+          </li>
+          <li>
+            <a class="" th:href="@{/borrow-return}">
+                          <i class="fa fa-retweet" aria-hidden="true"></i>
+                          <span>Mượn Trả</span>
+						  <span class="menu-arrow arrow_carrot-right"></span>
+                      </a>
+
+          </li>
+           <li>
+            <a class="" th:href="@{/account}">
+                          <i class="fa fa-user" aria-hidden="true"></i>
+                          <span>Tài Khoản</span>
+						<span class="menu-arrow arrow_carrot-right"></span>
+                      </a>
+
+          </li>
+          <li>
+            <a th:href="@{/}">
+                          <i class="fa fa-male" aria-hidden="true"></i>
+                          <span>Trang Người Dùng</span>
+
+                      </a>
+
+          </li>
+          <li>
+            <a th:href="@{/logout}">
+                          <i class="fa fa-sign-out" aria-hidden="true"></i>
+                          <span>Đăng Xuất</span>
+
+                      </a>
+
+          </li>
+        </ul>
+        <!-- sidebar menu end-->
+      </div>
+    </aside>
+    <!--sidebar end-->
+    
+      </div>  
+</body>
+</html>
