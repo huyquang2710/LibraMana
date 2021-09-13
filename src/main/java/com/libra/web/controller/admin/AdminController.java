@@ -26,6 +26,6 @@ public class AdminController {
 	public String admin(Model model) {
 		model.addAttribute("title", "Trang Chủ Admin");
 		model.addAttribute("user", getPrincipal());
-		return "admin/adminPage";
+		return "admin/base";
 	}
 }
