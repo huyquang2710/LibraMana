@@ -39,6 +39,11 @@ public class LoginController {
 		model.addAttribute("user", new SignUpDTO());
 		return "/authentication/signup";
 	}
+	// error 403
+	@GetMapping("/access-denied")
+	public String getAccessDenied() {
+		return "/authentication/403page";
+	}
 	// registration method
 	@PostMapping("/register")
 	public String register(@Valid @ModelAttribute("user") SignUpDTO signUpDTO, BindingResult bindingResult, HttpSession session, Model model) {
@@ -73,4 +78,5 @@ public class LoginController {
 			return "authentication/signup";
 		}
 	}
+	
 }

@@ -11,9 +11,11 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.web.access.AccessDeniedHandler;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
-import com.libra.securities.AccountAuthenticationSuccessHandler;
+import com.libra.handler.AccountAuthenticationSuccessHandler;
+import com.libra.handler.CustomAccessDeniedHandler;
 import com.libra.securities.UserDetailService;
 
 @Configuration
@@ -42,6 +44,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
 		return authProvider;
 	}
+	@Bean
+	public AccessDeniedHandler accessDeniedHandler() {
+		return new CustomAccessDeniedHandler();
+	}
 
 	@Override
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
@@ -65,10 +71,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		// Trang chỉ dành cho ADMIN
 		.antMatchers("/admin/**").hasAnyRole("ROLE_ADMIN")
 		 // Khi ng dung cố tình vào trang admin
-        .and().exceptionHandling().accessDeniedPage("/403");
+        .and().exceptionHandling().accessDeniedHandler(accessDeniedHandler())
         
         // Cấu hình cho Login Form.
-		http.authorizeRequests().and().formLogin().successHandler(successHandler)// điều hướng 
+		.and().formLogin().successHandler(successHandler)// điều hướng 
 		// Submit URL của trang login
 				.loginProcessingUrl("/check_login")
 				.loginPage("/login")// 
