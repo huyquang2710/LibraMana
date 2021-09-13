@@ -28,14 +28,14 @@ public class AccountAuthenticationSuccessHandler implements AuthenticationSucces
 		
 		Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
 		for(GrantedAuthority grantedAuthority : authorities ) {
-			if(grantedAuthority.getAuthority().equals("USER")) {
+			if(grantedAuthority.getAuthority().equals("ROLE_USER")) {
 				try {
 					hasUserRole = true;
 					break;
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
-			} else if(grantedAuthority.getAuthority().equals("ADMIN")) {
+			} else if(grantedAuthority.getAuthority().equals("ROLE_ADMIN")) {
 				try {
 					hasAdminRole = true;
 					break;

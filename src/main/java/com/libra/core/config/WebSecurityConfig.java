@@ -50,31 +50,28 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
-		http.csrf().disable(); // là kĩ thuật tấn công bằng cách sử dụng quyền chứng thực của người sử dụng đối
+		http.csrf().disable() // là kĩ thuật tấn công bằng cách sử dụng quyền chứng thực của người sử dụng đối
 		// với 1 website khác
 
 		// Các trang không yêu cầu login như vậy ai cũng có thể vào được admin hay user
 		// hoặc guest có thể vào các trang
-		http.authorizeRequests().antMatchers("/", "/login", "/logout").permitAll();
+		.authorizeRequests().antMatchers("/**", "/login", "/logout").permitAll()
 
 		// Trang /user yêu cầu phải login với vai trò ROLE_USER hoặc ROLE_ADMIN.
-		// Nếu chưa login, nó sẽ redirect tới trang /login.sau Mình dung hasAnyRole để
+		// Nếu chưa login, nó sẽ redirect tới trang /login. dung hasAnyRole để
 		// cho phép ai được quyền vào
-		http.authorizeRequests().antMatchers("/user/**").access("hasAnyRole('USER', 'ADMIN')");
+		.antMatchers("/user/**").hasAnyRole("ROLE_USER", "ROLE_ADMIN")
 
 		// Trang chỉ dành cho ADMIN
-		http.authorizeRequests().antMatchers("/admin/**").access("hasRole('ADMIN')");
+		.antMatchers("/admin/**").hasAnyRole("ROLE_ADMIN")
 		 // Khi ng dung cố tình vào trang admin
-        http.authorizeRequests().and().exceptionHandling().accessDeniedPage("/403");
+        .and().exceptionHandling().accessDeniedPage("/403");
         
         // Cấu hình cho Login Form.
 		http.authorizeRequests().and().formLogin().successHandler(successHandler)// điều hướng 
 		// Submit URL của trang login
 				.loginProcessingUrl("/check_login")
-				.loginPage("/login")//
-				//.defaultSuccessUrl("/home")// đây Khi đăng nhập thành công thì vào trang này. userAccountInfo
-				// sẽ được khai báo trong controller để hiển thị trang view
-				// tương ứng
+				.loginPage("/login")// 
 				.failureUrl("/login?error=true")// Khi đăng nhập sai username và password thì nhập lại
 				.usernameParameter("username")// tham số này nhận từ form login input name='username'
 				.passwordParameter("password")// tham số này nhận từ form login input name='password'
@@ -83,8 +80,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 				.logoutSuccessUrl("/login?logout");
 		
 		// Cấu hình remember me, thời gian là 1296000 giây
-	    http.rememberMe().key("uniqueAndSecret").tokenValiditySeconds(1296000);
-	   
+	    http.rememberMe().key("uniqueAndSecret").tokenValiditySeconds(1296000); 
 	}
 	@Override
 	public void configure(WebSecurity web) throws Exception {
