@@ -138,12 +138,16 @@ public class AuthorController {
 		// kiểm tra id có giá trị ko
 		System.out.println("id: " + id);
 		
-		Optional<Author> authorOtp = this.authorService.findById(id);
-		Author author = authorOtp.get();
-		
-		model.addAttribute("author", author);
-		model.addAttribute("title", "Chỉnh Sửa Tác Giả");
-		return "admin/author/authorEdit";
+		if(id != null) {
+			Optional<Author> authorOtp = this.authorService.findById(id);
+			Author author = authorOtp.get();
+			
+			model.addAttribute("author", author);
+			model.addAttribute("title", "Chỉnh Sửa Tác Giả");
+			return "admin/author/authorEdit";
+		}
+		session.setAttribute("message", new MessageResponse("Không tìm thấy Tác Giả!!, vui lòng thử lại!", "danger"));
+		return "admin/author/authorPage";
 	}
 	// update action
 		@RequestMapping(value = "/update", method = RequestMethod.POST)
