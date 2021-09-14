@@ -37,8 +37,13 @@
 		 		enctype="multipart/form-data">
 		   <div class="col-lg-8">
                 <div class="form">
-               		 <!-- id -->
-					<input type="hidden" th:value="${author.id}"  name="id" readonly />
+               		   <!-- id -->
+                    <div class="form-group ">
+                      <label for="cid" class="control-label col-lg-2">STT</label>
+                      <div class="col-lg-10">
+                        <input class="form-control " id="cid" name="id" type="text" th:value="${author.id}" readonly="readonly"/>
+                      </div>
+                    </div>
                 	<!-- name -->
                     <div class="form-group ">
                       <label for="cname" class="control-label col-lg-2">Họ và Tên</label>
@@ -47,7 +52,6 @@
                         		th:errorClass="is-invalid" />
                         	<div th:if="${#fields.hasErrors('name')}" th:errors="*{name}" class="invalid-feedback"></div>
                       </div>
-                  
                     </div>
                     
                     <!-- email -->

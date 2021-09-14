@@ -110,19 +110,7 @@ public class AuthorController {
 			return "admin/author/authorNew";
 		}
 	}
-	// edit form
-	/*
-	 * @GetMapping("/update/{id}") public String authorEdit(@PathVariable("id")
-	 * Integer id , Model model, HttpSession session) throws
-	 * ResourceNotFoundException { // kiểm tra id có giá trị ko
-	 * System.out.println("id: " + id);
-	 * 
-	 * Optional<Author> authorOtp = this.authorService.findById(id); Author author =
-	 * authorOtp.get();
-	 * 
-	 * model.addAttribute("author", author); model.addAttribute("title",
-	 * "Chỉnh Sửa Tác Giả"); return "admin/author/authorEdit"; }
-	 */
+	//findById
 	@GetMapping("/update/{id}")
 	public String authorEdit(@PathVariable("id") Integer id , Model model, HttpSession session) throws ResourceNotFoundException {
 		// kiểm tra id có giá trị ko
@@ -135,4 +123,60 @@ public class AuthorController {
 		model.addAttribute("title", "Chỉnh Sửa Tác Giả");
 		return "admin/author/authorEdit";
 	}
+	// update action
+		@RequestMapping(value = "/update", method = RequestMethod.POST)
+		public String updateAuthor(
+				@Valid @ModelAttribute("author") AuthorDTO authorDTO ,
+			BindingResult bindingResult,
+			@RequestParam("imageFile") MultipartFile fileImage,
+			Model model,
+			HttpSession session ) {
+			
+			try {
+				// Kiểm tra dữ liệu hợp lệ
+				if(bindingResult.hasErrors()) {
+					System.out.println("Author: " + bindingResult.toString());
+					//model.addAttribute("author", authorDTO);
+					return "admin/author/authorUpdate";
+				}
+				// chuyển dto thành entity
+				Author authorEntity =  modelMapper.map(authorDTO, Author.class);
+				
+				//lấy dữ liệu cũ
+				Author oldAuthor = authorService.findById(authorEntity.getId()).get();
+				
+				if(!fileImage.isEmpty()) {
+					System.out.println("File ảnh tồn tại !!");
+					//xóa ảnh cũ
+					File deleteFile = new ClassPathResource("static/image/author").getFile();
+					File deleteAction = new File(deleteFile, oldAuthor.getImage());
+					deleteAction.delete();
+					
+					//thêm ảnh mới
+					authorEntity.setImage(fileImage.getOriginalFilename());
+					File saveFile =new ClassPathResource("static/image/author").getFile();
+					Path path = Paths.get(saveFile.getAbsolutePath() + File.separator + fileImage.getOriginalFilename());
+					Files.copy(fileImage.getInputStream(), path, StandardCopyOption.REPLACE_EXISTING);
+					authorEntity.setImage(fileImage.getOriginalFilename());
+				} else {
+					// dùng ảnh cũ
+					authorEntity.setImage(oldAuthor.getImage());
+				}
+				this.authorService.update(authorEntity);
+				System.out.println("Thêm Tác giả thành công!!");
+				
+				//chuyển entity thành dto
+				AuthorDTO authorResponse = modelMapper.map(authorEntity, AuthorDTO.class);
+				
+				model.addAttribute("author", authorResponse);
+				session.setAttribute("message", new MessageResponse("Cập nhật Tác Giả thành công!!", "success"));
+				return "redirect:/admin/author";
+			} catch (Exception e) {
+				System.out.println("Cập nhật Tác giả thất bại!!");
+				session.setAttribute("message", new MessageResponse("Cập nhật Tác Giả thất bại!!, vui lòng thử lại!", "danger"));
+				String errorMessage = e.getMessage();
+				LOGGER.error(errorMessage);
+				return "admin/author/authorEdit";
+			}
+		}
 }

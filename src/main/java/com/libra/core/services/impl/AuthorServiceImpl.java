@@ -40,12 +40,6 @@ public class AuthorServiceImpl implements IAuthorService{
 		}
 		Optional<Author> authorOpt = Optional.ofNullable(author);
 		return authorOpt;
-//		Optional<Author> result = authorRepo.findById(id);
-//		if(result.isPresent()) {
-//			throw new ResourceNotFoundException("Không tìm thấy id: " + id);
-//		}
-//		Author author = authorRepo.findById(id).orElseThrow(() -> new ResourceNotFoundException("Không tìm thấy id: " + id));
-//		return author;
 	}
 
 	@SuppressWarnings("deprecation")
@@ -65,11 +59,29 @@ public class AuthorServiceImpl implements IAuthorService{
 		}
 		
 	}
+	
+	@SuppressWarnings("deprecation")
+	@Override
+	public void update(Author author) throws BadResourceException, ResourceNotFoundException {
+		if(!StringUtils.isEmpty(author.getName())) {
+			if(!existsById(author.getId())) {
+				throw new ResourceNotFoundException("Không tìm thấy id: " + author.getId());
+			}
+			authorRepo.save(author);
+		} else {
+			BadResourceException exc = new BadResourceException("Lỗi!!. Không thể lưu Tác Giả");
+			exc.addErrorMessage("Tác giả trống hoặc rỗng!!");
+			throw exc;
+		}
+		
+	}
 
 	@Override
 	public void delete(Integer id) {
 		authorRepo.deleteById(id	);
 	}
+
+
 
 	
 }

@@ -15,6 +15,8 @@ public interface GenericService<T> {
 	
 	T save(T t) throws BadResourceException, ResourceAlreadyExistsException;
 	
+	void update(T t) throws BadResourceException, ResourceNotFoundException;
+	
 	void delete(Integer id);
 
 }
