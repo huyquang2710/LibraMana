@@ -82,7 +82,7 @@ public class AuthorController {
 			} else {
 				//set anh
 				authorDTO.setImage(fileImage.getOriginalFilename());
-				File saveFile = new ClassPathResource("/static/image/author").getFile();
+				File saveFile = new ClassPathResource("static/image/author").getFile();
 				Path path = Paths.get(saveFile.getAbsolutePath() + File.separator + fileImage.getOriginalFilename());
 				
 				Files.copy(fileImage.getInputStream(), path, StandardCopyOption.REPLACE_EXISTING);
@@ -96,7 +96,7 @@ public class AuthorController {
 			System.out.println("Thêm Tác giả thành công!!");
 			
 			session.setAttribute("message", new MessageResponse("Thêm Tác Giả thành công!!", "success"));
-			return "rediect:/admin/author";
+			return "redirect:/admin/author";
 		} catch (Exception e) {
 			System.out.println("Thêm Tác giả thất bại!!");
 			session.setAttribute("message", new MessageResponse("Thêm Tác Giả thất bại!!, vui lòng thử lại!", "danger"));
