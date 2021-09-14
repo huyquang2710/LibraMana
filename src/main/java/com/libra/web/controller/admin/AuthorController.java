@@ -107,6 +107,13 @@ public class AuthorController {
 			return "admin/author/authorNew";
 		}
 	}
-	
+	// edit form
+	@GetMapping("/update")
+	public String authorEdit(@ModelAttribute AuthorDTO authorDTO , Model model) {
+		
+		model.addAttribute("author", authorDTO);
+		model.addAttribute("title", "Chỉnh Sửa Tác Giả");
+		return "admin/author/authorEdit";
+	}
 	
 }
