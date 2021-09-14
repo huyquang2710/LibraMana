@@ -133,7 +133,7 @@ public class AuthorController {
 		}
 	}
 	//findById
-	@GetMapping("/update/{id}")
+	@GetMapping("/findById/{id}")
 	public String authorEdit(@PathVariable("id") Integer id , Model model, HttpSession session) throws ResourceNotFoundException {
 		// kiểm tra id có giá trị ko
 		System.out.println("id: " + id);

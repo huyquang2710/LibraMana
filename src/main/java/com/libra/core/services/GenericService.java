@@ -10,7 +10,7 @@ import com.libra.exception.ResourceAlreadyExistsException;
 import com.libra.exception.ResourceNotFoundException;
 
 public interface GenericService<T> {
-	
+	//CRUD
 	List<T> findAll();
 
 	Optional<T> findById(Integer id) throws ResourceNotFoundException;
@@ -21,5 +21,9 @@ public interface GenericService<T> {
 	
 	void delete(Integer id) throws ResourceNotFoundException;
 	
+	//phân trang
 	Page<T> findByPageable(int pageNo);
+	
+	//tìm kiếm
+	List<T> findByNameContaining(String name);
 }

@@ -85,13 +85,19 @@ public class AuthorServiceImpl implements IAuthorService{
 		}
 		
 	}
-
+	
+	// xóa
 	@Override
 	public void delete(Integer id) throws ResourceNotFoundException {
 		if(!existsById(id)) {
 			throw new ResourceNotFoundException("Không tìm thấy id: " + id);
 		}
 		authorRepo.deleteById(id);
+	}
+	//tìm kiếm
+	@Override
+	public List<Author> findByNameContaining(String name) {
+		return authorRepo.findByNameContaining(name);
 	}
 
 
