@@ -17,6 +17,6 @@ public interface GenericService<T> {
 	
 	void update(T t) throws BadResourceException, ResourceNotFoundException;
 	
-	void delete(Integer id);
+	void delete(Integer id) throws ResourceNotFoundException;
 
 }

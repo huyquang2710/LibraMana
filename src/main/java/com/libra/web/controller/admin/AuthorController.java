@@ -22,6 +22,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -179,4 +180,18 @@ public class AuthorController {
 				return "admin/author/authorEdit";
 			}
 		}
+	@GetMapping("/delete/{id}")
+	public String deleteAuthor(@PathVariable("id") Integer id, HttpSession session) {
+		try {
+			authorService.delete(id);
+			
+			session.setAttribute("message", new MessageResponse("Xóa Thành Công!!,!", "success"));
+			return "redirect:/admin/author";
+		} catch (ResourceNotFoundException e) {
+			String errorMessage = e.getMessage();
+	        LOGGER.error(errorMessage);
+	        session.setAttribute("message", new MessageResponse("Xóa Thất Bại!!,!", "danger"));
+	        return "admin/author/authorPage";
+		}
+	}
 }
