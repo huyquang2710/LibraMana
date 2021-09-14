@@ -15,7 +15,7 @@
 			color: red;
 		}
 	</style>
-	<script src="/js/js.js" ></script>
+	<script src="/js/publisher.js" ></script>
 </head>
 <body>
     <!--main content start-->
@@ -79,19 +79,20 @@
 			</div>
 			<div class="col-lg-3">
 				<!-- img -->
-				<img class="my_profile_picture" id="image" style="height: 200px; width: 200px;" src="/image/avatar.png" alt="profile photo" />
+				<img class="my_profile_picture" id="imageFile" style="height: 200px; width: 200px;" src="/image/avatar.png" alt="profile photo" />
 				<br /><br />
 				<div class="col-lg-9">
-                      <input class="form-control " id="productImage" name="imageFile" type="file"  onchange="chooseFile(this)"></input>
+                      <input class="form-control " id="productImage" name="imageFile" type="file"  onchange="chooseFilePublisher(this)"></input>
                 </div>
 			</div>
+			
 			
 			<!-- button -->
 			<div class="form-group text-center ">
                 <div class="col-lg-offset-1 col-lg-9 mt">
                    <button class="btn btn-primary" type="submit">Thêm</button>
                    <button class="btn btn-default" onclick="reset()" type="reset">Reset</button>
-                   <a th:href="${/admin/publisher}" class="btn btn-default">Quay Lại</a>
+         
                 </div>
             </div>
 		 </form>

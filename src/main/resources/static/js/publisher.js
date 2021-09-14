@@ -21,7 +21,7 @@ const search = () => {
                 let text = `<div class='list-group'>`;
 
                 data.forEach((publisher) => {
-                    text += `<a href='/admin/publisher/findById/${author.id}' class='list-group-item list-group-item-action'> ${publisher.name} </a>`;
+                    text += `<a href='/admin/publisher/findById/${publisher.id}' class='list-group-item list-group-item-action'> ${publisher.name} </a>`;
                 });
 
                 text += `</div>`;
@@ -31,4 +31,18 @@ const search = () => {
             });
         $(".search-result").show();
     }
+}
+function chooseFilePublisher(fileInput) {
+    if(fileInput.files && fileInput.files[0]) {
+        var reader = new FileReader();
+
+        reader.onload = function(e){
+            $('#imageFile').attr('src', e.target.result);
+        }
+        reader.readAsDataURL(fileInput.files[0]);
+    }
+}
+
+function reset() {
+  document.getElementById("feedback_form").reset();
 }
