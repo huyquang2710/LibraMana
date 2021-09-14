@@ -32,7 +32,7 @@
 		<!-- message end-->
 		
     	  <!-- button add -->
-    	<a style="height: 31px;" type="button" th:href="@{/admin/<cate></cate>gory/new}" class="btn btn-primary">Thêm Mới</a>
+    	<a style="height: 31px;" type="button" th:href="@{/admin/category/new}" class="btn btn-primary">Thêm Mới</a>
       
         
     	<!-- table -->
@@ -46,7 +46,6 @@
                </thead>
                <tbody>
                   <tr th:each="category : ${category}" >
-
                     <td th:text="${category.name}" ></td>
                     <td th:text="${category.code}" ></td>
                     <td>
