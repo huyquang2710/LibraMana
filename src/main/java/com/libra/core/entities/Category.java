@@ -37,6 +37,7 @@ public class Category implements Serializable{
 	@NotEmpty(message="Thể loại không được trống")
 	private String name;
 	
+	@NotEmpty(message="Mã không được trống")
 	private String code;
 	
 	@OneToMany(mappedBy = "category")
