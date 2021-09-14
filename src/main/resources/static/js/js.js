@@ -8,3 +8,7 @@ function chooseFile(fileInput) {
         reader.readAsDataURL(fileInput.files[0]);
     }
 }
+
+function reset() {
+  document.getElementById("feedback_form").reset();
+}
