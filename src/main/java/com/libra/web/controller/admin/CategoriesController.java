@@ -93,4 +93,43 @@ public class CategoriesController {
 		}
 		return "admin/categories/categoryEdit";		
 	}
+	
+	// update
+	@PostMapping("/update")
+	public String categoryUpdate(@Valid @ModelAttribute("category") Category category,BindingResult bindingResult, Model model, HttpSession session) {
+		
+		try {
+			if(bindingResult.hasErrors()) {
+				System.out.println("Author: " + bindingResult.toString());
+				return "admin/categories/categoryNew";
+			}
+			categoriesService.update(category);
+			
+			model.addAttribute("category", category);
+			model.addAttribute("title", "Cập Nhật Thể Loại");
+			session.setAttribute("message", new MessageResponse("Cập Nhật Thể Loại thành công!!", "success"));
+			return "redirect:/admin/category";
+		} catch (BadResourceException | ResourceNotFoundException e) {
+			System.out.println("Thêm Thể Loại thất bại!!");
+			session.setAttribute("message", new MessageResponse("Cập Nhật Thể Loại thất bại!!, vui lòng thử lại!", "danger"));
+			String errorMessage = e.getMessage();
+			LOGGER.error(errorMessage);
+			return "admin/categories/categoryNew";
+		}
+	}
+	// delete
+	@GetMapping("/delete/{id}")
+	public String deleteCategory(@PathVariable("id") Integer id, HttpSession session) {
+		try {
+			categoriesService.delete(id);
+			
+			session.setAttribute("message", new MessageResponse("Xóa Thành Công!!,!", "success"));
+			return "redirect:/admin/category";
+		} catch (ResourceNotFoundException e) {
+			String errorMessage = e.getMessage();
+	        LOGGER.error(errorMessage);
+	        session.setAttribute("message", new MessageResponse("Xóa Thất Bại!!,!", "danger"));
+	        return "admin/categories/categoryPage";
+		}
+	}
 }

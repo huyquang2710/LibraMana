@@ -23,17 +23,17 @@
     	<section class="wrapper">
         <div class="row">
           <div class="col-lg-12">
-            <h3 class="page-header"><i class="fa fa-files-o"></i>Thêm Thể Loại</h3>
+            <h3 class="page-header"><i class="fa fa-files-o"></i>Sửa Thể Loại</h3>
             <ol class="breadcrumb">
-              <li><i class="fa fa-pencil-square"></i><a th:href="@{/admin/author}">Thể Loại</a></li>
-              <li><i class="icon_document_alt"></i>thêm mới</li>
+              <li><i class="fa fa-pencil-square"></i><a th:href="@{/admin/category}">Thể Loại</a></li>
+              <li><i class="icon_document_alt"></i>cập nhật</li>
             </ol>
           </div>
         </div>
     	
 		<!-- form new -->	
 		<div class="panel-body">
-		 <form class="form-validate form-horizontal" id="feedback_form" method="post" th:object="${category}" th:action="@{/admin/category/new}"
+		 <form class="form-validate form-horizontal" id="feedback_form" method="post" th:object="${category}" th:action="@{/admin/category/update}"
 		 		enctype="multipart/form-data">
 		   <div class="col-lg-8">
                 <div class="form">
@@ -63,7 +63,7 @@
 			<!-- button -->
 			<div class="form-group text-center ">
                 <div class="col-lg-offset-1 col-lg-9 mt">
-                   <button class="btn btn-primary" type="submit">Thêm</button>
+                   <button class="btn btn-primary" type="submit">Cập Nhật</button>
                    <button class="btn btn-default" onclick="reset()" type="reset">Reset</button>
                 </div>
             </div>
