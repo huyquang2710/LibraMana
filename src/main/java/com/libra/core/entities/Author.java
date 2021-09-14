@@ -14,9 +14,6 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import javax.validation.constraints.Email;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Size;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -37,8 +34,6 @@ public class Author implements Serializable {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer id;
 	
-	@NotBlank(message = "Yêu cầu nhập tên!!")
-	@Size(min = 2, max = 20, message = "Độ dài tên trong khoảng từ 2 đến 20 ký tự!!")
 	private String name;
 
 	private String address;
@@ -55,7 +50,6 @@ public class Author implements Serializable {
 	
 	
 	@Column(unique = true)
-	@Email(message = "Đúng định dạng email")
 	private String email;
 
 	@OneToMany(mappedBy = "author")
