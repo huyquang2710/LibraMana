@@ -11,6 +11,9 @@
 		.mt {
 			margin-top: 2%;
 		}
+		.invalid-feedback {
+			color: red;
+		}
 	</style>
 	<script src="/js/showImage.js" ></script>
 </head>
@@ -30,24 +33,28 @@
     	
 		<!-- form new -->	
 		<div class="panel-body">
-		 <form novalidate class="form-validate form-horizontal" id="feedback_form" method="post" th:object="${author}" th:action="@{/admin/author/new}"
-		 		enctype="multipart/form-data" >
+		 <form class="form-validate form-horizontal" id="feedback_form" method="post" th:object="${author}" th:action="@{/admin/author/new}"
+		 		enctype="multipart/form-data">
 		   <div class="col-lg-8">
                 <div class="form">
                 	<!-- name -->
                     <div class="form-group ">
-                      <label for="cname" class="control-label col-lg-2">Họ và Tên<span class="required">*</span></label>
+                      <label for="cname" class="control-label col-lg-2">Họ và Tên</label>
                       <div class="col-lg-10">
-                        <input class="form-control" id="cname" name="name" type="text" required />     
+                        <input class="form-control" id="cname" name="name" type="text" th:value="*{name}" 
+                        		th:errorClass="is-invalid" />
+                        	<div th:if="${#fields.hasErrors('name')}" th:errors="*{name}" class="invalid-feedback"></div>
                       </div>
-                    
+                  
                     </div>
                     
                     <!-- email -->
                     <div class="form-group ">
-                      <label for="cemail" class="control-label col-lg-2">E-Mail <span class="required">*</span></label>
+                      <label for="cemail" class="control-label col-lg-2">EMail</label>
                       <div class="col-lg-10">
-                        <input class="form-control " id="cemail" type="email" name="email" required /> 
+                        <input class="form-control " id="cemail" type="email" name="email" th:value="*{email}" 
+                        		th:errorClass="is-invalid" /> 
+                         	<div th:if="${#fields.hasErrors('email')}" th:errors="*{email}" class="invalid-feedback"></div>
                       </div>
                                  
                     </div>
@@ -62,9 +69,9 @@
                     
                     <!-- phone -->
                     <div class="form-group ">
-                      <label for="cnumber" class="control-label col-lg-2">Phone <span class="required">*</span></label>
+                      <label for="cnumber" class="control-label col-lg-2">Phone</label>
                       <div class="col-lg-10">
-                        <input class="form-control" id="subject" name="phone" type="number" required />
+                        <input class="form-control" id="subject" name="phone" type="number"/>
                       </div>
                     </div>
                     
@@ -72,7 +79,7 @@
                     <div class="form-group ">
                       <label for="caddress" class="control-label col-lg-2">Địa chỉ</label>
                       <div class="col-lg-10">
-                        <input class="form-control " id="caddress" name="address" type="text" required></input>
+                        <input class="form-control " id="caddress" name="address" type="text"></input>
                       </div>
                     </div>
                 </div>
@@ -82,7 +89,7 @@
 				<img class="my_profile_picture" id="image" style="height: 200px; width: 200px;" src="/image/avatar.png" alt="profile photo" />
 				<br /><br />
 				<div class="col-lg-9">
-                      <input class="form-control " id="productImage" name="imageFile" type="file"  onchange="chooseFile(this)" required></input>
+                      <input class="form-control " id="productImage" name="imageFile" type="file"  onchange="chooseFile(this)"></input>
                 </div>
 			</div>
 			

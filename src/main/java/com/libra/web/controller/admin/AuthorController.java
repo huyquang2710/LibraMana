@@ -20,8 +20,8 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -53,15 +53,16 @@ public class AuthorController {
 	
 	// new form
 	@GetMapping("/new")
-	public String authorForm(Model model) {
+	public String authorForm(@ModelAttribute AuthorDTO authorDTO , Model model) {
 		
+		model.addAttribute("author", authorDTO);
 		model.addAttribute("title", "Thêm Tác Giả");
 		return "admin/author/authorNew";
 	}
 	// new action
-	@PostMapping("/new")
+	@RequestMapping(value = "/new", method = RequestMethod.POST)
 	public String newAuthor(
-		@Valid @ModelAttribute("author") AuthorDTO authorDTO ,
+			@Valid @ModelAttribute("author") AuthorDTO authorDTO ,
 		BindingResult bindingResult,
 		@RequestParam("imageFile") MultipartFile fileImage,
 		Model model,
@@ -95,6 +96,7 @@ public class AuthorController {
 			
 			System.out.println("Thêm Tác giả thành công!!");
 			
+			model.addAttribute("author", authorDTO);
 			session.setAttribute("message", new MessageResponse("Thêm Tác Giả thành công!!", "success"));
 			return "redirect:/admin/author";
 		} catch (Exception e) {
