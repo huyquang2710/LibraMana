@@ -5,10 +5,13 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 import com.libra.core.entities.Author;
 import com.libra.core.repositoies.AuthorRepository;
 import com.libra.core.services.IAuthorService;
+import com.libra.exception.BadResourceException;
+import com.libra.exception.ResourceAlreadyExistsException;
 
 import lombok.AllArgsConstructor;
 
@@ -33,9 +36,22 @@ public class AuthorServiceImpl implements IAuthorService{
 		return authorRepo.findById(id);
 	}
 
+	@SuppressWarnings("deprecation")
 	@Override
-	public Author save(Author author) {
-		return authorRepo.save(author);
+	public Author save(Author author) throws BadResourceException, ResourceAlreadyExistsException{
+		
+		// kiểm tra id + name tồn tại
+		if(!StringUtils.isEmpty(author.getName())) {
+			if(author.getId() != null && existsById(author.getId())) {
+				throw new ResourceAlreadyExistsException("Tác giả với id: " + author.getId() + " đã tồn tại");
+			}
+			return authorRepo.save(author);
+		} else {
+			BadResourceException exc = new BadResourceException("Lỗi!!. Không thể lưu Tác Giả");
+			exc.addErrorMessage("Tác giả trống hoặc rỗng!!");
+			throw exc;
+		}
+		
 	}
 
 	@Override
