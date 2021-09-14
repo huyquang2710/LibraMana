@@ -99,8 +99,4 @@ public class AuthorServiceImpl implements IAuthorService{
 	public List<Author> findByNameContaining(String name) {
 		return authorRepo.findByNameContaining(name);
 	}
-
-
-
-	
 }
