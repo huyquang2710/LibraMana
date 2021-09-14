@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+ xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+ layout:decorator="~{admin/base.html}" >
+
+<head>
+	<link href="/css.css" rel="stylesheet">
+</head>
+
+<body>
+
+    <!--main content start-->
+    <section id="main-content" layout:fragment="content">
+    	<section class="wrapper">
+        <div class="row">
+          <div class="col-lg-12">
+            <h3 class="page-header"><i class="fa fa-files-o"></i>Danh Sách Thể Loại</h3>
+            <ol class="breadcrumb">
+              <li><i class="fa fa-pencil-square"></i><a th:href="@{/admin/category}">Thể Loại</a></li>
+              <li><i class="icon_document_alt"></i>Danh Sách</li>
+            </ol>
+          </div>
+        </div>
+    		<!-- message -->
+		<div th:if="${session.message}" class="container">
+			<div th:classappend="${'alert-' + session.message.type}"
+				class="alert text-center" role="alert">
+				<span th:text="${session.message.content}"></span>
+			</div>
+			<th:block th:text="${#session.removeAttribute('message')}" ></th:block>
+		</div>
+		<!-- message end-->
+		
+    	  <!-- button add -->
+    	<a style="height: 31px;" type="button" th:href="@{/admin/cateogory/new}" class="btn btn-primary">Thêm Mới</a>
+      
+        
+    	<!-- table -->
+     	 <table class="table table-striped table-advance table-hover">
+               	<thead>
+               		<tr>
+                  	<th></th>
+                    <th><i class="icon_profile"></i> Tên</th>
+                    <th><i class="icon_calendar"></i> Code</th>
+                    <th><i class="icon_cogs"></i> Action</th>
+                  </tr>
+               </thead>
+               <tbody>
+                  <tr th:each="category : ${category}" >
+
+                    <td th:text="${category.name}" ></td>
+                    <td th:text="${category.code}" ></td>
+                    <td>
+                      <div class="btn-group">
+                        <a class="btn btn-primary" th:href="@{'/admin/category/findById/' + ${category.id}}"><i class="fa fa-pencil-square-o"></i></a>
+                        <a class="btn btn-danger" th:href="@{'/admin/category/delete/' + ${category.id}}"><i class="icon_close_alt2"></i></a>
+                      </div>
+                    </td>
+                  </tr>
+                </tbody>
+         </table>
+		</section>
+	</section>	  
+    <!--main content end-->
+</body>
+
+</html>
