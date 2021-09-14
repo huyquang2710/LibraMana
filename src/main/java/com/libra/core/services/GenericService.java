@@ -5,12 +5,13 @@ import java.util.Optional;
 
 import com.libra.exception.BadResourceException;
 import com.libra.exception.ResourceAlreadyExistsException;
+import com.libra.exception.ResourceNotFoundException;
 
 public interface GenericService<T> {
 	
 	List<T> findAll();
 
-	Optional<T> findById(Integer id);
+	Optional<T> findById(Integer id) throws ResourceNotFoundException;
 	
 	T save(T t) throws BadResourceException, ResourceAlreadyExistsException;
 	

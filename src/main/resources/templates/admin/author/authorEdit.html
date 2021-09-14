@@ -15,7 +15,7 @@
 			color: red;
 		}
 	</style>
-	<script src="/js/showImage.js" ></script>
+	<script src="/js/js.js" ></script>
 </head>
 <body>
     <!--main content start-->
@@ -38,12 +38,12 @@
 		   <div class="col-lg-8">
                 <div class="form">
                		 <!-- id -->
-					<input type="hidden" th:value="*{id}"  name="id" readonly />
+					<input type="hidden" th:value="${author.id}"  name="id" readonly />
                 	<!-- name -->
                     <div class="form-group ">
                       <label for="cname" class="control-label col-lg-2">Họ và Tên</label>
                       <div class="col-lg-10">
-                        <input class="form-control" id="cname" name="name" type="text" th:value="*{name}" 
+                        <input class="form-control" id="cname" name="name" type="text" th:value="${author.name}"
                         		th:errorClass="is-invalid" />
                         	<div th:if="${#fields.hasErrors('name')}" th:errors="*{name}" class="invalid-feedback"></div>
                       </div>
@@ -54,7 +54,7 @@
                     <div class="form-group ">
                       <label for="cemail" class="control-label col-lg-2">EMail</label>
                       <div class="col-lg-10">
-                        <input class="form-control " id="cemail" type="email" name="email" th:value="*{email}" 
+                        <input class="form-control " id="cemail" type="email" name="email" th:value="${author.email}"
                         		th:errorClass="is-invalid" /> 
                          	<div th:if="${#fields.hasErrors('email')}" th:errors="*{email}" class="invalid-feedback"></div>
                       </div>
@@ -65,7 +65,7 @@
                     <div class="form-group ">
                       <label for="cyear" class="control-label col-lg-2">Năm Sinh</label>
                       <div class="col-lg-10">
-                        <input class="form-control " id="cyear" name="year" type="text" th:value="*{year}"/>
+                        <input class="form-control " id="cyear" name="year" type="text" th:value="${author.year}"/>
                       </div>
                     </div>
                     
@@ -73,7 +73,7 @@
                     <div class="form-group ">
                       <label for="cnumber" class="control-label col-lg-2">Phone</label>
                       <div class="col-lg-10">
-                        <input class="form-control" id="subject" name="phone" type="number" th:value="*{phone}"/>
+                        <input class="form-control" id="subject" name="phone" type="number" th:value="${author.phone}"/>
                       </div>
                     </div>
                     
@@ -81,14 +81,14 @@
                     <div class="form-group ">
                       <label for="caddress" class="control-label col-lg-2">Địa chỉ</label>
                       <div class="col-lg-10">
-                        <input class="form-control " id="caddress" name="address" type="text" th:value="*{address}"></input>
+                        <input class="form-control " id="caddress" name="address" type="text" th:value="${author.address}"></input>
                       </div>
                     </div>
                 </div>
 			</div>
 			<div class="col-lg-3">
 				<!-- img -->
-				<img class="my_profile_picture" id="image" style="height: 200px; width: 200px;" th:src="@{'/image/author/' + *{image}}" alt="profile photo" />
+				<img class="my_profile_picture" id="image" style="height: 200px; width: 200px;" th:src="@{'/image/author/' + ${author.image}}" alt="profile photo" />
 				<br /><br />
 				<div class="col-lg-9">
                       <input class="form-control " id="productImage" name="imageFile" type="file"  onchange="chooseFile(this)"></input>
@@ -99,8 +99,7 @@
 			<div class="form-group text-center ">
                 <div class="col-lg-offset-1 col-lg-9 mt">
                    <button class="btn btn-primary" type="submit">Chỉnh Sửa</button>
-                   <button class="btn btn-default" type="reset">Reset</button>
-                   <a class="btn btn-info" th:src="@{/admin/author}">Quay lại</a>
+                   <a class="btn btn-info" th:href="@{/admin/author}">Quay lại</a>
                 </div>
             </div>
 		 </form>

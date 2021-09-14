@@ -12,6 +12,7 @@ import com.libra.core.repositoies.AuthorRepository;
 import com.libra.core.services.IAuthorService;
 import com.libra.exception.BadResourceException;
 import com.libra.exception.ResourceAlreadyExistsException;
+import com.libra.exception.ResourceNotFoundException;
 
 import lombok.AllArgsConstructor;
 
@@ -32,8 +33,19 @@ public class AuthorServiceImpl implements IAuthorService{
 	}
 
 	@Override
-	public Optional<Author> findById(Integer id) {
-		return authorRepo.findById(id);
+	public Optional<Author> findById(Integer id) throws ResourceNotFoundException {
+		Author author = authorRepo.findById(id).get();
+		if(author == null) {
+			throw new ResourceNotFoundException("Không tìm thấy id: " + id);
+		}
+		Optional<Author> authorOpt = Optional.ofNullable(author);
+		return authorOpt;
+//		Optional<Author> result = authorRepo.findById(id);
+//		if(result.isPresent()) {
+//			throw new ResourceNotFoundException("Không tìm thấy id: " + id);
+//		}
+//		Author author = authorRepo.findById(id).orElseThrow(() -> new ResourceNotFoundException("Không tìm thấy id: " + id));
+//		return author;
 	}
 
 	@SuppressWarnings("deprecation")

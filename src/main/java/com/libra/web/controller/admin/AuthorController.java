@@ -6,6 +6,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.util.List;
+import java.util.Optional;
 
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
@@ -20,6 +21,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -27,6 +29,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.libra.core.entities.Author;
 import com.libra.core.services.IAuthorService;
+import com.libra.exception.ResourceNotFoundException;
 import com.libra.web.dto.AuthorDTO;
 import com.libra.web.message.MessageResponse;
 
@@ -108,12 +111,28 @@ public class AuthorController {
 		}
 	}
 	// edit form
-	@GetMapping("/update")
-	public String authorEdit(@ModelAttribute AuthorDTO authorDTO , Model model) {
+	/*
+	 * @GetMapping("/update/{id}") public String authorEdit(@PathVariable("id")
+	 * Integer id , Model model, HttpSession session) throws
+	 * ResourceNotFoundException { // kiểm tra id có giá trị ko
+	 * System.out.println("id: " + id);
+	 * 
+	 * Optional<Author> authorOtp = this.authorService.findById(id); Author author =
+	 * authorOtp.get();
+	 * 
+	 * model.addAttribute("author", author); model.addAttribute("title",
+	 * "Chỉnh Sửa Tác Giả"); return "admin/author/authorEdit"; }
+	 */
+	@GetMapping("/update/{id}")
+	public String authorEdit(@PathVariable("id") Integer id , Model model, HttpSession session) throws ResourceNotFoundException {
+		// kiểm tra id có giá trị ko
+		System.out.println("id: " + id);
 		
-		model.addAttribute("author", authorDTO);
+		Optional<Author> authorOtp = this.authorService.findById(id);
+		Author author = authorOtp.get();
+		
+		model.addAttribute("author", author);
 		model.addAttribute("title", "Chỉnh Sửa Tác Giả");
 		return "admin/author/authorEdit";
 	}
-	
 }
