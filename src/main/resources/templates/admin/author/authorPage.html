@@ -67,8 +67,25 @@
                     </td>
                   </tr>
                 </tbody>
-         </table>   	
-    	</section>
+         </table>
+         	<div>
+ 				<h5 style="color:red; font-weight: bold;" >Số lượng Tác Giả: [[${totalItems}]]</h5> 
+ 				<h5 style="color:red; font-weight: bold;" >Trang [[${currentPage}]] / [[${totalPages}]]</h5> 	
+         	</div>
+		<!-- phân trang -->
+			<div class="text-center">
+				<nav aria-label="Page navigation example">
+				<ul class="pagination">
+					<li class="page-item"><a class="page-link" href="#">Previous</a></li>
+					<li class="page-item"><a class="page-link" href="#">1</a></li>
+					<li class="page-item"><a class="page-link" href="#">2</a></li>
+					<li class="page-item"><a class="page-link" href="#">3</a></li>
+					<li class="page-item"><a class="page-link" href="#">Next</a></li>
+				</ul>
+			</nav>
+			</div>
+		<!-- phân trang end -->
+		</section>
 	</section>	  
     <!--main content end-->
 </body>

@@ -16,13 +16,13 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -46,12 +46,30 @@ public class AuthorController {
 	private ModelMapper modelMapper;
 	
 	// get all
+	/*
+	 * @GetMapping public String authorPage(Model model) { List<Author> authorList =
+	 * authorService.findAll();
+	 * 
+	 * model.addAttribute("author", authorList); model.addAttribute("title",
+	 * "Tác Giả"); return "admin/author/authorPage"; }
+	 */
+	// pagination
 	@GetMapping
 	public String authorPage(Model model) {
-		List<Author> authorList = authorService.findAll();
+		int currentPage = 1; // trang hiện tại
+		Page<Author> page = authorService.findByPageable();
+		long totalItems = page.getTotalElements(); // tổng số tác giả
+		int totalPages = page.getTotalPages();
+		
+		List<Author> authorList = page.getContent();
+		
+		model.addAttribute("currentPage", currentPage); // trang hiện tại
+		model.addAttribute("totalItems", totalItems); // tổng số tác giả
+		model.addAttribute("totalPages", totalPages);
 		
 		model.addAttribute("author", authorList);
-		model.addAttribute("title", "Tác Giả");
+		model.addAttribute("title","Tác Giả");
+		
 		return "admin/author/authorPage";
 	}
 	

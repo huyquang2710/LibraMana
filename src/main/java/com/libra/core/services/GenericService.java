@@ -3,6 +3,8 @@ package com.libra.core.services;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.data.domain.Page;
+
 import com.libra.exception.BadResourceException;
 import com.libra.exception.ResourceAlreadyExistsException;
 import com.libra.exception.ResourceNotFoundException;
@@ -18,5 +20,6 @@ public interface GenericService<T> {
 	void update(T t) throws BadResourceException, ResourceNotFoundException;
 	
 	void delete(Integer id) throws ResourceNotFoundException;
-
+	
+	Page<T> findByPageable();
 }

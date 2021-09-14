@@ -8,5 +8,6 @@ import com.libra.core.entities.Author;
 
 @Repository
 public interface AuthorRepository extends JpaRepository<Author, Integer>{
-
+	
+	
 }

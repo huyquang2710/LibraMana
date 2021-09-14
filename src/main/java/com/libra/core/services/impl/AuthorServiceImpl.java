@@ -4,6 +4,9 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
@@ -26,11 +29,18 @@ public class AuthorServiceImpl implements IAuthorService{
 	private boolean existsById(Integer id) {
 		return authorRepo.existsById(id);
 	}
-
+	//find all
 	@Override
 	public List<Author> findAll() {
 		return authorRepo.findAll();
 	}
+	// pagination	
+	@Override
+	public Page<Author> findByPageable() {
+		Pageable pageable = PageRequest.of(0, 5);
+		return authorRepo.findAll(pageable);
+	}
+
 
 	@Override
 	public Optional<Author> findById(Integer id) throws ResourceNotFoundException {
