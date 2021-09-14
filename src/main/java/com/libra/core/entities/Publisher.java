@@ -17,8 +17,6 @@ import javax.persistence.TemporalType;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 
-import org.hibernate.validator.constraints.Range;
-
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -41,11 +39,13 @@ public class Publisher implements Serializable{
 	
 	private String address;
 	
-	@Range(min = 10,max= 10, message = "định dạng 10 số" )
 	private int phone;
 	
 	@Email(message = "Nhập đúng định dạng email")
 	private String email;
+	
+	@Column(length = 200)
+	private String image;
 	
 	@OneToMany(mappedBy = "publisher")
 	private List<Book> books = new ArrayList<>();

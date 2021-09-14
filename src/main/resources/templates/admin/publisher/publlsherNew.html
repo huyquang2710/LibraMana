@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+ xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+ layout:decorator="~{admin/base.html}" >
+
+<head>
+	<style> 
+		.form-control {
+			width: 80%;
+		}
+		.mt {
+			margin-top: 2%;
+		}
+		.invalid-feedback {
+			color: red;
+		}
+	</style>
+	<script src="/js/js.js" ></script>
+</head>
+<body>
+    <!--main content start-->
+       	<section id="main-content" layout:fragment="content">
+    	<section class="wrapper">
+        <div class="row">
+          <div class="col-lg-12">
+            <h3 class="page-header"><i class="fa fa-files-o"></i>Thêm Nhà Xuất Bản</h3>
+            <ol class="breadcrumb">
+              <li><i class="fa fa-pencil-square"></i><a th:href="@{/admin/publisher}">Nhà xuất bản</a></li>
+              <li><i class="icon_document_alt"></i>thêm mới</li>
+            </ol>
+          </div>
+        </div>
+    	
+		<!-- form new -->	
+		<div class="panel-body">
+		 <form class="form-validate form-horizontal" id="feedback_form" method="post" th:object="${publisher}" th:action="@{/admin/publisher/new}"
+		 		enctype="multipart/form-data">
+		   <div class="col-lg-8">
+                <div class="form">
+                	<!-- name -->
+                    <div class="form-group ">
+                      <label for="cname" class="control-label col-lg-2">Tên Nhà Xuất Bản</label>
+                      <div class="col-lg-10">
+                        <input class="form-control" id="cname" name="name" type="text" th:value="*{name}" 
+                        		th:errorClass="is-invalid" />
+                        	<div th:if="${#fields.hasErrors('name')}" th:errors="*{name}" class="invalid-feedback"></div>
+                      </div>
+                  
+                    </div>
+                    
+                    <!-- email -->
+                    <div class="form-group ">
+                      <label for="cemail" class="control-label col-lg-2">Email</label>
+                      <div class="col-lg-10">
+                        <input class="form-control " id="cemail" type="email" name="email" th:value="*{email}" 
+                        		th:errorClass="is-invalid" /> 
+                         	<div th:if="${#fields.hasErrors('email')}" th:errors="*{email}" class="invalid-feedback"></div>
+                      </div>
+                                 
+                    </div>
+ 
+                    <!-- phone -->
+                    <div class="form-group ">
+                      <label for="cnumber" class="control-label col-lg-2">Phone</label>
+                      <div class="col-lg-10">
+                        <input class="form-control" id="subject" name="phone" type="number"/>
+                      </div>
+                      
+                    </div>
+                    
+                    <!-- address -->
+                    <div class="form-group ">
+                      <label for="caddress" class="control-label col-lg-2">Địa chỉ</label>
+                      <div class="col-lg-10">
+                        <input class="form-control " id="caddress" name="address" type="text"></input>
+                      </div>
+                    </div>
+                </div>
+			</div>
+			<div class="col-lg-3">
+				<!-- img -->
+				<img class="my_profile_picture" id="image" style="height: 200px; width: 200px;" src="/image/avatar.png" alt="profile photo" />
+				<br /><br />
+				<div class="col-lg-9">
+                      <input class="form-control " id="productImage" name="imageFile" type="file"  onchange="chooseFile(this)"></input>
+                </div>
+			</div>
+			
+			<!-- button -->
+			<div class="form-group text-center ">
+                <div class="col-lg-offset-1 col-lg-9 mt">
+                   <button class="btn btn-primary" type="submit">Thêm</button>
+                   <button class="btn btn-default" onclick="reset()" type="reset">Reset</button>
+                   <a th:href="${/admin/publisher}" class="btn btn-default">Quay Lại</a>
+                </div>
+            </div>
+		 </form>
+     </div>
+	<!-- form new end -->	
+     	 
+    	</section>
+	</section>	  
+    <!--main content end-->
+   
+</body>
+
+</html>
