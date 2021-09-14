@@ -53,11 +53,14 @@ public class AuthorController {
 	 * model.addAttribute("author", authorList); model.addAttribute("title",
 	 * "Tác Giả"); return "admin/author/authorPage"; }
 	 */
-	// pagination
 	@GetMapping
-	public String authorPage(Model model) {
-		int currentPage = 1; // trang hiện tại
-		Page<Author> page = authorService.findByPageable();
+	public String viewPage(Model model) {
+		return authorPage(model, 1);
+	}
+	// pagination
+	@GetMapping("/page/{pageNo}")
+	public String authorPage(Model model, @PathVariable("pageNo") int currentPage) {
+		Page<Author> page = authorService.findByPageable(currentPage);
 		long totalItems = page.getTotalElements(); // tổng số tác giả
 		int totalPages = page.getTotalPages();
 		

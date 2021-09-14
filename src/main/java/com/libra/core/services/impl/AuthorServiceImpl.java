@@ -36,8 +36,8 @@ public class AuthorServiceImpl implements IAuthorService{
 	}
 	// pagination	
 	@Override
-	public Page<Author> findByPageable() {
-		Pageable pageable = PageRequest.of(0, 5);
+	public Page<Author> findByPageable(int pageNo) {
+		Pageable pageable = PageRequest.of(pageNo - 1, 5);
 		return authorRepo.findAll(pageable);
 	}
 

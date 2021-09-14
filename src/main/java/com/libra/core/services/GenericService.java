@@ -21,5 +21,5 @@ public interface GenericService<T> {
 	
 	void delete(Integer id) throws ResourceNotFoundException;
 	
-	Page<T> findByPageable();
+	Page<T> findByPageable(int pageNo);
 }

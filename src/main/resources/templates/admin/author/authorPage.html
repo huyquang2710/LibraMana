@@ -73,17 +73,33 @@
  				<h5 style="color:red; font-weight: bold;" >Trang [[${currentPage}]] / [[${totalPages}]]</h5> 	
          	</div>
 		<!-- phân trang -->
-			<div class="text-center">
+			<div class="text-center" style="margin-top: -40px;" >
 				<nav aria-label="Page navigation example">
 				<ul class="pagination">
-					<li class="page-item"><a class="page-link" href="#">Previous</a></li>
-					<li class="page-item"><a class="page-link" href="#">1</a></li>
-					<li class="page-item"><a class="page-link" href="#">2</a></li>
-					<li class="page-item"><a class="page-link" href="#">3</a></li>
-					<li class="page-item"><a class="page-link" href="#">Next</a></li>
+				
+					<li class="page-item">
+						<a class="page-link" th:if="${currentPage > 1}" th:href="@{'/admin/author/page/1'}">Đầu Tiên</a>
+						<span th:unless="${currentPage > 1}">Đầu Tiên</span>
+					</li>
+					<li class="page-item">
+						<a class="page-link"  th:if="${currentPage > 1}" th:href="@{'/admin/author/page/' + ${currentPage - 1}}">Về Trước</a>
+						<span th:unless="${currentPage > 1}">Về Trước</span>
+					</li>
+					<li class="page-item" th:each="i: ${#numbers.sequence(1, totalPages)}" >
+   							 <a th:if="${currentPage != i}" th:href="@{'/admin/author/page/' + ${i}}">[[${i}]]</a>
+   							 <span th:unless="${currentPage != i}">[[${i}]]</span>
+					</li>
+					<li class="page-item">
+						<a class="page-link" th:if="${currentPage < totalPages}" th:href="@{'/admin/author/page/' + ${currentPage + 1}}">Kế Tiếp</a>
+						<span th:unless="${currentPage < totalPages}">Kế Tiếp</span>
+					</li>
+					<li class="page-item">
+						<a class="page-link" th:if="${currentPage < totalPages}" th:href="@{'/admin/author/page/' + ${totalPages}}">Cuối Cùng</a>
+						<span th:unless="${currentPage < totalPages}">Cuối Cùng</span>
+					</li>
 				</ul>
 			</nav>
-			</div>
+		</div>
 		<!-- phân trang end -->
 		</section>
 	</section>	  
