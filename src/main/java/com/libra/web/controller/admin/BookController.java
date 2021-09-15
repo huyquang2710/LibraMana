@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -24,6 +25,7 @@ import com.libra.core.services.IBookService;
 import com.libra.core.services.ICategoriesService;
 import com.libra.core.services.IPublisherService;
 import com.libra.exception.ResourceNotFoundException;
+import com.libra.web.dto.BookDTO;
 import com.libra.web.message.MessageResponse;
 
 @Controller
@@ -83,6 +85,25 @@ public class BookController {
 		}
 		session.setAttribute("message", new MessageResponse("Không tìm thấy Sách!!, vui lòng thử lại!", "danger"));
 		return "admin/book/bookPage";
+	}
+	
+	//form add book
+	@GetMapping("/new")
+	public String bookForm(@ModelAttribute Book book, Model model) {
+		//lấy danh sách tên tác giả
+		List<Author> authorList = authorService.findAll();
+		//lấy danh sách tên nhà xuất bản
+		List<Publisher> publisherList = publisherService.findAll();
+		//lấy danh sách tên thể loại
+		List<Category> categoryList = categoryService.findAll();
+		
+		model.addAttribute("author", authorList);
+		model.addAttribute("publisher", publisherList);
+		model.addAttribute("category", categoryList);
+		
+		model.addAttribute("book", book);
+		model.addAttribute("title", "Thêm Sách");
+		return "admin/book/bookNew";
 	}
 	
 }

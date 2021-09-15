@@ -23,10 +23,10 @@
     	<section class="wrapper">
         <div class="row">
           <div class="col-lg-12">
-            <h3 class="page-header"><i class="fa fa-files-o"></i>Chi Tiết Sách</h3>
+            <h3 class="page-header"><i class="fa fa-files-o"></i>Thêm Sách</h3>
             <ol class="breadcrumb">
-              <li><i class="fa fa-pencil-square"></i><a th:href="@{/admin/author}">Sách</a></li>
-              <li><i class="icon_document_alt"></i>chi tiết</li>
+              <li><i class="fa fa-pencil-square"></i><a th:href="@{/admin/book}">Sách</a></li>
+              <li><i class="icon_document_alt"></i>thêm sách</li>
             </ol>
           </div>
         </div>
@@ -37,13 +37,6 @@
 		 		enctype="multipart/form-data">
 		   <div class="col-lg-7">
                 <div class="form">
-               		   <!-- id -->
-                    <div class="form-group ">
-                      <label for="cid" class="control-label col-lg-2">STT</label>
-                      <div class="col-lg-10">
-                        <input class="form-control " id="cid" name="id" type="text" th:value="${book.id}" readonly="readonly"/>
-                      </div>
-                    </div>
                 	<!-- name -->
                     <div class="form-group ">
                       <label for="cname" class="control-label col-lg-2">Tên Sách</label>
@@ -69,23 +62,35 @@
                     <div class="form-group ">
                       <label for="ccategory" class="control-label col-lg-2">Thể Loại</label>
                       <div class="col-lg-10">
-                        <input class="form-control " id="ccategory" name="category" type="text" th:value="${book.category.name}"/>
+                        <select th:field="*{category}" name="category" id="ccategory" class="form-control" required="required">
+                        	<th:block th:each=" category : ${category}" >
+                        		<option th:text="${category.name}" th:value="${category.id}"></option>
+                        	</th:block>
+                        </select>
                       </div>
                     </div>
-                    
-              		<!-- author-->
+                   <!--  
+              			author-->
                     <div class="form-group ">
-                      <label for="cnumber" class="control-label col-lg-2">Tác Giả</label>
+                      <label for="cauthor" class="control-label col-lg-2">Tác Giả</label>
                       <div class="col-lg-10">
-                        <input class="form-control" id="author" name="author" type="text" th:value="${book.author.name}"/>
+                       <select th:field="*{author}" name="author" id="cauthor" class="form-control" required="required">
+                        	<th:block th:each=" author : ${author}" >
+                        		<option th:text="${author.name}" th:value="${author.id}"></option>
+                        	</th:block>
+                        </select>
                       </div>
                     </div>
                     
                     <!-- publisher -->
                     <div class="form-group ">
-                      <label for="caddress" class="control-label col-lg-2">Nhà Xuất Bản</label>
+                      <label for="cpublisher" class="control-label col-lg-2">Nhà Xuất Bản</label>
                       <div class="col-lg-10">
-                        <input class="form-control " id="publisher" name="publisher" type="text" th:value="${book.publisher.name}"></input>
+                        <select th:field="*{publisher}" name="publisher" id="cpublisher" class="form-control" required="required">
+                        	<th:block th:each=" publisher : ${publisher}" >
+                        		<option th:text="${publisher.name}" th:value="${publisher.id}"></option>
+                        	</th:block>
+                        </select>
                       </div>
                     </div> 
                 </div>
@@ -93,7 +98,7 @@
 			
 			<div class="col-lg-4 text-center">
 				<!-- img -->
-				<img class="my_profile_picture text-center" id="imageFile" style="height: 250px; width: 200px;" th:src="@{'/image/book/' + ${book.image}}" alt="profile photo" />
+				<img class="my_profile_picture text-center" id="imageFile" style="height: 200px; width: 200px;" src="/image/book/book.png" alt="profile photo" />
 				<br /><br />
 				<div class="col-lg-9">
                       <input class="form-control " id="productImage" name="imageFile" type="file"  onchange="chooseFilePublisher(this)"></input>
@@ -107,7 +112,7 @@
 			<!-- button -->
 			<div class="form-group text-center ">
                 <div class="col-lg-offset-1 col-lg-9 mt">
-                   <button class="btn btn-primary" type="submit">Chỉnh Sửa</button>
+                   <button class="btn btn-primary" type="submit">Thêm Sách</button>
                    <button class="btn btn-default" onclick="reset()" type="reset">Reset</button>
                    <a class="btn btn-info" th:href="@{/admin/book}">Quay lại</a>
                    
