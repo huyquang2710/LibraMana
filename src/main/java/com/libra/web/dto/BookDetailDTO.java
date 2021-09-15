@@ -2,6 +2,7 @@ package com.libra.web.dto;
 
 import java.util.Date;
 
+import javax.validation.constraints.Max;
 import javax.validation.constraints.NotEmpty;
 
 import com.libra.core.entities.Author;
@@ -22,7 +23,7 @@ public class BookDetailDTO {
 
 	private Integer id;
 	
-	@NotEmpty(message="Tên tác giả không được trống !!!")
+	@NotEmpty(message="Tên Sách không được trống !!!")
 	private String name;
 	
 	private int isbn;
@@ -32,7 +33,7 @@ public class BookDetailDTO {
 	private String description;
 	
 	private User user;
-
+	
 	private Category category;
 	
 	private Publisher publisher;

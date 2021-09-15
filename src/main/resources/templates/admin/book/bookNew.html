@@ -52,8 +52,7 @@
                       <label for="cemail" class="control-label col-lg-2">ISBN</label>
                       <div class="col-lg-10">
                         <input class="form-control " id="cemail" type="number" name="isbn" 
-                        		th:errorClass="is-invalid" /> 
-                         	<div th:if="${#fields.hasErrors('isbn')}" th:errors="*{isbn}" class="invalid-feedback"></div>
+                        	 /> 
                       </div>
                                  
                     </div>
@@ -107,7 +106,8 @@
 			</div>
 			<br />
 			 <div class="col-lg-5">
-                 <textarea th:text="${book.description}" name="description" id="description" class="form-control" cols="30" rows="6"></textarea>
+                 <textarea th:text="${book.description}" name="description" id="description" class="form-control" cols="30" rows="6" th:errorClass="is-invalid"></textarea>
+                 <div th:if="${#fields.hasErrors('description')}" th:errors="*{description}" class="invalid-feedback"></div>
              </div>
 			<!-- button -->
 			<div class="form-group text-center ">

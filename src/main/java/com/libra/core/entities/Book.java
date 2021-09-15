@@ -46,7 +46,6 @@ public class Book implements Serializable{
 	private String image;
 	
 	@Lob
-	@Column(columnDefinition = "TEXT")
 	private String description;
 	
 //	@ManyToOne(fetch = FetchType.LAZY)

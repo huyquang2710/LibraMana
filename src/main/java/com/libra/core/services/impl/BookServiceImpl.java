@@ -5,6 +5,8 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
@@ -59,28 +61,40 @@ public class BookServiceImpl implements IBookService{
 		
 	}
 
+	@SuppressWarnings("deprecation")
 	@Override
-	public void update(Book t) throws BadResourceException, ResourceNotFoundException {
-		// TODO Auto-generated method stub
+	public void update(Book book) throws BadResourceException, ResourceNotFoundException {
+		if(!StringUtils.isEmpty(book.getName())) {
+			if(!existsById(book.getId())) {
+				throw new ResourceNotFoundException("Không tìm thấy id: " + book.getId());
+			}
+			bookRepository.save(book);
+		} else {
+			BadResourceException exc = new BadResourceException("Lỗi!!. Không thể lưu Tác Giả");
+			exc.addErrorMessage("Tác giả trống hoặc rỗng!!");
+			throw exc;
+		}
 		
 	}
 
 	@Override
 	public void delete(Integer id) throws ResourceNotFoundException {
-		// TODO Auto-generated method stub
+		if(!existsById(id)) {
+			throw new ResourceNotFoundException("Không tìm thấy id: " + id);
+		}
+		bookRepository.deleteById(id);
 		
 	}
 
 	@Override
 	public Page<Book> findByPageable(int pageNo) {
-		// TODO Auto-generated method stub
-		return null;
+		Pageable pageable = PageRequest.of(pageNo - 1, 5);
+		return bookRepository.findAll(pageable);
 	}
 
 	@Override
 	public List<Book> findByNameContaining(String name) {
-		// TODO Auto-generated method stub
-		return null;
+		return bookRepository.findByNameContaining(name);
 	}
 
 }
