@@ -1,4 +1,4 @@
-package com.libra.core.entities;
+ package com.libra.core.entities;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -45,7 +45,8 @@ public class Book implements Serializable{
 	@Lob
 	private String image;
 	
-	@Column(columnDefinition = "VARCHAR(300)")
+	@Lob
+	@Column(columnDefinition = "TEXT")
 	private String description;
 	
 //	@ManyToOne(fetch = FetchType.LAZY)
@@ -53,15 +54,15 @@ public class Book implements Serializable{
 //	private User user;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "categoryid", insertable = false, updatable = false)
+	@JoinColumn(name = "categoryid")
 	private Category category;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "publisherid", insertable = false, updatable = false)
+	@JoinColumn(name = "publisherid")
 	private Publisher publisher;
 
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "authorid", insertable = false, updatable = false)
+	@JoinColumn(name = "authorid")
 	private Author author;
 	
 	@OneToMany(mappedBy = "book")

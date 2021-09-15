@@ -33,7 +33,7 @@
     	
 		<!-- form new -->	
 		<div class="panel-body">
-		 <form class="form-validate form-horizontal" id="feedback_form" method="post" th:object="${book}" th:action="@{/admin/book/update}"
+		 <form class="form-validate form-horizontal" id="feedback_form" method="post" th:object="${book}" th:action="@{/admin/book/new}"
 		 		enctype="multipart/form-data">
 		   <div class="col-lg-7">
                 <div class="form">
@@ -41,7 +41,7 @@
                     <div class="form-group ">
                       <label for="cname" class="control-label col-lg-2">Tên Sách</label>
                       <div class="col-lg-10">
-                        <input class="form-control" id="cname" name="name" type="text" th:value="${book.name}"
+                        <input class="form-control" id="cname" name="name" type="text"
                         		th:errorClass="is-invalid" />
                         	<div th:if="${#fields.hasErrors('name')}" th:errors="*{name}" class="invalid-feedback"></div>
                       </div>
@@ -51,7 +51,7 @@
                     <div class="form-group ">
                       <label for="cemail" class="control-label col-lg-2">ISBN</label>
                       <div class="col-lg-10">
-                        <input class="form-control " id="cemail" type="number" name="isbn" th:value="${book.isbn}"
+                        <input class="form-control " id="cemail" type="number" name="isbn" 
                         		th:errorClass="is-invalid" /> 
                          	<div th:if="${#fields.hasErrors('isbn')}" th:errors="*{isbn}" class="invalid-feedback"></div>
                       </div>

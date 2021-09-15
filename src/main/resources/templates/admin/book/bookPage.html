@@ -65,7 +65,7 @@
                     </td>
                     <td th:text="${book.isbn}" ></td>
                     <td th:text="${book.name}" ></td>
-                    <td>  <a th:href="@{'/admin/book/findById-detail/' + ${book.id}}">Chi Tiết Sách</a></td>
+                    <td><a th:href="@{'/admin/book/findById-detail/' + ${book.id}}">Chi Tiết Sách</a></td>
                     <td>
                       <div class="btn-group">
                        <a class="btn btn-primary" th:href="@{'/admin/book/findById-update/' + ${book.id}}"><i class="fa fa-pencil-square-o"></i></a>

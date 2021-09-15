@@ -6,6 +6,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 import com.libra.core.entities.Book;
 import com.libra.core.repositoies.BookRepository;
@@ -41,10 +42,21 @@ public class BookServiceImpl implements IBookService{
 		return bookOpt;
 	}
 
+	@SuppressWarnings("deprecation")
 	@Override
-	public Book save(Book t) throws BadResourceException, ResourceAlreadyExistsException {
-		// TODO Auto-generated method stub
-		return null;
+	public Book save(Book book) throws BadResourceException, ResourceAlreadyExistsException {
+		//kiểm tra id + name chưa
+		if(!StringUtils.isEmpty(book.getName())) {
+			if(book.getId() !=  null && existsById(book.getId())) {
+				throw new ResourceAlreadyExistsException("Sách với id: " + book.getId() + " đã tồn tại");
+			}
+			return bookRepository.save(book);
+		} else {
+			BadResourceException exc = new BadResourceException("Lỗi!!. Không thể lưu Sách");
+			exc.addErrorMessage("Sách trống hoặc rỗng!!");
+			throw exc;
+		}
+		
 	}
 
 	@Override
