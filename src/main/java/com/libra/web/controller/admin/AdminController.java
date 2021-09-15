@@ -2,6 +2,7 @@
 
 import java.security.Principal;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.libra.core.entities.User;
 import com.libra.core.services.IUserService;
+import com.libra.web.dto.AdminDTO;
 
 @Controller
 @RequestMapping("/admin")
@@ -19,6 +21,8 @@ public class AdminController {
 		
 	@Autowired
 	private IUserService userService;
+	@Autowired
+	private ModelMapper mapper;
 	
 	//  lấy được username của principal đã được xác thực
 	public String getPrincipal() {
@@ -51,8 +55,10 @@ public class AdminController {
 		
 		User account = userService.getUsernameByUsername(username);
 		
+		//chueyẻn entity thanh dto
+		AdminDTO adminDTO = mapper.map(account, AdminDTO.class);
 		model.addAttribute("title", "Thông Tin Tài Khoản");
-		model.addAttribute("account", account);
+		model.addAttribute("account", adminDTO);
 		
 		return "admin/accountPage";
 	}
