@@ -1,6 +1,7 @@
 package com.libra.core.services.impl;
 
 import java.util.HashSet;
+import java.util.Optional;
 import java.util.Set;
 
 import javax.transaction.Transactional;
@@ -15,6 +16,7 @@ import com.libra.core.entities.User;
 import com.libra.core.repositoies.RoleRepository;
 import com.libra.core.repositoies.UserRepository;
 import com.libra.core.services.IUserService;
+import com.libra.exception.ResourceNotFoundException;
 import com.libra.web.dto.SignUpDTO;
 
 @Service
@@ -105,6 +107,17 @@ public class UserServiceImpl implements IUserService{
 	@Override
 	public boolean emailExists(String email) {
 		return userRepo.findExistByemail(email);
+	}
+
+
+	@Override
+	public Optional<User> findById(Integer id) throws ResourceNotFoundException{
+		User user = userRepo.findById(id).get();
+		if(user == null) {
+			throw new ResourceNotFoundException("Không tìm thấy id: " + id);
+		}
+		Optional<User> userOpt = Optional.ofNullable(user);
+		return userOpt;
 	}
 
 }

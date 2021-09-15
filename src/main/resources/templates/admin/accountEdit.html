@@ -15,8 +15,8 @@
 			color: red;
 		}
 	</style>
-	<script src="/js/author.js" ></script>
-	  <link rel="stylesheet" href="/css/account.css">
+	<script src="/js/account.js" ></script>
+	<link rel="stylesheet" href="/css/account.css">
 </head>
 <body>
     <!--main content start-->
@@ -25,14 +25,18 @@
         <div class="container">
     <div class="team-single">
         <div class="row" th:if="${account}">
+        	<form action="" th:object="${account}">
+        	<!-- id -->
+        	<input name="id" th:value="${account.id}" type="hidden" >
+        	
             <div class="col-lg-4 col-md-5 xs-margin-30px-bottom">
                 <div class="team-single-img">
-                    <img th:src="@{'/image/account/' + ${account.image}}" alt="">
+                    <img id="image" th:src="@{'/image/account/' + ${account.image}}" alt="">
+                     <input class="form-control " id="productImage" name="imageFile" type="file"  onchange="chooseFile(this)"></input>
                 </div>
                 <div class="bg-light-gray padding-30px-all md-padding-25px-all sm-padding-20px-all text-center">
                     <h4 class="margin-10px-bottom font-size24 md-font-size22 sm-font-size20 font-weight-600">- Giới Tiệu Bản Thân -</h4>
-                    <p class="sm-width-95 sm-margin-auto" th:text="${account.description}" ></p>
-             
+             		<textarea class="sm-width-95 sm-margin-auto" rows="4" cols="38" th:text="${account.description}" ></textarea>
                 </div>
             </div>
 
@@ -43,7 +47,6 @@
                     <div class="contact-info-section margin-40px-tb">
                         <ul class="list-style9 no-margin">
                             <li>
-
                                 <div class="row">
                                     <div class="col-md-5 col-5">
                                         <i class="fas fa-graduation-cap text-orange"></i>
@@ -61,9 +64,9 @@
                                         <i class="fas fa-envelope text-pink"></i>
                                         <strong class="margin-10px-left xs-margin-four-left text-pink">Email:</strong>
                                     </div>
-                                    <div class="col-md-7 col-7">
-                                        <p><a href="javascript:void(0)" th:text="${account.email}"  ></a></p>
-                                    </div>
+                                   <div class="col-md-5 col-15" >
+               				         <input class="form-control" id="email" name="email" type="email" th:value="${account.email}">                  		
+                      				</div>
                                 </div>
                             </li>
                             <li>
@@ -72,9 +75,9 @@
                                         <i class="fas fa-birthday-cake"></i>
                                         <strong class="margin-10px-left text-lightred">Năm Sinh:</strong>
                                     </div>
-                                    <div class="col-md-7 col-7">
-                                        <p th:text="${account.year}" ></p>
-                                    </div>
+                                    <div class="col-md-5 col-15" >
+               				         <input class="form-control" id="year" name="year" type="number" th:value="${account.year}">                  		
+                      				</div>
                                 </div>
                             </li>
                             <li>
@@ -84,9 +87,9 @@
                                         <i class="fas fa-map-marker-alt text-green"></i>
                                         <strong class="margin-10px-left text-green">Địa Chỉ:</strong>
                                     </div>
-                                    <div class="col-md-7 col-7">
-                                        <p th:text="${account.address}" >.</p>
-                                    </div>
+                                    <div class="col-md-5 col-15" >
+               				         <input class="form-control" id="address" name="address" type="text" th:value="${account.address}">                  		
+                      				</div>
                                 </div>
 
                             </li>
@@ -97,9 +100,9 @@
                                         <i class="fas fa-mobile-alt text-purple"></i>
                                         <strong class="margin-10px-left xs-margin-four-left text-purple">Số Điện Thoại:</strong>
                                     </div>
-                                    <div class="col-md-7 col-7">
-                                        <p th:text="${account.phone}" ></p>
-                                    </div>
+                                    <div class="col-md-5 col-15" >
+               				         <input class="form-control" id="phone" name="phone" type="number" th:value="${account.phone}">                  		
+                      				</div>
                                 </div>
 
                             </li>
@@ -108,15 +111,15 @@
                     </div>
                 </div>
             </div>
+            </form>
         </div>
     </div>
 </div>
      	 <!-- button -->
      	  <div class="form-group text-center ">
                 <div class="col-lg-offset-1 col-lg-9 mt">
-                   <a class="btn btn-primary" th:href="@{'/admin/account/findById/' + ${account.id}}" >Đổi Thông Tin</a> &nbsp&nbsp
-                   <a class="btn btn-info" >Thêm Admin</a> &nbsp&nbsp
-                   <a class="btn btn-warning" >Đổi Mật Khẩu</a>          
+                   <a class="btn btn-primary" th:href="@{'/admin/account/findById/' + ${account.id}}" >Cập Nhật</a> &nbsp&nbsp
+                   <a class="btn btn-warning" th:href="@{/admin/account}" >Quay Lại</a>          
                 </div>
             </div>
     	</section>

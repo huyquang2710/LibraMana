@@ -1,6 +1,9 @@
  package com.libra.web.controller.admin;
 
 import java.security.Principal;
+import java.util.Optional;
+
+import javax.servlet.http.HttpSession;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,11 +12,14 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.libra.core.entities.User;
 import com.libra.core.services.IUserService;
+import com.libra.exception.ResourceNotFoundException;
 import com.libra.web.dto.AdminDTO;
+import com.libra.web.message.MessageResponse;
 
 @Controller
 @RequestMapping("/admin")
@@ -60,6 +66,20 @@ public class AdminController {
 		model.addAttribute("title", "Thông Tin Tài Khoản");
 		model.addAttribute("account", adminDTO);
 		
+		return "admin/accountPage";
+	}
+	
+	@GetMapping("/account/findById/{id}")
+	public String accountEdit(@PathVariable("id") Integer id ,Model model, HttpSession session) throws ResourceNotFoundException {
+		if(id != null) {
+			Optional<User> userOtp = this.userService.findById(id);
+			User user = userOtp.get();
+			
+			model.addAttribute("account", user);
+			model.addAttribute("title", "Chỉnh Sửa Tài Khoản");
+			return "admin/accountEdit";
+		}
+		session.setAttribute("message", new MessageResponse("Không tìm thấy Tài Khoản!!, vui lòng thử lại!", "danger"));
 		return "admin/accountPage";
 	}
 }

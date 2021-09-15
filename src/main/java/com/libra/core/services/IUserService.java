@@ -1,8 +1,11 @@
 package com.libra.core.services;
 
+import java.util.Optional;
+
 import org.springframework.data.repository.query.Param;
 
 import com.libra.core.entities.User;
+import com.libra.exception.ResourceNotFoundException;
 import com.libra.web.dto.SignUpDTO;
 
 public interface IUserService {
@@ -14,4 +17,6 @@ public interface IUserService {
 		
 		//register
 		User register(SignUpDTO user);
+		
+		Optional<User> findById(Integer id) throws ResourceNotFoundException;
 }
