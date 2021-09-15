@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+ xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+ layout:decorator="~{admin/base.html}" >
+
+<head>
+	<link href="/css.css" rel="stylesheet">
+	<script src="/js/author.js" ></script>
+</head>
+
+<body>
+
+    <!--main content start-->
+    <section id="main-content" layout:fragment="content">
+    	<section class="wrapper">
+        <div class="row">
+          <div class="col-lg-12">
+            <h3 class="page-header"><i class="fa fa-files-o"></i>Danh sách Sách</h3>
+            <ol class="breadcrumb">
+              <li><i class="fa fa-pencil-square"></i><a th:href="@{/admin/book}">Sách</a></li>
+              <li><i class="icon_document_alt"></i>Danh sách</li>
+            </ol>
+          </div>
+        </div>
+    		<!-- message -->
+		<div th:if="${session.message}" class="container">
+			<div th:classappend="${'alert-' + session.message.type}"
+				class="alert text-center" role="alert">
+				<span th:text="${session.message.content}"></span>
+			</div>
+			<th:block th:text="${#session.removeAttribute('message')}" ></th:block>
+		</div>
+		<!-- message end-->
+		
+    	<ul class="nav top-menu">
+    	  <!-- button add -->
+    	  <li><a style="height: 31px;" type="button" th:href="@{/admin/book/new}" class="btn btn-primary">Thêm Mới</a></li>
+          <li>
+          <!-- Search form -->
+            <div class="search-container my-4" >
+            	<input onkeyup="search()" style="height: 31px;" id="search-input" type="text" class="form-control" placeholder="Tìm kiếm Tác Giả" />
+            		<div class="search-result">
+            			<!-- Kết quả trả về ở đây -->
+            		</div>
+            </div>
+          </li>
+           <!-- Search form end-->
+        </ul>
+        
+    	<!-- table -->
+     	 <table class="table table-striped table-advance table-hover">
+               	<thead>
+               		<tr>
+                  	<th></th>
+                  	<th><i class="fa fa-barcode"></i> ISBN</th>
+                    <th><i class="fa fa-book"></i> Tên</th>
+                    <th><i class="fa fa-asterisk"></i> Chi Tiết</th>
+                    <th><i class="icon_cogs"></i> Action</th>
+                  </tr>
+               </thead>
+               <tbody>
+                  <tr th:each="book : ${book}" >
+                    <td  >
+                    <img class="my_profile_picture" th:src="@{'/image/book/' + ${book.image}}" alt="profile photo" />
+                    </td>
+                    <td th:text="${book.isbn}" ></td>
+                    <td th:text="${book.name}" ></td>
+                    <td>  <a th:href="@{'/admin/book/findById/' + ${book.id}}">Chi Tiết Sách</a></td>
+                    <td>
+                      <div class="btn-group">
+                        <a class="btn btn-danger" th:href="@{'/admin/book/delete/' + ${book.id}}"><i class="icon_close_alt2"></i></a>
+                      </div>
+                    </td>
+                  </tr>
+                </tbody>
+         </table>
+         <!-- 	<div>
+ 				<h5 style="color:red; font-weight: bold;" >Số lượng Tác Giả: [[${totalItems}]]</h5> 
+ 				<h5 style="color:red; font-weight: bold;" >Trang [[${currentPage}]] / [[${totalPages}]]</h5> 	
+         	</div> -->
+		<!-- phân trang -->
+	<!-- 		<div class="text-center" style="margin-top: -40px;" >
+				<nav aria-label="Page navigation example">
+				<ul class="pagination">
+				
+					<li class="page-item">
+						<a class="page-link" th:if="${currentPage > 1}" th:href="@{'/admin/author/page/1'}">Đầu Tiên</a>
+						<span th:unless="${currentPage > 1}">Đầu Tiên</span>
+					</li>
+					<li class="page-item">
+						<a class="page-link"  th:if="${currentPage > 1}" th:href="@{'/admin/author/page/' + ${currentPage - 1}}">Về Trước</a>
+						<span th:unless="${currentPage > 1}">Về Trước</span>
+					</li>
+					<li class="page-item" th:each="i: ${#numbers.sequence(1, totalPages)}" >
+   							 <a th:if="${currentPage != i}" th:href="@{'/admin/author/page/' + ${i}}">[[${i}]]</a>
+   							 <span th:unless="${currentPage != i}">[[${i}]]</span>
+					</li>
+					<li class="page-item">
+						<a class="page-link" th:if="${currentPage < totalPages}" th:href="@{'/admin/author/page/' + ${currentPage + 1}}">Kế Tiếp</a>
+						<span th:unless="${currentPage < totalPages}">Kế Tiếp</span>
+					</li>
+					<li class="page-item">
+						<a class="page-link" th:if="${currentPage < totalPages}" th:href="@{'/admin/author/page/' + ${totalPages}}">Cuối Cùng</a>
+						<span th:unless="${currentPage < totalPages}">Cuối Cùng</span>
+					</li>
+				</ul>
+			</nav>
+		</div> -->
+		<!-- phân trang end -->
+		</section>
+	</section>	  
+    <!--main content end-->
+</body>
+
+</html>

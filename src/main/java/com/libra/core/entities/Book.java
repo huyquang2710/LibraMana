@@ -18,7 +18,6 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import javax.validation.constraints.NotEmpty;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -38,7 +37,6 @@ public class Book implements Serializable{
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	
-	@NotEmpty(message="Tên tác giả không được trống !!!")
 	private String name;
 	
 	@Column(length = 100)
@@ -48,12 +46,11 @@ public class Book implements Serializable{
 	private String image;
 	
 	@Column(columnDefinition = "VARCHAR(300)")
-	
 	private String description;
 	
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "userid", insertable = false, updatable = false)
-	private User user;
+//	@ManyToOne(fetch = FetchType.LAZY)
+//	@JoinColumn(name = "userid", insertable = false, updatable = false)
+//	private User user;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "categoryid", insertable = false, updatable = false)
