@@ -15,7 +15,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.libra.core.entities.Author;
 import com.libra.core.entities.Book;
+import com.libra.core.entities.Category;
+import com.libra.core.entities.Publisher;
 import com.libra.core.services.IAuthorService;
 import com.libra.core.services.IBookService;
 import com.libra.core.services.ICategoriesService;
@@ -28,7 +31,14 @@ import com.libra.web.message.MessageResponse;
 public class BookController {
 	private final Logger LOGGER = LoggerFactory.getLogger(this.getClass());
 	
-
+	@Autowired
+	private IBookService bookService;
+	@Autowired
+	private IAuthorService authorService;
+	@Autowired
+	private IPublisherService publisherService;
+	@Autowired
+	private ICategoriesService categoryService;
 	@Autowired
 	private ModelMapper modelMapper;
 	
@@ -53,7 +63,15 @@ public class BookController {
 		System.out.println("id: " + id);
 		
 		//lấy danh sách tên tác giả
+		List<Author> authorList = authorService.findAll();
+		//lấy danh sách tên nhà xuất bản
+		List<Publisher> publisherList = publisherService.findAll();
+		//lấy danh sách tên thể loại
+		List<Category> categoryList = categoryService.findAll();
 		
+		model.addAttribute("author", authorList);
+		model.addAttribute("publisher", publisherList);
+		model.addAttribute("category", categoryList);
 		
 		if(id != null) {
 			Optional<Book> bookOtp = this.bookService.findById(id);

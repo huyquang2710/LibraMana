@@ -15,7 +15,7 @@
 			color: red;
 		}
 	</style>
-	<script src="/js/publisher.js" ></script>
+	<script src="/js/book.js" ></script>
 </head>
 <body>
     <!--main content start-->
@@ -23,32 +23,32 @@
     	<section class="wrapper">
         <div class="row">
           <div class="col-lg-12">
-            <h3 class="page-header"><i class="fa fa-files-o"></i>Chỉnh Sửa Tác Giả</h3>
+            <h3 class="page-header"><i class="fa fa-files-o"></i>Chi Tiết Sách</h3>
             <ol class="breadcrumb">
-              <li><i class="fa fa-pencil-square"></i><a th:href="@{/admin/author}">Tác giả</a></li>
-              <li><i class="icon_document_alt"></i>chỉnh sửa</li>
+              <li><i class="fa fa-pencil-square"></i><a th:href="@{/admin/author}">Sách</a></li>
+              <li><i class="icon_document_alt"></i>chi tiết</li>
             </ol>
           </div>
         </div>
     	
 		<!-- form new -->	
 		<div class="panel-body">
-		 <form class="form-validate form-horizontal" id="feedback_form" method="post" th:object="${author}" th:action="@{/admin/author/update}"
+		 <form class="form-validate form-horizontal" id="feedback_form" method="post" th:object="${book}" th:action="@{/admin/book/update}"
 		 		enctype="multipart/form-data">
-		   <div class="col-lg-8">
+		   <div class="col-lg-7">
                 <div class="form">
                		   <!-- id -->
                     <div class="form-group ">
                       <label for="cid" class="control-label col-lg-2">STT</label>
                       <div class="col-lg-10">
-                        <input class="form-control " id="cid" name="id" type="text" th:value="${author.id}" readonly="readonly"/>
+                        <input class="form-control " id="cid" name="id" type="text" th:value="${book.id}" readonly="readonly"/>
                       </div>
                     </div>
                 	<!-- name -->
                     <div class="form-group ">
-                      <label for="cname" class="control-label col-lg-2">Họ và Tên</label>
+                      <label for="cname" class="control-label col-lg-2">Tên Sách</label>
                       <div class="col-lg-10">
-                        <input class="form-control" id="cname" name="name" type="text" th:value="${author.name}"
+                        <input class="form-control" id="cname" name="name" type="text" th:value="${book.name}"
                         		th:errorClass="is-invalid" />
                         	<div th:if="${#fields.hasErrors('name')}" th:errors="*{name}" class="invalid-feedback"></div>
                       </div>
@@ -56,55 +56,60 @@
                     
                     <!-- email -->
                     <div class="form-group ">
-                      <label for="cemail" class="control-label col-lg-2">EMail</label>
+                      <label for="cemail" class="control-label col-lg-2">ISBN</label>
                       <div class="col-lg-10">
-                        <input class="form-control " id="cemail" type="email" name="email" th:value="${author.email}"
+                        <input class="form-control " id="cemail" type="number" name="isbn" th:value="${book.isbn}"
                         		th:errorClass="is-invalid" /> 
-                         	<div th:if="${#fields.hasErrors('email')}" th:errors="*{email}" class="invalid-feedback"></div>
+                         	<div th:if="${#fields.hasErrors('isbn')}" th:errors="*{isbn}" class="invalid-feedback"></div>
                       </div>
                                  
                     </div>
                     
                     <!-- year -->
                     <div class="form-group ">
-                      <label for="cyear" class="control-label col-lg-2">Năm Sinh</label>
+                      <label for="ccategory" class="control-label col-lg-2">Thể Loại</label>
                       <div class="col-lg-10">
-                        <input class="form-control " id="cyear" name="year" type="text" th:value="${author.year}"/>
+                        <input class="form-control " id="ccategory" name="category" type="text" th:value="${book.category.name}"/>
                       </div>
                     </div>
-                    
-                    <!-- phone -->
+                   <!--  
+              			author-->
                     <div class="form-group ">
-                      <label for="cnumber" class="control-label col-lg-2">Phone</label>
+                      <label for="cnumber" class="control-label col-lg-2">Tác Giả</label>
                       <div class="col-lg-10">
-                        <input class="form-control" id="subject" name="phone" type="number" th:value="${author.phone}"/>
+                        <input class="form-control" id="author" name="author" type="text" th:value="${book.author.name}"/>
                       </div>
                     </div>
                     
                     <!-- address -->
                     <div class="form-group ">
-                      <label for="caddress" class="control-label col-lg-2">Địa chỉ</label>
+                      <label for="caddress" class="control-label col-lg-2">Nhà Xuất Bản</label>
                       <div class="col-lg-10">
-                        <input class="form-control " id="caddress" name="address" type="text" th:value="${author.address}"></input>
+                        <input class="form-control " id="publisher" name="publisher" type="text" th:value="${book.publisher.name}"></input>
                       </div>
-                    </div>
-                </div>
-			</div>
-			<div class="col-lg-3">
-				<!-- img -->
-				<img class="my_profile_picture" id="image" style="height: 200px; width: 200px;" th:src="@{'/image/author/' + ${author.image}}" alt="profile photo" />
-				<br /><br />
-				<div class="col-lg-9">
-                      <input class="form-control " id="productImage" name="imageFile" type="file"  onchange="chooseFile(this)"></input>
+                    </div> 
                 </div>
 			</div>
 			
+			<div class="col-lg-4 text-center">
+				<!-- img -->
+				<img class="my_profile_picture text-center" id="imageFile" style="height: 250px; width: 200px;" th:src="@{'/image/book/' + ${book.image}}" alt="profile photo" />
+				<br /><br />
+				<div class="col-lg-9">
+                      <input class="form-control " id="productImage" name="imageFile" type="file"  onchange="chooseFilePublisher(this)"></input>
+                </div>    
+                <br /><br /><br />
+			</div>
+			<br />
+			 <div class="col-lg-5">
+                 <textarea th:text="${book.description}" name="description" id="description" class="form-control" cols="30" rows="6"></textarea>
+             </div>
 			<!-- button -->
 			<div class="form-group text-center ">
                 <div class="col-lg-offset-1 col-lg-9 mt">
                    <button class="btn btn-primary" type="submit">Chỉnh Sửa</button>
                    <button class="btn btn-default" onclick="reset()" type="reset">Reset</button>
-                   <a class="btn btn-info" th:href="@{/admin/author}">Quay lại</a>
+                   <a class="btn btn-info" th:href="@{/admin/book}">Quay lại</a>
                    
                 </div>
             </div>
