@@ -1,4 +1,4 @@
-package com.libra.web.controller.admin;
+ package com.libra.web.controller.admin;
 
 import java.security.Principal;
 
@@ -33,5 +33,17 @@ public class AdminController {
 		model.addAttribute("title", "Trang Chủ Admin");
 		return "admin/base";
 	}
-
+	
+	//form account info
+	
+	@GetMapping("/account")
+	public String accoundAdmin(Model model, Principal principal) {
+		
+		String username = principal.getName();
+		System.out.println("username:" + username);
+		
+		model.addAttribute("title", "Thông Tin Tài Khoản");
+		
+		return "admin/accountPage";
+	}
 }
