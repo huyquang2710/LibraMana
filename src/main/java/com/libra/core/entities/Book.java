@@ -45,7 +45,6 @@ public class Book implements Serializable{
 	@Lob
 	private String image;
 	
-	@Lob
 	private String description;
 	
 //	@ManyToOne(fetch = FetchType.LAZY)

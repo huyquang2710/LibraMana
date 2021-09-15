@@ -16,6 +16,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -37,7 +38,6 @@ import com.libra.core.services.IBookService;
 import com.libra.core.services.ICategoriesService;
 import com.libra.core.services.IPublisherService;
 import com.libra.exception.ResourceNotFoundException;
-import com.libra.web.dto.AuthorDTO;
 import com.libra.web.dto.BookDetailDTO;
 import com.libra.web.message.MessageResponse;
 
@@ -57,16 +57,30 @@ public class BookController {
 	@Autowired
 	private ModelMapper modelMapper;
 	
-	// findAll
 	@GetMapping
-	public String getAllDetail(Model model, HttpSession session) {
-		List<Book> bookList = bookService.findAll();
+	public String getAll(Model model) {
+		return getDetailByPage(model, 1, null);
+	}
+	
+	// findAll
+	@GetMapping("/page/{pageNo}")
+	public String getDetailByPage(Model model, @PathVariable("pageNo") int currentPage, HttpSession session) {
+		Page<Book> page = bookService.findByPageable(currentPage);
 		
 		//kiểm tra book có rỗng ko
-		if(bookList.isEmpty()) {
+		if(page.isEmpty()) {
 			session.setAttribute("message", new MessageResponse("Chưa có cuốn sách nào","notify"));
 			return "admin/book/bookPage";
 		}
+		long totalItems = page.getTotalElements(); // tổng
+		int totalPages = page.getTotalPages();
+		
+		List<Book> bookList = page.getContent();
+		
+		model.addAttribute("currentPage", currentPage); // trang hiện tại
+		model.addAttribute("totalItems", totalItems); // tổng số tác giả
+		model.addAttribute("totalPages", totalPages);
+		
 		model.addAttribute("book", bookList);
 		model.addAttribute("title", "Sách");
 		return "admin/book/bookPage";

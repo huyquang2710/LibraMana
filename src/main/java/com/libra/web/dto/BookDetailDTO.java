@@ -2,7 +2,6 @@ package com.libra.web.dto;
 
 import java.util.Date;
 
-import javax.validation.constraints.Max;
 import javax.validation.constraints.NotEmpty;
 
 import com.libra.core.entities.Author;
