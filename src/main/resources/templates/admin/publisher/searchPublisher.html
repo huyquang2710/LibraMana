@@ -1,0 +1,1 @@
+<a th:each="publisher :  ${publisher}" th:href="@{/admin/publisher/findById/{id}(id = ${publisher.id})}" class="dropdown-item">[[${publisher.name}]] <br /></a>

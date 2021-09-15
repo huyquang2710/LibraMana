@@ -99,6 +99,10 @@ public class PublisherServiceImpl implements IPublisherService{
 	public List<Publisher> findByNameContaining(String name) {
 		return publisherRepo.findByNameContaining(name);
 	}
+	@Override
+	public List<Publisher> searchAuthorByNameLike(String value) {
+			return publisherRepo.findByNameContainingIgnoreCase(value);
+	}
 
 
 }

@@ -37,13 +37,13 @@
     	  <li><a style="height: 31px;" type="button" th:href="@{/admin/publisher/new}" class="btn btn-primary">Thêm Mới</a></li>
           <li>
           <!-- Search form -->
-            <div class="search-container my-4" >
-            	<input onkeyup="search()" style="height: 31px;" id="search-input" type="text" class="form-control" placeholder="Tìm kiếm Nhà Xuất Bản" />
-            		<div class="search-result">
-            			<!-- Kết quả trả về ở đây -->
-            		</div>
-            </div>
-          </li>
+            	<div class="form-inline frm">
+          		<input type="search" class="for-control mr-sm-2" value="" id="search" onkeydown="dropDown(event);" data-toggle="dropdown"
+          				placeholder="Tìm Kiếm" aria-label="Search" />
+          			<div class="dropdown-menu ropdown-menu-right ml-4" id="dropdown-container">
+          			
+          			</div>		
+          	</div>
            <!-- Search form end-->
         </ul>
         

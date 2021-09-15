@@ -3,9 +3,6 @@ package com.libra.core.api;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -13,7 +10,6 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.libra.core.entities.Author;
-import com.libra.core.entities.Book;
 import com.libra.core.entities.Publisher;
 import com.libra.core.services.IAuthorService;
 import com.libra.core.services.IBookService;
@@ -61,4 +57,22 @@ public class SearchController {
 		mv.addObject("author", authors);
 		return mv;
 	}
+	// publisher
+	@RequestMapping(value = "/publisher/search", method = RequestMethod.GET)
+	public ModelAndView searchPublisher(@RequestParam("value") String value) {
+		ModelAndView mv = new ModelAndView();
+		mv.setViewName("admin/publisher/searchPublisher");
+		List<Publisher> publishers = publisherService.searchAuthorByNameLike(value);
+		mv.addObject("publisher", publishers);
+		return mv;
+	}
+//	// publisher
+//	@RequestMapping(value = "/book/search", method = RequestMethod.GET)
+//		public ModelAndView searchBook(@RequestParam("value") String value) {
+//		ModelAndView mv = new ModelAndView();
+//		mv.setViewName("admin/book/searchBook");
+//		List<Publisher> publishers = publisherService.searchAuthorByNameLike(value);
+//		mv.addObject("publisher", publishers);
+//		return mv;
+//	}	
 }
