@@ -7,19 +7,7 @@ import com.libra.web.dto.SignUpDTO;
 
 public interface IUserService {
 		
-		User getUsernameByUsername(@Param("username") String username);
-		
-		// param username
-		// return boolean
-		//Optional<User> findByUsername(String username);
-	
-		//User findByUsername(String username);
-		
-		// param email
-		// return boolean
-		//Optional<User> findByEmail(String email);
-		//boolean emailExists(String email);
-		//User findByEmail(String email);
+		User getUsernameByUsername(@Param("username") String username);	
 		
 		boolean userExists(String username);
 		boolean emailExists(String email);

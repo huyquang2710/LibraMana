@@ -2,6 +2,7 @@
 
 import java.security.Principal;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
@@ -9,9 +10,15 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.libra.core.entities.User;
+import com.libra.core.services.IUserService;
+
 @Controller
 @RequestMapping("/admin")
 public class AdminController {
+		
+	@Autowired
+	private IUserService userService;
 	
 	//  lấy được username của principal đã được xác thực
 	public String getPrincipal() {
@@ -42,7 +49,10 @@ public class AdminController {
 		String username = principal.getName();
 		System.out.println("username:" + username);
 		
+		User account = userService.getUsernameByUsername(username);
+		
 		model.addAttribute("title", "Thông Tin Tài Khoản");
+		model.addAttribute("account", account);
 		
 		return "admin/accountPage";
 	}
