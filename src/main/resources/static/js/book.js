@@ -9,7 +9,7 @@ const search = () => {
 
 
         //sending request to server
-        let url = `http://localhost:8080/search/publisher/${query}`;
+        let url = `http://localhost:8080/search/book/${query}`;
         fetch(url) 
             .then((response) => {
                 return response.json();
@@ -20,8 +20,8 @@ const search = () => {
 
                 let text = `<div class='list-group'>`;
 
-                data.forEach((publisher) => {
-                    text += `<a href='/admin/book/findById/${book.id}' class='list-group-item list-group-item-action'> ${book.name} </a>`;
+                data.forEach((book) => {
+                    text += `<a href='/admin/book/findById-detail/${book.id}' class='list-group-item list-group-item-action'> ${book.name} </a>`;
                 });
 
                 text += `</div>`;

@@ -13,4 +13,6 @@ public interface AuthorRepository extends JpaRepository<Author, Integer>{
 	
 	//search
 	public List<Author> findByNameContaining(String name);
+	
+	List<Author> findByNameContainingIgnoreCase(String name);
 }

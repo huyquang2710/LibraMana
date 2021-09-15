@@ -32,12 +32,12 @@ const search = () => {
         $(".search-result").show();
     }
 }
-function chooseFilePublisher(fileInput) {
+function chooseFile(fileInput) {
     if(fileInput.files && fileInput.files[0]) {
         var reader = new FileReader();
 
         reader.onload = function(e){
-            $('#imageFile').attr('src', e.target.result);
+            $('#image').attr('src', e.target.result);
         }
         reader.readAsDataURL(fileInput.files[0]);
     }
