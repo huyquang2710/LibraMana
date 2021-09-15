@@ -12,4 +12,6 @@ public interface BookRepository extends JpaRepository<Book, Integer>{
 	
 	//search
 	public List<Book> findByNameContaining(String name);
+	
+	List<Book> findByNameContainingIgnoreCase(String name);
 }

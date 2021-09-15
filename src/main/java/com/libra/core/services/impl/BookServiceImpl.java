@@ -97,4 +97,10 @@ public class BookServiceImpl implements IBookService{
 		return bookRepository.findByNameContaining(name);
 	}
 
+	@Override
+	public List<Book> searchAuthorByNameLike(String value) {
+		
+		return bookRepository.findByNameContainingIgnoreCase(value);
+	}
+
 }

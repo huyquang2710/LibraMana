@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.libra.core.entities.Author;
+import com.libra.core.entities.Book;
 import com.libra.core.entities.Publisher;
 import com.libra.core.services.IAuthorService;
 import com.libra.core.services.IBookService;
@@ -66,13 +67,13 @@ public class SearchController {
 		mv.addObject("publisher", publishers);
 		return mv;
 	}
-//	// publisher
-//	@RequestMapping(value = "/book/search", method = RequestMethod.GET)
-//		public ModelAndView searchBook(@RequestParam("value") String value) {
-//		ModelAndView mv = new ModelAndView();
-//		mv.setViewName("admin/book/searchBook");
-//		List<Publisher> publishers = publisherService.searchAuthorByNameLike(value);
-//		mv.addObject("publisher", publishers);
-//		return mv;
-//	}	
+	// book
+	@RequestMapping(value = "/book/search", method = RequestMethod.GET)
+		public ModelAndView searchBook(@RequestParam("value") String value) {
+		ModelAndView mv = new ModelAndView();
+		mv.setViewName("admin/book/searchBook");
+		List<Book> books = bookService.searchAuthorByNameLike(value);
+		mv.addObject("book", books);
+		return mv;
+	}	
 }
