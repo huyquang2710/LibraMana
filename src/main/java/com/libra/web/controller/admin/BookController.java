@@ -25,7 +25,6 @@ import com.libra.core.services.IBookService;
 import com.libra.core.services.ICategoriesService;
 import com.libra.core.services.IPublisherService;
 import com.libra.exception.ResourceNotFoundException;
-import com.libra.web.dto.BookDTO;
 import com.libra.web.message.MessageResponse;
 
 @Controller
@@ -59,8 +58,8 @@ public class BookController {
 		return "admin/book/bookPage";
 	}
 	//findById
-	@GetMapping("/findById/{id}")
-	public String findById(@PathVariable("id") Integer id, Model model, HttpSession session) throws ResourceNotFoundException {
+	@GetMapping("/findById-detail/{id}")
+	public String findByIdDetail(@PathVariable("id") Integer id, Model model, HttpSession session) throws ResourceNotFoundException {
 		// kiểm tra id có giá trị ko
 		System.out.println("id: " + id);
 		
@@ -82,6 +81,33 @@ public class BookController {
 			model.addAttribute("book", book);
 			model.addAttribute("title", "Chi Tiết Sách");
 			return "admin/book/bookDetail";
+		}
+		session.setAttribute("message", new MessageResponse("Không tìm thấy Sách!!, vui lòng thử lại!", "danger"));
+		return "admin/book/bookPage";
+	}
+	@GetMapping("/findById-update/{id}")
+	public String findByIdUpdate(@PathVariable("id") Integer id, 
+								Model model, HttpSession session ) throws ResourceNotFoundException {
+		// kiểm tra id có giá trị ko
+		System.out.println("id: " + id);
+		
+		//lấy danh sách tên tác giả
+		List<Author> authorList = authorService.findAll();
+		//lấy danh sách tên nhà xuất bản
+		List<Publisher> publisherList = publisherService.findAll();
+		//lấy danh sách tên thể loại
+		List<Category> categoryList = categoryService.findAll();
+		
+		if(id != null) {
+			Book book = bookService.findById(id).get();
+			
+			model.addAttribute("author", authorList);
+			model.addAttribute("publisher", publisherList);
+			model.addAttribute("category", categoryList);
+			
+			model.addAttribute("book", book);
+			model.addAttribute("title", "Cập Nhật Sách");
+			return "admin/book/bookEdit";
 		}
 		session.setAttribute("message", new MessageResponse("Không tìm thấy Sách!!, vui lòng thử lại!", "danger"));
 		return "admin/book/bookPage";

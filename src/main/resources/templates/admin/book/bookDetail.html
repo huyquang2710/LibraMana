@@ -33,7 +33,7 @@
     	
 		<!-- form new -->	
 		<div class="panel-body">
-		 <form class="form-validate form-horizontal" id="feedback_form" method="post" th:object="${book}" th:action="@{/admin/book/update}"
+		 <form class="form-validate form-horizontal" id="feedback_form" method="post" th:object="${book}"
 		 		enctype="multipart/form-data">
 		   <div class="col-lg-7">
                 <div class="form">
@@ -107,7 +107,7 @@
 			<!-- button -->
 			<div class="form-group text-center ">
                 <div class="col-lg-offset-1 col-lg-9 mt">
-                   <button class="btn btn-primary" type="submit">Chỉnh Sửa</button>
+                   <a class="btn btn-primary" th:href="@{'/admin/book/findById-update/' + ${book.id}}">Chỉnh Sửa</a>
                    <button class="btn btn-default" onclick="reset()" type="reset">Reset</button>
                    <a class="btn btn-info" th:href="@{/admin/book}">Quay lại</a>
                    
