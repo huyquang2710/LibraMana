@@ -19,6 +19,7 @@ import org.springframework.core.io.ClassPathResource;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.StringUtils;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -30,6 +31,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.libra.core.entities.Publisher;
 import com.libra.core.services.IPublisherService;
+import com.libra.core.utils.FileUploadUtil;
 import com.libra.exception.ResourceNotFoundException;
 import com.libra.web.dto.PublisherDTO;
 import com.libra.web.message.MessageResponse;
@@ -89,7 +91,7 @@ public class PublisherController {
 	public String newPublisher(
 			@Valid @ModelAttribute("publisher") PublisherDTO publisherDTO ,
 		BindingResult bindingResult,
-		@RequestParam("imageFile") MultipartFile fileImage,
+		@RequestParam("imageFile") MultipartFile multipartFile,
 		Model model,
 		HttpSession session ) {
 		
@@ -100,24 +102,20 @@ public class PublisherController {
 				//model.addAttribute("publisher", publisherDTO);
 				return "admin/publisher/publisherNew";
 			}
-			if(fileImage.isEmpty()) {
-				System.out.println("File ảnh trống !!");
-				
-				//set ảnh mặc định
-				publisherDTO.setImage("avatar.png");
-			} else {
-				//set anh
-				publisherDTO.setImage(fileImage.getOriginalFilename());
-				File saveFile = new ClassPathResource("static/image/publisher").getFile();
-				Path path = Paths.get(saveFile.getAbsolutePath() + File.separator + fileImage.getOriginalFilename());
-				
-				Files.copy(fileImage.getInputStream(), path, StandardCopyOption.REPLACE_EXISTING);
-				System.out.println("Thêm ảnh thành công!!");
-			}
+			//set anh
+			
+			String fileName = StringUtils.cleanPath(multipartFile.getOriginalFilename());
+
+			publisherDTO.setImage(fileName);	
+		
 			Publisher publisher = new Publisher();
 			//chuuyen kieu thanh entity
 			modelMapper.map(publisherDTO, publisher);
-			this.publisherService.save(publisher);
+			this.publisherService.save(publisher);		
+	
+			//lưu đường dẫn
+			String uploadDir = "avatar/publisher/" + publisher.getId();
+			FileUploadUtil.saveFile(uploadDir, fileName, multipartFile);
 			
 			System.out.println("Thêm Nhà Xuất Bản thành công!!");
 			
@@ -148,9 +146,9 @@ public class PublisherController {
 	// update action
 		@RequestMapping(value = "/update", method = RequestMethod.POST)
 		public String updatepublisher(
-				@Valid @ModelAttribute("publisher") Publisher publisherDTO ,
+				@Valid @ModelAttribute("publisher") Publisher publisher ,
 			BindingResult bindingResult,
-			@RequestParam("imageFile") MultipartFile fileImage,
+			@RequestParam("imageFile") MultipartFile multipartFile,
 			Model model,
 			HttpSession session ) {
 			
@@ -160,43 +158,34 @@ public class PublisherController {
 					System.out.println("publisher: " + bindingResult.toString());
 					//model.addAttribute("publisher", publisherDTO);
 					return "admin/publisher/publisherUpdate";
-				}
-				// chuyển dto thành entity
-				Publisher publisherEntity =  modelMapper.map(publisherDTO, Publisher.class);
-				
+				}	
 				//lấy dữ liệu cũ
-				Publisher oldpublisher = publisherService.findById(publisherEntity.getId()).get();
+				Publisher oldPublisher = publisherService.findById(publisher.getId()).get();
 				
-				if(!fileImage.isEmpty()) {
+				String fileName = StringUtils.cleanPath(multipartFile.getOriginalFilename());
+				
+				if(!multipartFile.isEmpty()) {
 					System.out.println("File ảnh tồn tại !!");
 					//xóa ảnh cũ
-					File deleteFile = new ClassPathResource("static/image/publisher").getFile();
-					File deleteAction = new File(deleteFile, oldpublisher.getImage());
+					String deleteFile = "avatar/publisher/" + publisher.getId();
+					File deleteAction = new File(deleteFile, oldPublisher.getImage());
 					deleteAction.delete();
 					
 					//thêm ảnh mới
-					publisherEntity.setImage(fileImage.getOriginalFilename());
-					File saveFile =new ClassPathResource("static/image/publisher").getFile();
-					Path path = Paths.get(saveFile.getAbsolutePath() + File.separator + fileImage.getOriginalFilename());
-					Files.copy(fileImage.getInputStream(), path, StandardCopyOption.REPLACE_EXISTING);
-					publisherEntity.setImage(fileImage.getOriginalFilename());
-				} else {
-					// dùng ảnh cũ
-					publisherEntity.setImage(oldpublisher.getImage());
-				}
-				this.publisherService.update(publisherEntity);
+					publisher.setImage(fileName);	
+					String uploadDir = "avatar/publisher/" + oldPublisher.getId();
+					FileUploadUtil.saveFile(uploadDir, fileName, multipartFile);
+				} 
+				this.publisherService.update(publisher);
 				System.out.println("Thêm Nhà Xuất Bản thành công!!");
-				
-				//chuyển entity thành dto
-				Publisher publisherResponse = modelMapper.map(publisherEntity, Publisher.class);
-				
-				model.addAttribute("publisher", publisherResponse);
+
+				model.addAttribute("publisher", publisher);
 				session.setAttribute("message", new MessageResponse("Cập nhật Nhà Xuất Bản thành công!!", "success"));
 				return "redirect:/admin/publisher";
 			} catch (Exception e) {
 				System.out.println("Cập nhật Nhà Xuất Bản thất bại!!");
-				session.setAttribute("message", new MessageResponse("Cập nhật Nhà Xuất Bản thất bại!!, vui lòng thử lại!", "danger"));
 				String errorMessage = e.getMessage();
+				session.setAttribute("message", new MessageResponse(e.getMessage(), "danger"));
 				LOGGER.error(errorMessage);
 				return "admin/publisher/publisherEdit";
 			}

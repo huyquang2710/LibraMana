@@ -14,6 +14,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 
@@ -57,5 +58,12 @@ public class Publisher implements Serializable{
 	@Temporal(TemporalType.DATE)
 	@Column(name = "modifiedat")
 	private Date modifiedAt;
+	
+	@Transient
+    public String getPhotosImagePath() {
+        if (image == null || id == null) return null;
+         
+        return "/avatar/publisher/" + id + "/" + image;
+    }
 }
 

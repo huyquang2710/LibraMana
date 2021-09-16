@@ -62,7 +62,7 @@
                <tbody>
                   <tr th:each="publisher : ${publisher}" >
                     <td  >
-                    <img class="my_profile_picture" th:src="@{'/image/publisher/' + ${publisher.image}}" alt="profile photo" />
+                    <img class="my_profile_picture" th:src="@{${publisher.photosImagePath}}" alt="profile photo" />
                     </td>
                     <td th:text="${publisher.name}" ></td>
                     <td th:text="${publisher.email}" ></td>
