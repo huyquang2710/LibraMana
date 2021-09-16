@@ -69,7 +69,7 @@ public class BookController {
 		
 		//kiểm tra book có rỗng ko
 		if(page.isEmpty()) {
-			session.setAttribute("message", new MessageResponse("Chưa có cuốn sách nào","notify"));
+			
 			return "admin/book/bookPage";
 		}
 		long totalItems = page.getTotalElements(); // tổng

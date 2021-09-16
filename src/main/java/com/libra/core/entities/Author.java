@@ -68,6 +68,6 @@ public class Author implements Serializable {
     public String getPhotosImagePath() {
         if (image == null || id == null) return null;
          
-        return "/author/avatar/" + id + "/" + image;
+        return "/avatar/author/" + id + "/" + image;
     }
 }

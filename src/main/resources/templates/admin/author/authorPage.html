@@ -70,7 +70,7 @@
                <tbody>
                   <tr th:each="author : ${author}" >
                     <td>
-                    <img class="my_profile_picture" th:src="@{${author.photosImagePath}}" alt="profile photo" />
+                    <img class="my_profile_picture" th:src="@{${author.photosImagePath}}" alt="avatar" />
                     </td>
                     <td th:text="${author.name}" ></td>
                     <td th:text="${author.year}" ></td>

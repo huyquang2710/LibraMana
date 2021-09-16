@@ -27,4 +27,10 @@ public class AuthorDTO {
 	@Email(message = "Đúng định dạng email")
 	private String email;
 	
+	public String getPhotosImagePath() {
+        if (image == null || id == null) return null;
+         
+        return "/avatar/author/" + id + "/" + image;
+    }
+	
 }
