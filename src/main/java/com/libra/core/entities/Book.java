@@ -18,6 +18,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -73,5 +74,12 @@ public class Book implements Serializable{
 	@Temporal(TemporalType.DATE)
 	@Column(name = "modifiedat")
 	private Date modifiedAt;
+	
+	@Transient
+    public String getPhotosImagePath() {
+        if (image == null || id == null) return null;
+         
+        return "/avatar/book/" + id + "/" + image;
+    }
 }
  

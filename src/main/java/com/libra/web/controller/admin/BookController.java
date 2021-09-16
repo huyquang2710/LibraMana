@@ -19,6 +19,7 @@ import org.springframework.core.io.ClassPathResource;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.StringUtils;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -37,6 +38,7 @@ import com.libra.core.services.IAuthorService;
 import com.libra.core.services.IBookService;
 import com.libra.core.services.ICategoriesService;
 import com.libra.core.services.IPublisherService;
+import com.libra.core.utils.FileUploadUtil;
 import com.libra.exception.ResourceNotFoundException;
 import com.libra.web.dto.BookDetailDTO;
 import com.libra.web.message.MessageResponse;
@@ -164,7 +166,7 @@ public class BookController {
 	@RequestMapping(value = "/new", method = RequestMethod.POST)
 	public String newBook(@Valid @ModelAttribute("book") BookDetailDTO bookDto,
 							BindingResult bindingResult,
-							@RequestParam("imageFile") MultipartFile fileImage,
+							@RequestParam("imageFile") MultipartFile multipartFile,
 							Model model,
 							HttpSession session) {
 		try {
@@ -173,22 +175,21 @@ public class BookController {
 				System.out.println("Book: " + bindingResult.toString());
 				return "admin/book/bookNew";
 			}
-			// set ảnh mặc định nếu có upload ảnh
-			if(fileImage.isEmpty()) {
-				bookDto.setImage("book.png");
-			} else {
-				bookDto.setImage(fileImage.getOriginalFilename());
-				File saveFile = new ClassPathResource("static/image/book").getFile();
-				Path path = Paths.get(saveFile.getAbsolutePath() + File.separator + fileImage.getOriginalFilename());
-				
-				Files.copy(fileImage.getInputStream(), path, StandardCopyOption.REPLACE_EXISTING);
-				System.out.println("Thêm ảnh thành công!!");
-			}
+			//new anh
+			String fileName = StringUtils.cleanPath(multipartFile.getOriginalFilename());
+			bookDto.setImage(fileName);
+
 			Book book = new Book();
 			
 			//chuyen Dto thanh entity
 			modelMapper.map(bookDto, book);
+			
 			this.bookService.save(book);
+			
+			
+			//lưu đường dẫn
+			String uploadDir = "avatar/book/" + book.getId();
+			FileUploadUtil.saveFile(uploadDir, fileName, multipartFile);
 			
 			model.addAttribute("book", book);
 			session.setAttribute("message", new MessageResponse("Thêm Sách thành công!!", "success"));
@@ -196,17 +197,17 @@ public class BookController {
 			
 		} catch (Exception e) {
 			System.out.println("Thêm Sách thất bại!!");
-			session.setAttribute("message", new MessageResponse("Thêm Sách thất bại!!, vui lòng thử lại!", "danger"));
 			String errorMessage = e.getMessage();
+			session.setAttribute("message", new MessageResponse( e.getMessage(), "danger"));
 			LOGGER.error(errorMessage);
 			return "admin/book/bookNew";
 		}
 	}
 	//update
 	@PostMapping("/update")
-	public String updateBook(@Valid @ModelAttribute("book") BookDetailDTO dto ,
+	public String updateBook(@Valid @ModelAttribute("book") Book book ,
 			BindingResult bindingResult,
-			@RequestParam("imageFile") MultipartFile fileImage,
+			@RequestParam("imageFile") MultipartFile multipartFile,
 			Model model,
 			HttpSession session) {
 		
@@ -214,45 +215,35 @@ public class BookController {
 			// Kiểm tra dữ liệu hợp lệ
 			if(bindingResult.hasErrors()) {
 				System.out.println("Book: " + bindingResult.toString());
-				//model.addAttribute("author", authorDTO);
 				return "admin/book/bookEdit";
 			}
-			// chuyển dto thành entity
-			Book entity =  modelMapper.map(dto, Book.class);
-			
 			//lấy dữ liệu cũ
-			Book oldBook = bookService.findById(entity.getId()).get();
+			Book oldBook = bookService.findById(book.getId()).get();
 			
-			if(!fileImage.isEmpty()) {
+			String fileName = StringUtils.cleanPath(multipartFile.getOriginalFilename());
+			
+			if(!multipartFile.isEmpty()) {
 				System.out.println("File ảnh tồn tại !!");
 				//xóa ảnh cũ
-				File deleteFile = new ClassPathResource("static/image/book").getFile();
+				String deleteFile = "avatar/book/" + book.getId();
 				File deleteAction = new File(deleteFile, oldBook.getImage());
 				deleteAction.delete();
 				
 				//thêm ảnh mới
-				entity.setImage(fileImage.getOriginalFilename());
-				File saveFile =new ClassPathResource("static/image/book").getFile();
-				Path path = Paths.get(saveFile.getAbsolutePath() + File.separator + fileImage.getOriginalFilename());
-				Files.copy(fileImage.getInputStream(), path, StandardCopyOption.REPLACE_EXISTING);
-				entity.setImage(fileImage.getOriginalFilename());
-			} else {
-				// dùng ảnh cũ
-				entity.setImage(oldBook.getImage());
-			}
-			this.bookService.update(entity);
+				book.setImage(fileName);	
+				String uploadDir = "avatar/book/" + book.getId();
+				FileUploadUtil.saveFile(uploadDir, fileName, multipartFile);
+			} 
+			this.bookService.update(book);
 			System.out.println("Thêm Sách thành công!!");
 			
-			//chuyển entity thành dto
-			BookDetailDTO bookResp = modelMapper.map(entity, BookDetailDTO.class);
-			
-			model.addAttribute("book", bookResp);
+			model.addAttribute("book", book);
 			session.setAttribute("message", new MessageResponse("Cập nhật Sách thành công!!", "success"));
 			return "redirect:/admin/book";
 		} catch (Exception e) {
 			System.out.println("Cập nhật Sách thất bại!!");
-			session.setAttribute("message", new MessageResponse("Cập nhật Sách thất bại!!, vui lòng thử lại!", "danger"));
 			String errorMessage = e.getMessage();
+			session.setAttribute("message", new MessageResponse(e.getMessage(), "danger"));
 			LOGGER.error(errorMessage);
 			return "admin/book/bookEdit";
 		}
