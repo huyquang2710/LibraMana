@@ -1,8 +1,6 @@
 package com.libra.web.controller.admin;
 
 import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -33,6 +31,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.libra.core.entities.Author;
 import com.libra.core.services.IAuthorService;
+import com.libra.core.utils.FileUploadUtil;
 import com.libra.exception.ResourceNotFoundException;
 import com.libra.web.dto.AuthorDTO;
 import com.libra.web.message.MessageResponse;
@@ -124,20 +123,10 @@ public class AuthorController {
 			modelMapper.map(authorDTO, author);
 			this.authorService.save(author);
 			
-			String uploadDir = "./avatar/author/" + author;
-			Path uploadPath = Paths.get(uploadDir);
-			if(!Files.exists(uploadPath)) {
-				Files.createDirectories(uploadPath);
-			}
-			try (InputStream inputStream = multipartFile.getInputStream() ) {
-				Path filePath = uploadPath.resolve(fileName);
-				Files.copy(inputStream, filePath, StandardCopyOption.REPLACE_EXISTING);
-				
-				System.out.println(filePath.toFile().getAbsolutePath());
-			} catch (IOException e) {
-				session.setAttribute("message", new MessageResponse("Không tìm thấy file: !!", "danger"));
-				throw new IOException("Không tìm thấy file: " + fileName);	
-			}
+			String uploadDir = "author/avatar/" + author.getId();
+			
+			//lưu đường dẫn
+			FileUploadUtil.saveFile(uploadDir, fileName, multipartFile);
 			
 			System.out.println("Thêm Tác giả thành công!!");
 			

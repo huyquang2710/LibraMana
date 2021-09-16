@@ -69,8 +69,8 @@
                </thead>
                <tbody>
                   <tr th:each="author : ${author}" >
-                    <td  >
-                    <img class="my_profile_picture" th:src="@{'/image/author/' + ${author.image}}" alt="profile photo" />
+                    <td>
+                    <img class="my_profile_picture" th:src="@{${author.photosImagePath}}" alt="profile photo" />
                     </td>
                     <td th:text="${author.name}" ></td>
                     <td th:text="${author.year}" ></td>
