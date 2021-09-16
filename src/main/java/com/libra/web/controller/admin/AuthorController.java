@@ -1,6 +1,8 @@
 package com.libra.web.controller.admin;
 
 import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -19,6 +21,7 @@ import org.springframework.core.io.ClassPathResource;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.StringUtils;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -89,7 +92,7 @@ public class AuthorController {
 	public String newAuthor(
 			@Valid @ModelAttribute("author") AuthorDTO authorDTO ,
 		BindingResult bindingResult,
-		@RequestParam("imageFile") MultipartFile fileImage,
+		@RequestParam("imageFile") MultipartFile multipartFile,
 		Model model,
 		HttpSession session ) {
 		
@@ -100,24 +103,41 @@ public class AuthorController {
 				//model.addAttribute("author", authorDTO);
 				return "admin/author/authorNew";
 			}
-			if(fileImage.isEmpty()) {
+			if(multipartFile.isEmpty()) {
 				System.out.println("File ảnh trống !!");
 				
 				//set ảnh mặc định
 				authorDTO.setImage("avatar.png");
-			} else {
+			} 
 				//set anh
-				authorDTO.setImage(fileImage.getOriginalFilename());
-				File saveFile = new ClassPathResource("static/image/author").getFile();
-				Path path = Paths.get(saveFile.getAbsolutePath() + File.separator + fileImage.getOriginalFilename());
+//				authorDTO.setImage(fileImage.getOriginalFilename());
+//				File saveFile = new ClassPathResource("static/image/author").getFile();
+//				Path path = Paths.get(saveFile.getAbsolutePath() + File.separator + fileImage.getOriginalFilename());
+//				
+//				Files.copy(fileImage.getInputStream(), path, StandardCopyOption.REPLACE_EXISTING);
 				
-				Files.copy(fileImage.getInputStream(), path, StandardCopyOption.REPLACE_EXISTING);
-				System.out.println("Thêm ảnh thành công!!");
-			}
+			String fileName = StringUtils.cleanPath(multipartFile.getOriginalFilename());
+			authorDTO.setImage(fileName);	
+			
 			Author author = new Author();
 			//chuuyen kieu thanh entity
 			modelMapper.map(authorDTO, author);
 			this.authorService.save(author);
+			
+			String uploadDir = "./avatar/author/" + author;
+			Path uploadPath = Paths.get(uploadDir);
+			if(!Files.exists(uploadPath)) {
+				Files.createDirectories(uploadPath);
+			}
+			try (InputStream inputStream = multipartFile.getInputStream() ) {
+				Path filePath = uploadPath.resolve(fileName);
+				Files.copy(inputStream, filePath, StandardCopyOption.REPLACE_EXISTING);
+				
+				System.out.println(filePath.toFile().getAbsolutePath());
+			} catch (IOException e) {
+				session.setAttribute("message", new MessageResponse("Không tìm thấy file: !!", "danger"));
+				throw new IOException("Không tìm thấy file: " + fileName);	
+			}
 			
 			System.out.println("Thêm Tác giả thành công!!");
 			
@@ -126,8 +146,8 @@ public class AuthorController {
 			return "redirect:/admin/author";
 		} catch (Exception e) {
 			System.out.println("Thêm Tác giả thất bại!!");
-			session.setAttribute("message", new MessageResponse("Thêm Tác Giả thất bại!!, vui lòng thử lại!", "danger"));
 			String errorMessage = e.getMessage();
+			session.setAttribute("message", new MessageResponse(errorMessage, "danger"));
 			LOGGER.error(errorMessage);
 			return "admin/author/authorNew";
 		}
