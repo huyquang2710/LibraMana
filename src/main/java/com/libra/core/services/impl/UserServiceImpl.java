@@ -8,6 +8,8 @@ import javax.transaction.Transactional;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
@@ -42,28 +44,6 @@ public class UserServiceImpl implements IUserService{
 	private boolean existsById(Integer id) {
 		return userRepo.existsById(id);
 	}
-
-//	//check user 
-////	@Override
-////	@Transactional
-////	public Optional<User> findByUsername(String username) {
-////	
-////		return userRepo.findByUsername(username);
-////	}	
-//	@Override
-//	public boolean userExists(String username) {
-//		return userRepo.findByUsername(username);
-//	}
-//	//check email ton tai
-//	@Override
-//	@Transactional
-//	public Optional<User> findByEmail(String email) {
-//		return userRepo.findUser
-//	}
-//	@Override
-//	public boolean emailExists(String email) {
-//		return findUserByEmail(email).isPresent();
-//	}
 	
 	//dang ky moi
 	@Transactional
@@ -111,18 +91,6 @@ public class UserServiceImpl implements IUserService{
 		return save(user);
 	}
 
-
-//	@Override
-//	public User findByUsername(String username) {
-//		return userRepo.findByUsername(username);
-//	}
-//
-//
-//	@Override
-//	public User findByEmail(String email) {
-//		return userRepo.findByEmail(email);
-//	}
-
 	//check username va email
 	@Override
 	public boolean userExists(String username) {
@@ -132,7 +100,6 @@ public class UserServiceImpl implements IUserService{
 	public boolean emailExists(String email) {
 		return userRepo.findExistByemail(email);
 	}
-
 
 	@Override
 	public Optional<User> findById(Integer id) throws ResourceNotFoundException{
@@ -160,5 +127,28 @@ public class UserServiceImpl implements IUserService{
 		}
 		
 	}
-
+	//forgot mat khau
+	@Override
+	public void updateResetPassword(String token, String email) {
+		User user = userRepo.findByEmail(email);
+		
+		if(user != null) {
+			user.setResetPasswordToken(token);
+			userRepo.save(user);
+		} else {
+			throw new UsernameNotFoundException("Không tìm thấy email: " + email);
+		}
+	}
+	public User get(String resetPasswordToken) {
+		return userRepo.findByResetPasswordToken(resetPasswordToken);
+	}
+	public void updatePassword(User user, String newPassword) {
+		BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+		String encoderPassword = passwordEncoder.encode(newPassword);
+		
+		user.setPassword(encoderPassword);
+		user.setResetPasswordToken(null);
+		
+		userRepo.save(user);
+	}
 }

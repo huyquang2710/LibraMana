@@ -23,4 +23,10 @@ public interface IUserService {
 		Optional<User> findById(Integer id) throws ResourceNotFoundException;
 		
 		void update(User user) throws BadResourceException, ResourceNotFoundException;
+		
+		
+		//forgor mat khau
+		void updateResetPassword(String token, String email);
+		User get(String resetPasswordToken);
+		void updatePassword(User user, String newPassword);
 }
