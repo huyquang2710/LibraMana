@@ -45,8 +45,8 @@ public class LoginController {
 		return "/authentication/403page";
 	}
 	// registration method
-	@PostMapping("/register")
-	public String register(@Valid @ModelAttribute("user") SignUpDTO signUpDTO, BindingResult bindingResult, HttpSession session, Model model) {
+	@PostMapping("/register-user")
+	public String registerUser(@Valid @ModelAttribute("user") SignUpDTO signUpDTO, BindingResult bindingResult, HttpSession session, Model model) {
 		try {
 			//Kiem tra usernamme
 			if(userService.userExists(signUpDTO.getUsername())) {
@@ -64,7 +64,7 @@ public class LoginController {
 			}
 			model.addAttribute("title", "Đăng Ký");
 			model.addAttribute("user", new SignUpDTO());
-			userService.register(signUpDTO);
+			userService.registerUser(signUpDTO);
 		
 			//message
 			session.setAttribute("message", new MessageResponse("Đăng ký thành công!!", "alert-success"));
@@ -78,5 +78,39 @@ public class LoginController {
 			return "authentication/signup";
 		}
 	}
+	// registration admin
+		@PostMapping("/register-admin")
+		public String registerAdmin(@Valid @ModelAttribute("user") SignUpDTO signUpDTO, BindingResult bindingResult, HttpSession session, Model model) {
+			try {
+				//Kiem tra usernamme
+				if(userService.userExists(signUpDTO.getUsername())) {
+					bindingResult.addError(new FieldError("user", "username", "Tài khoản đã tồn tại"));
+				}
+				//Kiem tra email
+				if(userService.emailExists(signUpDTO.getEmail())) {
+					bindingResult.addError(new FieldError("user", "email", "Email đã tồn tại"));
+				}
+				//Kiem tra sai cu phap
+				if(bindingResult.hasErrors()) {
+					System.out.println("Error: " + bindingResult.toString());
+					model.addAttribute("user", signUpDTO);
+					return "authentication/signup";
+				}
+				model.addAttribute("title", "Đăng Ký");
+				model.addAttribute("user", new SignUpDTO());
+				userService.registerAdmin(signUpDTO);
+			
+				//message
+				session.setAttribute("message", new MessageResponse("Đăng ký thành công!!", "alert-success"));
+				
+				System.out.println(signUpDTO.toString());
+				return "authentication/signup";
+			} catch (Exception e) {
+				e.printStackTrace();
+				model.addAttribute("user", signUpDTO);
+				session.setAttribute("message", new MessageResponse("Aushiet!!. Có lỗi xảy ra" +e.getMessage(), "alert-danger"));
+				return "authentication/signup";
+			}
+		}
 	
 }

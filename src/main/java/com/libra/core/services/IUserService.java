@@ -17,7 +17,8 @@ public interface IUserService {
 		boolean emailExists(String email);
 		
 		//register
-		User register(SignUpDTO user);
+		User registerUser(SignUpDTO user);
+		User registerAdmin(SignUpDTO user);
 		
 		Optional<User> findById(Integer id) throws ResourceNotFoundException;
 		

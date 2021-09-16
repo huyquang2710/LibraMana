@@ -71,7 +71,7 @@ public class UserServiceImpl implements IUserService{
 		return userRepo.save(user);
 	}
 	@Override
-	public User register(SignUpDTO userDTO) {
+	public User registerUser(SignUpDTO userDTO) {
 		// ma hoa pass
 		String password = passwordEncoder.encode(userDTO.getPassword());
 		userDTO.setPassword(password);
@@ -83,6 +83,26 @@ public class UserServiceImpl implements IUserService{
 		//set role
 		Set<Role> role = new HashSet<>();
 		role.add(roleRepo.findByName("USER"));
+		user.setRoles(role);
+		
+		//chuyen Dto sang entity
+		modelMapper.map(userDTO, user);
+		
+		return save(user);
+	}
+	@Override
+	public User registerAdmin(SignUpDTO userDTO) {
+		// ma hoa pass
+		String password = passwordEncoder.encode(userDTO.getPassword());
+		userDTO.setPassword(password);
+		
+		User user = new User();
+		user.setImage("avatar.png");
+		user.setEnabled(true);
+		
+		//set role
+		Set<Role> role = new HashSet<>();
+		role.add(roleRepo.findByName("ADMIN"));
 		user.setRoles(role);
 		
 		//chuyen Dto sang entity

@@ -33,6 +33,7 @@ import com.libra.core.entities.User;
 import com.libra.core.services.IUserService;
 import com.libra.exception.ResourceNotFoundException;
 import com.libra.web.dto.AdminDTO;
+import com.libra.web.dto.SignUpDTO;
 import com.libra.web.message.MessageResponse;
 
 @Controller
@@ -150,6 +151,14 @@ public class AdminController {
 				LOGGER.error(errorMessage);
 				return "admin/accountEdit";
 			}
+	}
+	
+	// đăng ký admin
+	@GetMapping("/register-admin")
+	public String signup(Model model) {
+		model.addAttribute("title", "Đăng Ký Admin");
+		model.addAttribute("user", new SignUpDTO());
+		return "/admin/signup-admin";
 	}
 
 }
