@@ -136,13 +136,15 @@ public class UserServiceImpl implements IUserService{
 			user.setResetPasswordToken(token);
 			userRepo.save(user);
 		} else {
-			throw new UsernameNotFoundException("Không tìm thấy email: " + email);
+			throw new UsernameNotFoundException("Không tìm thấy email: " + email +". Vui lòng nhập lại");
 		}
 	}
+	//reset pass
 	public User get(String resetPasswordToken) {
 		return userRepo.findByResetPasswordToken(resetPasswordToken);
 	}
-	public void updatePassword(User user, String newPassword) {
+	//new pass
+	public void updateNewPassword(User user, String newPassword) {
 		BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 		String encoderPassword = passwordEncoder.encode(newPassword);
 		

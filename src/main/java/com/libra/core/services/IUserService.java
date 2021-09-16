@@ -28,5 +28,5 @@ public interface IUserService {
 		//forgor mat khau
 		void updateResetPassword(String token, String email);
 		User get(String resetPasswordToken);
-		void updatePassword(User user, String newPassword);
+		void updateNewPassword(User user, String newPassword);
 }
