@@ -136,6 +136,7 @@ public class AdminController {
 				user.setImage(oldUser.getImage());
 			}
 			user.setEnabled(true);
+			user.setPassword(oldUser.getPassword());
 			this.userService.update(user);
 			System.out.println("Cập nhật thành công!!");
 			
