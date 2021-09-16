@@ -1,131 +1,164 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org"
- xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
- layout:decorator="~{admin/base.html}" >
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorator="~{admin/base.html}">
 
 <head>
-	<style> 
-		.form-control {
-			width: 80%;
-		}
-		.mt {
-			margin-top: 2%;
-		}
-		.invalid-feedback {
-			color: red;
-		}
-	</style>
-	<script src="/js/account.js" ></script>
-	<link rel="stylesheet" href="/css/account.css">
+<style>
+.form-control {
+	width: 80%;
+}
+
+.mt {
+	margin-top: 2%;
+}
+
+.invalid-feedback {
+	color: red;
+}
+</style>
+<script src="/js/account.js"></script>
+<link rel="stylesheet" href="/css/account.css">
 </head>
 <body>
-    <!--main content start-->
-       	<section id="main-content" layout:fragment="content">
-    	<section class="wrapper">
-        <div class="container">
-    <div class="team-single">
-        <div class="row" th:if="${account}">
-        	<form action="" th:object="${account}">
-        	<!-- id -->
-        	<input name="id" th:value="${account.id}" type="hidden" >
-        	
-            <div class="col-lg-4 col-md-5 xs-margin-30px-bottom">
-                <div class="team-single-img">
-                    <img id="image" th:src="@{'/image/account/' + ${account.image}}" alt="">
-                     <input class="form-control " id="productImage" name="imageFile" type="file"  onchange="chooseFile(this)"></input>
-                </div>
-                <div class="bg-light-gray padding-30px-all md-padding-25px-all sm-padding-20px-all text-center">
-                    <h4 class="margin-10px-bottom font-size24 md-font-size22 sm-font-size20 font-weight-600">- Giới Tiệu Bản Thân -</h4>
-             		<textarea class="sm-width-95 sm-margin-auto" rows="4" cols="38" th:text="${account.description}" ></textarea>
-                </div>
-            </div>
+	<!--main content start-->
+	<section id="main-content" layout:fragment="content">
+		<section class="wrapper">
+			<div class="container">
+				<div class="team-single">
+					<form th:object="${account}" th:action="@{/admin/account/update}"
+						enctype="multipart/form-data" method="post">
+						<div class="row">
+							<div class="col-lg-4 col-md-5 xs-margin-30px-bottom">
+								<div class="team-single-img">
+									<img id="image" th:src="@{'/image/account/' + ${account.image}}" alt="avatar">
+									<input class="form-control " id="productImage" name="imageFile"
+										type="file" onchange="chooseFile(this)"></input>
+								</div>
+								<div
+									class="bg-light-gray padding-30px-all md-padding-25px-all sm-padding-20px-all text-center">
+									<h4
+										class="margin-10px-bottom font-size24 md-font-size22 sm-font-size20 font-weight-600">-
+										Giới Tiệu Bản Thân -</h4>
+									<textarea name="description"  class="sm-width-95 sm-margin-auto" rows="4" cols="38"
+										th:text="${account.description}"></textarea>
+								</div>
+							</div>
 
-            <div class="col-lg-8 col-md-7">
-                <div class="team-single-text padding-50px-left sm-no-padding-left">
-                    <h3 class="font-size38 sm-font-size32 xs-font-size30" th:text="${account.name}"></h3>
-                    <br />
-                    <div class="contact-info-section margin-40px-tb">
-                        <ul class="list-style9 no-margin">
-                            <li>
-                                <div class="row">
-                                    <div class="col-md-5 col-5">
-                                        <i class="fas fa-graduation-cap text-orange"></i>
-                                        <strong class="margin-10px-left text-orange">Tài Khoản:</strong>
-                                    </div>
-                                    <div class="col-md-7 col-7">
-                                        <p th:text="${account.username}" ></p>
-                                    </div>
-                                </div>
+							<div class="col-lg-8 col-md-7">
+								<div
+									class="team-single-text padding-50px-left sm-no-padding-left">
+									<ul class="list-style9 no-margin">
+										<!-- id -->
+										<li>
+											<div class="row">
+												<div class="col-md-5 col-15">
+													<input readonly="readonly" class="form-control" id="id"
+														name="id" type="hidden" th:value="${account.id}">
+												</div>
+											</div>
+										</li>
+										<li>
+											<div class="row">
+												<div class="col-md-5 col-5">
+													<i class="fas fa-envelope text-pink"></i> <strong
+														class="margin-10px-left xs-margin-four-left text-pink">Tài
+														Khoản:</strong>
+												</div>
+												<div class="col-md-5 col-15">
+													<input class="form-control" id="username" name="username"
+														type="text" th:value="${account.username}"
+														readonly="readonly">
+												</div>
+											</div>
+										</li>
+										<li>
+											<div class="row">
+												<div class="col-md-5 col-5">
+													<i class="fas fa-envelope text-pink"></i> <strong
+														class="margin-10px-left xs-margin-four-left text-pink">Tên:</strong>
+												</div>
+												<div class="col-md-5 col-15">
+													<input class="form-control" id="email" name="name"
+														type="text" th:value="${account.name}">
+												</div>
+											</div>
+										</li>
+										<li>
+											<div class="row">
+												<div class="col-md-5 col-5">
+													<i class="fas fa-envelope text-pink"></i> <strong
+														class="margin-10px-left xs-margin-four-left text-pink">Email:</strong>
+												</div>
+												<div class="col-md-5 col-15">
+													<input class="form-control" id="email" name="email"
+														type="email" th:value="${account.email}">
+												</div>
+											</div>
+										</li>
+										<li>
+											<div class="row">
+												<div class="col-md-5 col-5">
+													<i class="fas fa-birthday-cake"></i> <strong
+														class="margin-10px-left text-lightred">Năm Sinh:</strong>
+												</div>
+												<div class="col-md-5 col-15">
+													<input class="form-control" id="year" name="year"
+														type="number" th:value="${account.year}">
+												</div>
+											</div>
+										</li>
+										<li>
 
-                            </li>
-                           <li>
-                                <div class="row">
-                                    <div class="col-md-5 col-5">
-                                        <i class="fas fa-envelope text-pink"></i>
-                                        <strong class="margin-10px-left xs-margin-four-left text-pink">Email:</strong>
-                                    </div>
-                                   <div class="col-md-5 col-15" >
-               				         <input class="form-control" id="email" name="email" type="email" th:value="${account.email}">                  		
-                      				</div>
-                                </div>
-                            </li>
-                            <li>
-                                <div class="row">
-                                    <div class="col-md-5 col-5">
-                                        <i class="fas fa-birthday-cake"></i>
-                                        <strong class="margin-10px-left text-lightred">Năm Sinh:</strong>
-                                    </div>
-                                    <div class="col-md-5 col-15" >
-               				         <input class="form-control" id="year" name="year" type="number" th:value="${account.year}">                  		
-                      				</div>
-                                </div>
-                            </li>
-                            <li>
+											<div class="row">
+												<div class="col-md-5 col-5">
+													<i class="fas fa-map-marker-alt text-green"></i> <strong
+														class="margin-10px-left text-green">Địa Chỉ:</strong>
+												</div>
+												<div class="col-md-5 col-15">
+													<input class="form-control" id="address" name="address"
+														type="text" th:value="${account.address}">
+												</div>
+											</div>
 
-                                <div class="row">
-                                    <div class="col-md-5 col-5">
-                                        <i class="fas fa-map-marker-alt text-green"></i>
-                                        <strong class="margin-10px-left text-green">Địa Chỉ:</strong>
-                                    </div>
-                                    <div class="col-md-5 col-15" >
-               				         <input class="form-control" id="address" name="address" type="text" th:value="${account.address}">                  		
-                      				</div>
-                                </div>
+										</li>
+										<li>
 
-                            </li>
-                            <li>
+											<div class="row">
+												<div class="col-md-5 col-5">
+													<i class="fas fa-mobile-alt text-purple"></i> <strong
+														class="margin-10px-left xs-margin-four-left text-purple">Số
+														Điện Thoại:</strong>
+												</div>
+												<div class="col-md-5 col-15">
+													<input class="form-control" id="phone" name="phone"
+														type="number" th:value="${account.phone}">
+												</div>
+											</div>
 
-                                <div class="row">
-                                    <div class="col-md-5 col-5">
-                                        <i class="fas fa-mobile-alt text-purple"></i>
-                                        <strong class="margin-10px-left xs-margin-four-left text-purple">Số Điện Thoại:</strong>
-                                    </div>
-                                    <div class="col-md-5 col-15" >
-               				         <input class="form-control" id="phone" name="phone" type="number" th:value="${account.phone}">                  		
-                      				</div>
-                                </div>
+										</li>
 
-                            </li>
-                            
-                        </ul>
-                    </div>
-                </div>
-            </div>
-            </form>
-        </div>
-    </div>
-</div>
-     	 <!-- button -->
-     	  <div class="form-group text-center ">
-                <div class="col-lg-offset-1 col-lg-9 mt">
-                   <a class="btn btn-primary" th:href="@{'/admin/account/findById/' + ${account.id}}" >Cập Nhật</a> &nbsp&nbsp
-                   <a class="btn btn-warning" th:href="@{/admin/account}" >Quay Lại</a>          
-                </div>
-            </div>
-    	</section>
-	</section>	  
-    <!--main content end-->
-   
+									</ul>
+								</div>
+							</div>
+						</div>
+						<!-- button -->
+						<div class="form-group text-center ">
+							<div class="col-lg-offset-1 col-lg-9 mt">
+								<button class="btn btn-primary"
+									th:href="@{'/admin/account/findById/' + ${account.id}}"
+									type="submit">Cập Nhật</button>
+								&nbsp&nbsp <a class="btn btn-warning"
+									th:href="@{/admin/account}">Quay Lại</a>
+							</div>
+						</div>
+					</form>
+				</div>
+			</div>
+		</section>
+	</section>
+	<!--main content end-->
+
 </body>
 
 </html>

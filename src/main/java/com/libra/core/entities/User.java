@@ -13,7 +13,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
-import javax.persistence.Lob;
 import javax.persistence.ManyToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -44,8 +43,7 @@ public class User implements Serializable{
 	private boolean enabled;
 	
 	private String description;
-	
-	@Lob // tao ra nhung chuoi van ban dai
+
 	private String image;
 	
 	@Column(length = 100) 

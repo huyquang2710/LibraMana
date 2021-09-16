@@ -10,12 +10,14 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 import com.libra.core.entities.Role;
 import com.libra.core.entities.User;
 import com.libra.core.repositoies.RoleRepository;
 import com.libra.core.repositoies.UserRepository;
 import com.libra.core.services.IUserService;
+import com.libra.exception.BadResourceException;
 import com.libra.exception.ResourceNotFoundException;
 import com.libra.web.dto.SignUpDTO;
 
@@ -37,7 +39,9 @@ public class UserServiceImpl implements IUserService{
 	public User getUsernameByUsername(String username) {
 		return userRepo.getUsernameByUsername(username);
 	}
-
+	private boolean existsById(Integer id) {
+		return userRepo.existsById(id);
+	}
 
 //	//check user 
 ////	@Override
@@ -118,6 +122,23 @@ public class UserServiceImpl implements IUserService{
 		}
 		Optional<User> userOpt = Optional.ofNullable(user);
 		return userOpt;
+	}
+
+	//update
+	@SuppressWarnings("deprecation")
+	@Override
+	public void update(User user) throws BadResourceException, ResourceNotFoundException {
+		if(!StringUtils.isEmpty(user.getName())) {
+			if(!existsById(user.getId())) {
+				throw new ResourceNotFoundException("Không tìm thấy id: " + user.getId());
+			}
+			userRepo.save(user);
+		} else {
+			BadResourceException exc = new BadResourceException("Lỗi!!. Không thể cập nhật");
+			exc.addErrorMessage("Tài khoản trống hoặc rỗng!!");
+			throw exc;
+		}
+		
 	}
 
 }

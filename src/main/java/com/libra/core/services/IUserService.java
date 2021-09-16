@@ -5,6 +5,7 @@ import java.util.Optional;
 import org.springframework.data.repository.query.Param;
 
 import com.libra.core.entities.User;
+import com.libra.exception.BadResourceException;
 import com.libra.exception.ResourceNotFoundException;
 import com.libra.web.dto.SignUpDTO;
 
@@ -19,4 +20,6 @@ public interface IUserService {
 		User register(SignUpDTO user);
 		
 		Optional<User> findById(Integer id) throws ResourceNotFoundException;
+		
+		void update(User user) throws BadResourceException, ResourceNotFoundException;
 }
