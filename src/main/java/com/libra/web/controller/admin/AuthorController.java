@@ -1,6 +1,7 @@
 package com.libra.web.controller.admin;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 
@@ -12,6 +13,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
@@ -27,6 +29,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.libra.core.entities.Author;
 import com.libra.core.services.IAuthorService;
 import com.libra.core.utils.FileUploadUtil;
+import com.libra.exception.BadResourceException;
 import com.libra.exception.ResourceNotFoundException;
 import com.libra.web.dto.AuthorDTO;
 import com.libra.web.message.MessageResponse;
@@ -180,7 +183,7 @@ public class AuthorController {
 			model.addAttribute("author", author);
 			session.setAttribute("message", new MessageResponse("Cập nhật Tác Giả thành công!!", "success"));
 			return "redirect:/admin/author";
-		} catch (Exception e) {
+		} catch (UsernameNotFoundException | IOException | BadResourceException | ResourceNotFoundException e) {
 			System.out.println("Cập nhật Tác giả thất bại!!");
 			String errorMessage = e.getMessage();
 			session.setAttribute("message", new MessageResponse( e.getMessage(), "danger"));

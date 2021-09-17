@@ -57,6 +57,6 @@ public class UserDTO {
     public String getPhotosImagePath() {
         if (image == null || id == null) return null;
          
-        return "/avatar/author/" + id + "/" + image;
+        return "/avatar/account/" + id + "/" + image;
     }
 }

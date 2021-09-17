@@ -39,7 +39,7 @@ public class User implements Serializable{
 	
 	private String name;
 	
-	@Column(unique=true)
+	@Column(unique=true, insertable = false, updatable = false)
 	private String username;
 	
 	@Column(unique=true)

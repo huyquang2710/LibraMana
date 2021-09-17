@@ -50,16 +50,16 @@
             </ol>
           </nav>
           <!-- /Breadcrumb -->
-    <form th:action="@{/user/info/update}" th:object="${user}" enctype="multipart/form-data">
+    <form th:action="@{/user/info}" th:object="${user}" enctype="multipart/form-data" method="post">
       <input class="form-control " name="id" type="hidden" th:value="${user.id}"/>
        <!-- username -->
-      <input class="text-secondary mb-1" type="hidden" th:value="${user.username}"  ></input>
+      <input class="text-secondary mb-1" type="hidden" name="username" th:value="${user.username}"  ></input>
           <div class="row gutters-sm">
             <div class="col-md-4 mb-3">
               <div class="card">
                 <div class="card-body">
                   <div class="d-flex flex-column align-items-center text-center">
-                    <img id="image" src="https://bootdey.com/img/Content/avatar/avatar7.png" alt="Admin" class="rounded-circle" width="150">
+                    <img id="image" th:src="@{${user.photosImagePath}}" alt="Admin" class="rounded-circle" width="150">
                      <input class="form-control " id="productImage" name="imageFile" type="file"  onchange="chooseFile(this)"></input>
                     <div class="mt-3">
                     
@@ -109,7 +109,7 @@
                       <h6 class="mb-0">Năm Sinh</h6>
                     </div>
                     <div class="col-sm-9 text-secondary">
-                      <input class="form-input" id="phone" name="phone" type="number" th:value="${user.phone}">
+                      <input class="form-input" id="phone" name="year" type="number" th:value="${user.year}">
                     </div>
                   </div>
                   <hr>
