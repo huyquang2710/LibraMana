@@ -38,12 +38,7 @@
 		   <div class="col-lg-7">
                 <div class="form">
              	   <!-- id -->
-                    <div class="form-group ">
-                      <label for="cid" class="control-label col-lg-2">STT</label>
-                      <div class="col-lg-10">
-                        <input class="form-control " id="cid" name="id" type="text" th:value="${book.id}" readonly="readonly"/>
-                      </div>
-                    </div>
+                        <input class="form-control " id="cid" name="id" type="hidden" th:value="${book.id}" readonly="readonly"/>
                 	<!-- name -->
                     <div class="form-group ">
                       <label for="cname" class="control-label col-lg-2">Tên Sách</label>

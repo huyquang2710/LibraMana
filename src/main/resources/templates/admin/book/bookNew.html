@@ -61,10 +61,9 @@
                     <div class="form-group ">
                       <label for="ccategory" class="control-label col-lg-2">Thể Loại</label>
                       <div class="col-lg-10">
-                        <select th:field="*{category}" name="category" id="ccategory" class="form-control" required="required">
-                        	<th:block th:each=" category : ${category}" >
-                        		<option th:text="${category.name}" th:value="${category.id}"></option>
-                        	</th:block>
+                        <select name="category" id="ccategory" class="form-control" required="required">
+                        		<option>- Chọn Thể Loại -</option>
+                        		<option  th:each=" category : ${category}" th:text="${category.name}" th:value="${category.id}"></option>
                         </select>
                       </div>
                     </div>
@@ -73,10 +72,9 @@
                     <div class="form-group ">
                       <label for="cauthor" class="control-label col-lg-2">Tác Giả</label>
                       <div class="col-lg-10">
-                       <select th:field="*{author}" name="author" id="cauthor" class="form-control" required="required">
-                        	<th:block th:each=" author : ${author}" >
-                        		<option th:text="${author.name}" th:value="${author.id}"></option>
-                        	</th:block>
+                       <select name="author" id="cauthor" class="form-control" required="required">
+                        	<option>- Chọn Tác Giả -</option>
+                        	<option  th:each=" author : ${author}" th:text="${author.name}" th:value="${author.id}"></option>
                         </select>
                       </div>
                     </div>
@@ -85,10 +83,9 @@
                     <div class="form-group ">
                       <label for="cpublisher" class="control-label col-lg-2">Nhà Xuất Bản</label>
                       <div class="col-lg-10">
-                        <select th:field="*{publisher}" name="publisher" id="cpublisher" class="form-control" required="required">
-                        	<th:block th:each=" publisher : ${publisher}" >
-                        		<option th:text="${publisher.name}" th:value="${publisher.id}"></option>
-                        	</th:block>
+                        <select name="publisher" id="cpublisher" class="form-control" required="required">                
+                        		<option>- Chọn Nhà Xuất Bản -</option>
+                        		<option th:each=" publisher : ${publisher}" th:text="${publisher.name}" th:value="${publisher.id}"></option>
                         </select>
                       </div>
                     </div> 
