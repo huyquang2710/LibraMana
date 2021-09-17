@@ -195,7 +195,7 @@ public class BookController {
 		} catch (Exception e) {
 			System.out.println("Thêm Sách thất bại!!");
 			String errorMessage = e.getMessage();
-			session.setAttribute("message", new MessageResponse( e.getMessage(), "danger"));
+			session.setAttribute("message", new MessageResponse( "Thêm Sách Thất Bại, vui lòng thử lại", "danger"));
 			LOGGER.error(errorMessage);
 			return "admin/book/bookNew";
 		}

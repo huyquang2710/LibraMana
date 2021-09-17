@@ -76,4 +76,13 @@ public class SearchController {
 		mv.addObject("book", books);
 		return mv;
 	}	
+	// book home
+	@RequestMapping(value = "/book-home/search", method = RequestMethod.GET)
+		public ModelAndView searchBookHome(@RequestParam("value") String value) {
+		ModelAndView mv = new ModelAndView();
+		mv.setViewName("book/searchBookHome");
+		List<Book> books = bookService.searchAuthorByNameLike(value);
+		mv.addObject("book", books);
+		return mv;
+	}	
 }

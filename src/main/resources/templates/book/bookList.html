@@ -27,6 +27,17 @@
 
 <section class="posts section">
 	<div class="container">
+		<!-- search -->
+			<div class="widget-search widget">
+            <form action="#">
+              <!-- Search bar -->
+              <input class="form-control" type="text" placeholder="Tìm Kiếm Sách ............." name="search">
+              <button type="submit" class="widget-search-btn">
+                <i class="tf-ion-ios-search"></i>
+              </button>
+            </form>
+          </div>
+         <!-- search end -->
 		<div class="row">
 			<!-- /section title -->
 			<!-- single blog post -->
@@ -39,7 +50,7 @@
 					<div class="content">
 						<h3><a href="single-post.html" th:text="${book.name}" ></a></h3>
 						<p th:text="${book.description}" ></p>
-						<a class="btn btn-main" href="single-post.html">Chi Tiết</a>
+						<a class="btn btn-main" th:href="@{'/book/findById/' + ${book.id}}" >Chi Tiết</a>
 						<a class="btn btn-main" href="single-post.html">Mượn</a>
 					</div>
 				</div>
