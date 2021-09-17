@@ -5,6 +5,7 @@
 
 <head>
 	<link rel="stylesheet" href="/user.css"> 
+	<script src="/js/user.js" ></script>
 </head>
 
 <body>
@@ -49,20 +50,33 @@
             </ol>
           </nav>
           <!-- /Breadcrumb -->
-    
+    <form th:action="@{/user/info/update}" th:object="${user}" enctype="multipart/form-data">
+      <input class="form-control " name="id" type="hidden" th:value="${user.id}"/>
+       <!-- username -->
+      <input class="text-secondary mb-1" type="hidden" th:value="${user.username}"  ></input>
           <div class="row gutters-sm">
             <div class="col-md-4 mb-3">
               <div class="card">
                 <div class="card-body">
                   <div class="d-flex flex-column align-items-center text-center">
-                    <img src="https://bootdey.com/img/Content/avatar/avatar7.png" alt="Admin" class="rounded-circle" width="150">
+                    <img id="image" src="https://bootdey.com/img/Content/avatar/avatar7.png" alt="Admin" class="rounded-circle" width="150">
+                     <input class="form-control " id="productImage" name="imageFile" type="file"  onchange="chooseFile(this)"></input>
                     <div class="mt-3">
-                      <h4>John Doe</h4>
-                      <p class="text-secondary mb-1">Full Stack Developer</p>
-                      <p class="text-muted font-size-sm">Bay Area, San Francisco, CA</p>
+                    
+                     <!-- Tên -->
+                      <input class="form-input" id="name" name="name" type="text" th:value="${user.name}">
+                     
+                     <!-- description -->
+                     	<div class="bg-light-gray padding-30px-all md-padding-25px-all sm-padding-20px-all text-center">
+                     	<br />
+							<p class="margin-10px-bottom font-size24 md-font-size22 sm-font-size20 font-weight-600">-
+									Giới Tiệu Bản Thân -</p>
+						<textarea name="description"  class="sm-width-95 sm-margin-auto" rows="4" cols="38" th:text="${user.description}"></textarea>
+						</div>
+						<br />
                       <!-- btn -->
-                	 <button class="btn btn-primary">Cập Nhật Thông Tin</button>
-                     <button class="btn btn-outline-primary">Đổi Mật Khẩu</button>
+                	 <button type="submit" class="btn btn-primary">Cập Nhật</button>
+                     <a class="btn btn-outline-primary" th:href="@{/user/info}">Quay Lại</a>
                     </div>
                   </div>
                 </div>
@@ -71,48 +85,40 @@
             <div class="col-md-8">
               <div class="card mb-3">
                 <div class="card-body">
-                  <div class="row">
-                    <div class="col-sm-3">
-                      <h6 class="mb-0">Full Name</h6>
-                    </div>
-                    <div class="col-sm-9 text-secondary">
-                      Kenneth Valdez
-                    </div>
-                  </div>
                   <hr>
                   <div class="row">
                     <div class="col-sm-3">
                       <h6 class="mb-0">Email</h6>
                     </div>
                     <div class="col-sm-9 text-secondary">
-                      fip@jukmuh.al
+                       <input class="form-input" id="email" name="email" type="email" th:value="${user.email}">
                     </div>
                   </div>
                   <hr>
                   <div class="row">
                     <div class="col-sm-3">
-                      <h6 class="mb-0">Phone</h6>
+                      <h6 class="mb-0">Điện Thoại</h6>
                     </div>
                     <div class="col-sm-9 text-secondary">
-                      (239) 816-9029
+                      <input class="form-input" id="phone" name="phone" type="number" th:value="${user.phone}">
                     </div>
                   </div>
                   <hr>
                   <div class="row">
                     <div class="col-sm-3">
-                      <h6 class="mb-0">Mobile</h6>
+                      <h6 class="mb-0">Năm Sinh</h6>
                     </div>
                     <div class="col-sm-9 text-secondary">
-                      (320) 380-4539
+                      <input class="form-input" id="phone" name="phone" type="number" th:value="${user.phone}">
                     </div>
                   </div>
                   <hr>
                   <div class="row">
                     <div class="col-sm-3">
-                      <h6 class="mb-0">Address</h6>
+                      <h6 class="mb-0">Địa Chỉ</h6>
                     </div>
                     <div class="col-sm-9 text-secondary">
-                      Bay Area, San Francisco, CA
+                     <input class="form-input" id="address" name="address" type="text" th:value="${user.address}">
                     </div>
                   </div>
                   <hr>
@@ -121,7 +127,8 @@
               </div>
             </div>
           </div>
-        </div>
+         </form>
+       </div>
     </div>
 </section>
 </div>

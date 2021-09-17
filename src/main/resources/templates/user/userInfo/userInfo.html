@@ -60,7 +60,7 @@
                       <h4 th:text="${user.name}"  ></h4>
                       <p class="text-secondary mb-1" th:text="${user.description}" ></p>
                       <!-- btn -->
-                	 <button class="btn btn-primary">Cập Nhật Thông Tin</button>
+                	 <a class="btn btn-primary" th:href="@{'/user/info/findById/' + ${user.id} }" >Cập Nhật Thông Tin</a>
                      <button class="btn btn-outline-primary">Đổi Mật Khẩu</button>
                     </div>
                   </div>
