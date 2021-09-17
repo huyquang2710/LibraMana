@@ -6,6 +6,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -65,9 +66,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		http
 		    .csrf().disable()
 		    .authorizeRequests()
-
-				.antMatchers("/admin").hasAuthority("ADMIN") // fix Ở đây nè. mất 2 ngày
-				.antMatchers("/user").hasAnyAuthority("USER", "ADMIN") // fix Ở đây nè. mất 2 ngày
+		    	.antMatchers("/register").permitAll()
+		    	.antMatchers("/").permitAll()
+				.antMatchers("/admin/**").hasAuthority("ADMIN") // fix Ở đây nè. mất 2 ngày
+				.antMatchers("/user/**").hasAnyAuthority("USER", "ADMIN") // fix Ở đây nè. mất 2 ngày
 			    .and()
 			.formLogin()
 			    .loginPage("/login").permitAll()
@@ -85,9 +87,13 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 			.exceptionHandling().accessDeniedPage("/403");
 	}
 
-//	
-//	@Override
-//	public void configure(WebSecurity web) throws Exception {
-//		web.ignoring().antMatchers("/resources/**", "/static/**","/css/**", "/js/**", "/images/**");
-//	}
+	@Override
+	public void configure(WebSecurity web) throws Exception {
+	    	web
+	            .ignoring()
+	            .antMatchers(
+	            		 "/user/css/**", "/user/js/**", "/user/images/**", "/user/plugins/**", "/user/scss/**",
+	            		 "/admin/assets/**", "/admin/css/**", "/admin/img/**", "/admin/fonts/**", "/admin/js/**");
+	           
+	}
 }
