@@ -6,6 +6,6 @@ import com.libra.core.entities.Book;
 
 public interface IBookService extends GenericService<Book>{
 
-	List<Book> searchAuthorByNameLike(String value);
+	List<Book> searchBookByNameLike(String value);
 
 }

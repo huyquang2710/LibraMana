@@ -63,7 +63,7 @@ public class SearchController {
 	public ModelAndView searchPublisher(@RequestParam("value") String value) {
 		ModelAndView mv = new ModelAndView();
 		mv.setViewName("admin/publisher/searchPublisher");
-		List<Publisher> publishers = publisherService.searchAuthorByNameLike(value);
+		List<Publisher> publishers = publisherService.searchPublisherByNameLike(value);
 		mv.addObject("publisher", publishers);
 		return mv;
 	}
@@ -72,7 +72,7 @@ public class SearchController {
 		public ModelAndView searchBook(@RequestParam("value") String value) {
 		ModelAndView mv = new ModelAndView();
 		mv.setViewName("admin/book/searchBook");
-		List<Book> books = bookService.searchAuthorByNameLike(value);
+		List<Book> books = bookService.searchBookByNameLike(value);
 		mv.addObject("book", books);
 		return mv;
 	}	
@@ -81,7 +81,7 @@ public class SearchController {
 		public ModelAndView searchBookHome(@RequestParam("value") String value) {
 		ModelAndView mv = new ModelAndView();
 		mv.setViewName("book/searchBookHome");
-		List<Book> books = bookService.searchAuthorByNameLike(value);
+		List<Book> books = bookService.searchBookByNameLike(value);
 		mv.addObject("book", books);
 		return mv;
 	}	

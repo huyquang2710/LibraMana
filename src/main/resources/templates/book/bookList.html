@@ -4,7 +4,7 @@
  layout:decorator="~{user/base.html}" >
 
 <head>
-
+	<script src="/js/book-home/book-home.js" ></script>
 </head>
 
 <body>
@@ -31,13 +31,13 @@
 			<div class="widget-search widget">
             <form action="#">
               <!-- Search bar -->
-              <input class="form-control" type="text" placeholder="Tìm Kiếm Sách ............." name="search">
-              <button type="submit" class="widget-search-btn">
-                <i class="tf-ion-ios-search"></i>
-              </button>
+              <input  data-toggle="dropdown" onkeydown="dropDown(event);" id="search" class="form-control" 
+              				type="search" placeholder="Tìm Kiếm Sách .............">
+              						
+              <div class="dropdown-menu ropdown-menu-right ml-8" id="dropdown-container">
+          	  </div>		
             </form>
           </div>
-         <!-- search end -->
 		<div class="row">
 			<!-- /section title -->
 			<!-- single blog post -->

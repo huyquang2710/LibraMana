@@ -6,6 +6,6 @@ import com.libra.core.entities.Publisher;
 
 public interface IPublisherService extends GenericService<Publisher>{
 
-	List<Publisher> searchAuthorByNameLike(String value);
+	List<Publisher> searchPublisherByNameLike(String value);
 
 }
