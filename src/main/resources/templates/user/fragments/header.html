@@ -1,6 +1,7 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org"
- xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+ xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+ xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
 <body>
      <!--sidebar start-->
 
@@ -24,36 +25,26 @@
           <li class="nav-item dropdown active">
             <a class="nav-link" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
               aria-haspopup="true" aria-expanded="false">
-              Homepage
+              Trang Chủ
             </a>
           </li>
           <li class="nav-item ">
-            <a class="nav-link" href="about.html">About Us</a>
+            <a class="nav-link" href="about.html">Sách</a>
           </li>
           <li class="nav-item ">
-            <a class="nav-link" href="service.html">Services</a>
+            <a class="nav-link" href="service.html">Thể Loại</a>
           </li>
           <li class="nav-item ">
-            <a class="nav-link" href="portfolio.html">Portfolio</a>
+            <a class="nav-link" href="portfolio.html">Mượn</a>
           </li>
-          <li class="nav-item ">
-            <a class="nav-link" href="team.html">Team</a>
-          </li>
-          <li class="nav-item ">
-            <a class="nav-link" href="pricing.html">Pricing</a>
-          </li>
-          <li class="nav-item ">
-            <a class="nav-link" href="contact.html">Contact</a>
-          </li>
-          
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
               aria-haspopup="true" aria-expanded="false">
-              Tài Khoản
+              Welcome:  <span style="text-transform: uppercase;" sec:authentication="name"></span>
             </a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <a class="dropdown-item" th:href="@{/user/info}">Thông Tin Cá Nhân</a>
               <a class="dropdown-item" th:href="@{/login}">Đăng Nhập</a>
-              <a class="dropdown-item" th:href="@{/register}">Đăng Ký</a>
               <a class="dropdown-item" th:href="@{/logout}" >Đăng Xuất</a>
             </div>
           </li>
