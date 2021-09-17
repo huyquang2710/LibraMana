@@ -10,7 +10,7 @@
     <!-- main nav -->
     <nav class="navbar navbar-expand-lg navbar-light">
       <!-- logo -->
-      <a class="navbar-brand logo" href="index.html">
+      <a class="navbar-brand logo" th:href="@{/}">
         <img class="logo-default" style="width: 60px;"  src="/user/images/book-icon.png" alt="logo"/>
         <img class="logo-white" style="width: 60px;" src="/user/images/book-icon.png" alt="logo"/>
       </a>
@@ -28,7 +28,7 @@
             </a>
           </li>
           <li class="nav-item ">
-            <a class="nav-link" href="about.html">Sách</a>
+            <a class="nav-link" th:href="@{/book}">Sách</a>
           </li>
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"

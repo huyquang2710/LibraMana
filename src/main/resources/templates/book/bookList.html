@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+ xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+ layout:decorator="~{user/base.html}" >
+
+<head>
+
+</head>
+
+<body>
+    <!--main content start-->
+
+<div layout:fragment="content" >
+
+<section class="single-page-header">
+	<div class="container">
+		<div class="row">
+			<div class="col-md-12">
+				<h2>Sách</h2>
+
+			</div>
+		</div>
+	</div>
+</section>
+
+
+
+<section class="posts section">
+	<div class="container">
+		<div class="row">
+			<!-- /section title -->
+			<!-- single blog post -->
+			<article class="col-md-4 col-sm-6 col-xs-12 clearfix  "  th:each="book : ${book}">
+				<div class="post-item">
+					<div class="media-wrapper">
+						<img th:src="@{${book.photosImagePath}}" alt="amazing caves coverimage" class="img-fluid">
+					</div>
+
+					<div class="content">
+						<h3><a href="single-post.html" th:text="${book.name}" ></a></h3>
+						<p th:text="${book.description}" ></p>
+						<a class="btn btn-main" href="single-post.html">Chi Tiết</a>
+						<a class="btn btn-main" href="single-post.html">Mượn</a>
+					</div>
+				</div>
+			</article>
+		</div>
+	</div>
+</section>
+
+</div>    
+    <!--main content end-->
+</body>
+
+</html>
