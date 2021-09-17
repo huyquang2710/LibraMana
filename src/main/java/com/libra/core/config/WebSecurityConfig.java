@@ -87,10 +87,14 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 //	}
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
+		 String[] resources = new String[]{
+	                "/", "/home","/pictureCheckCode","/include/**",
+	                "/css/**","/icons/**","/images/**","/js/**","/layer/**"
+	        };
 		http
 		    .csrf().disable()
 		    .authorizeRequests()
-		        .antMatchers("/").permitAll()
+		    	.antMatchers(resources).permitAll()
 				.antMatchers("/admin/**").hasAuthority("ADMIN") // fix Ở đây nè. mất 2 ngày
 				.antMatchers("/user/**").hasAnyAuthority("USER", "ADMIN") // fix Ở đây nè. mất 2 ngày
 			    .and()

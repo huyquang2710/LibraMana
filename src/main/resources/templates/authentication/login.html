@@ -5,8 +5,20 @@
 <title th:text="${title}"></title>
 </head>
 <body>
-
+		
+		
+		
 	<section class="ftco-section">
+		 <!-- message -->
+     		<div class="row justify-content-center" >
+		    <header >
+		       <div th:if="${param.error}" class="alert alert-danger " >Tài khoản hoặc mật khẩu không đúng!!</div>
+		       <div th:if="${param.logout}" class="alert alert-success " >Bạn đã đăng xuất!!</div>
+		        <div th:if="${param.accessDenied}" class="alert alert-danger " >Bạn không đủ quyền truy cập!!</div>
+		       <div th:if="${param.change}" class="alert alert-success " ><p th:text="${param.change}" ></p></div>
+     		</header>
+		 </div>
+	
 		<div class="container">
 		 <!-- message -->
      		<div class="row justify-content-center" >
@@ -15,13 +27,7 @@
 		       <div th:if="${param.logout}" class="alert alert-success " >Bạn đã đăng xuất!!</div>
 		        <div th:if="${param.accessDenied}" class="alert alert-danger " >Bạn không đủ quyền truy cập!!</div>
 		       <div th:if="${param.change}" class="alert alert-success " ><p th:text="${param.change}" ></p></div>
-		       
-		        <div th:if="${session.message}" th:classappend="${session.message.type}" class="alert" role="alert">
-				<p style="color: red;" class="text-center" th:text="${session.message.content}"></p>
-				<th:block th:text="${#session.removeAttribute('message')}"></th:block>
-				</div>
      		</header>
-		  </div>
 		 </div>
 			<div class="row justify-content-center">
 				<div class="col-md-6 col-lg-5">
@@ -35,15 +41,15 @@
 		      			<input type="text" class="form-control rounded-left" name="username" placeholder="Tài Khoản" required>
 		      		</div>
 	            <div class="form-group d-flex">
-	              <input type="password" class="form-control rounded-left" name="password" placeholder="Mật Khẩu" >
+	              <input type="password" class="form-control rounded-left" name="password" placeholder="Mật Khẩu" required>
 	            </div>
 	            <div class="form-group d-md-flex">
-	            	<div class="w-50"> <a th:href="@{/register-user}">Đăng Ký</a>
+	            	<div class="w-50"> <a th:href="@{/register}">Đăng Ký</a>
 	            		<label class="checkbox-wrap checkbox-primary">Remember Me <input name="remember-me" type="checkbox" checked>
 									  <span class="checkmark"></span>
 						</label>
 	            	</div>
-					<div class="w-50 text-md-right"><a th:href="@{/forgot_password}">Quên mật khẩu ?</a></div>
+					<div class="w-50 text-md-right"><a href="#">Forgot password ?</a></div>
 	            </div>
 	            <div class="form-group">
 	            	<button type="submit" class="btn btn-primary rounded submit p-3 px-5">Bắt Đầu</button>

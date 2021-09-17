@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"	
+	th:fragment="layout(content)" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	 xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+
+   <title th:text="${title}"></title>
+
+<!-- Mobile Specific Meta
+  ================================================== -->
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  
+  <!-- Favicon -->
+  <link rel="shortcut icon" type="image/x-icon" href="/user/images/book-icon.png" />
+  
+  <!-- CSS
+  ================================================== -->
+  <!-- Themefisher Icon font -->
+  <link rel="stylesheet" href="user/plugins/themefisher-font/style.css">
+  <!-- bootstrap.min css -->
+  <link rel="stylesheet" href="user/plugins/bootstrap/css/bootstrap.min.css">
+  <!-- Lightbox.min css -->
+  <link rel="stylesheet" href="/user/plugins/lightbox2/dist/css/lightbox.min.css">
+  <!-- animation css -->
+  <link rel="stylesheet" href="/user/plugins/animate/animate.css">
+  <!-- Slick Carousel -->
+  <link rel="stylesheet" href="/user/plugins/slick/slick.css">
+  <!-- Main Stylesheet -->
+  <link rel="stylesheet" href="/user/css/style.css">  
+ 	<base th:href="@{/}" />
+</head>
+
+<body id="body">
+  <!--main content start-->
+  	<!--sidebar start-->
+		<aside>
+			<div th:replace="user/fragments/header:: header"></div>
+		</aside>
+		<!--sidebar end-->
+		
+		<!--sidebar start-->
+	<!-- 	<aside>
+			<div th:replace="user/fragments/menu:: menu"></div>
+		</aside> -->
+		<!--sidebar end-->
+		
+		<!-- content start  -->
+		<div layout:fragment="content" ></div>
+		<!-- content end  -->
+		
+		<!--sidebar start-->
+		<aside>
+			<div th:replace="user/fragments/footer:: footer"></div>
+		</aside>
+		<!--sidebar end-->
+    <!--main content end-->
+
+
+    <!-- 
+    Essential Scripts
+    =====================================-->
+    <!-- Main jQuery -->
+    <script src="/user/plugins/jquery/jquery.min.js"></script>
+    <!-- Google Map -->
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBu5nZKbeK-WHQ70oqOWo-_4VmwOwKP9YQ"></script>
+    <script  src="/user/plugins/google-map/gmap.js"></script>
+
+    <!-- Form Validation -->
+    <script src="/user/plugins/form-validation/jquery.form.js"></script> 
+    <script src="/user/plugins/form-validation/jquery.validate.min.js"></script>
+    
+    <!-- Bootstrap4 -->
+    <script src="/user/plugins/bootstrap/js/bootstrap.min.js"></script>
+    <!-- Parallax -->
+    <script src="/user/plugins/parallax/jquery.parallax-1.1.3.js"></script>
+    <!-- lightbox -->
+    <script src="/user/plugins/lightbox2/dist/js/lightbox.min.js"></script>
+    <!-- Owl Carousel -->
+    <script src="/user/plugins/slick/slick.min.js"></script>
+    <!-- filter -->
+    <script src="/user/plugins/filterizr/jquery.filterizr.min.js"></script>
+    <!-- Smooth Scroll js -->
+    <script src="/user/plugins/smooth-scroll/smooth-scroll.min.js"></script>
+    
+    <!-- Custom js -->
+    <script src="/user/js/script.js"></script>
+
+  </body>
+  </html>
