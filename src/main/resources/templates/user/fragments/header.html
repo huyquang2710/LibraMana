@@ -44,17 +44,20 @@
           <li class="nav-item ">
             <a class="nav-link" href="portfolio.html">Mượn</a>
           </li>
-          <li class="nav-item dropdown">
+          
+          <li class="nav-item dropdown"  sec:authorize="isAuthenticated()">
             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
-              aria-haspopup="true" aria-expanded="false">
-              Welcome:  <span style="text-transform: uppercase;" sec:authentication="name"></span>
+              aria-haspopup="true" aria-expanded="false" >
+              Chào:  <span style="text-transform: uppercase;" sec:authentication="name"></span>
             </a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
               <a class="dropdown-item" th:href="@{/user/info}">Thông Tin Cá Nhân</a>
-              <a class="dropdown-item" th:href="@{/login}">Đăng Nhập</a>
-              <a class="dropdown-item" th:href="@{/logout}" >Đăng Xuất</a>
+              <a class="pl-3" th:href="@{/logout}">Đăng Xuất</a>
             </div>
-          </li>
+             <li sec:authorize="!isAuthenticated()" class="nav-item">
+            <a class="nav-link" th:href="@{/login}">Đăng Nhập</a>
+        </li>
+
           
         </ul>
       </div>
