@@ -1,6 +1,7 @@
 package com.libra.web.controller.user;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -8,8 +9,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/user")
 public class UserController {
 	
-	@GetMapping
-	public String userHome() {
-		return "user/user";
+	
+	@GetMapping("/info")
+	public String userInfo(Model model) {
+		
+		model.addAttribute("title", "Thông Tin Cá Nhân");
+		return "user/userInfo";
 	}
+	
+	//
 }

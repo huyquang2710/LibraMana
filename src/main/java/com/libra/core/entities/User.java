@@ -51,6 +51,7 @@ public class User implements Serializable{
 	
 	private boolean enabled;
 	
+	@Column(length = 5000)
 	private String description;
 
 	private String image;

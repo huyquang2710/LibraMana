@@ -20,15 +20,6 @@
 		 </div>
 	
 		<div class="container">
-		 <!-- message -->
-     		<div class="row justify-content-center" >
-		    <header >
-		       <div th:if="${param.error}" class="alert alert-danger " >Tài khoản hoặc mật khẩu không đúng!!</div>
-		       <div th:if="${param.logout}" class="alert alert-success " >Bạn đã đăng xuất!!</div>
-		        <div th:if="${param.accessDenied}" class="alert alert-danger " >Bạn không đủ quyền truy cập!!</div>
-		       <div th:if="${param.change}" class="alert alert-success " ><p th:text="${param.change}" ></p></div>
-     		</header>
-		 </div>
 			<div class="row justify-content-center">
 				<div class="col-md-6 col-lg-5">
 					<div class="login-wrap p-4 p-md-5">

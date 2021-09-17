@@ -23,16 +23,23 @@
       <div class="collapse navbar-collapse" id="navigation">
         <ul class="navbar-nav ml-auto text-center">
           <li class="nav-item dropdown active">
-            <a class="nav-link" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
-              aria-haspopup="true" aria-expanded="false">
+            <a class="nav-link" th:href="@{/}" id="navbarDropdown" role="button" >
               Trang Chủ
             </a>
           </li>
           <li class="nav-item ">
             <a class="nav-link" href="about.html">Sách</a>
           </li>
-          <li class="nav-item ">
-            <a class="nav-link" href="service.html">Thể Loại</a>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+              aria-haspopup="true" aria-expanded="false">
+            	Thể Loại
+            </a>
+            <!-- <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <a class="dropdown-item" th:href="@{/user/info}">Thông Tin Cá Nhân</a>
+              <a class="dropdown-item" th:href="@{/login}">Đăng Nhập</a>
+              <a class="dropdown-item" th:href="@{/logout}" >Đăng Xuất</a>
+            </div> -->
           </li>
           <li class="nav-item ">
             <a class="nav-link" href="portfolio.html">Mượn</a>

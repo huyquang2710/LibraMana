@@ -5,7 +5,8 @@
 <head>
 
    <title th:text="${title}"></title>
-
+	<!-- Favicon -->
+  
 <!-- Mobile Specific Meta
   ================================================== -->
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -16,9 +17,9 @@
   <!-- CSS
   ================================================== -->
   <!-- Themefisher Icon font -->
-  <link rel="stylesheet" href="user/plugins/themefisher-font/style.css">
+  <link rel="stylesheet" href="/user/plugins/themefisher-font/style.css">
   <!-- bootstrap.min css -->
-  <link rel="stylesheet" href="user/plugins/bootstrap/css/bootstrap.min.css">
+  <link rel="stylesheet" href="/user/plugins/bootstrap/css/bootstrap.min.css">
   <!-- Lightbox.min css -->
   <link rel="stylesheet" href="/user/plugins/lightbox2/dist/css/lightbox.min.css">
   <!-- animation css -->
@@ -27,6 +28,7 @@
   <link rel="stylesheet" href="/user/plugins/slick/slick.css">
   <!-- Main Stylesheet -->
   <link rel="stylesheet" href="/user/css/style.css">  
+  
  	<base th:href="@{/}" />
 </head>
 
@@ -34,8 +36,9 @@
   <!--main content start-->
   	<!--sidebar start-->
 		<aside>
-			<div th:replace="user/fragments/header:: header"></div>
+			<div th:replace="/user/fragments/header:: header"></div>
 		</aside>
+		
 		<!--sidebar end-->
 		
 		<!--sidebar start-->

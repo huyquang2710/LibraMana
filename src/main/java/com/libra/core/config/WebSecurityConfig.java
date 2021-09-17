@@ -6,7 +6,6 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -60,46 +59,18 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		auth.authenticationProvider(authenticationProvider());
 
 	}
-//	@Override
-//	protected void configure(HttpSecurity http) throws Exception {
-//		http
-//		    .csrf().disable()
-//		    .authorizeRequests()
-//		    	 .antMatchers("/").permitAll()
-//		    	 .antMatchers("/user").hasAnyRole("USER", "ADMIN")
-//		    	 .antMatchers("/admin").hasRole("ADMIN")
-//				.anyRequest().fullyAuthenticated()
-//			    .and()
-//			.formLogin()
-//			    .loginPage("/login")
-//			    .successHandler(successHandler)
-//			    .usernameParameter("username")
-//				.passwordParameter("password")
-//				.failureUrl("/login?error")
-//			    .and()
-//			 .logout()
-//			    .logoutUrl("/logout")
-//			    .logoutSuccessUrl("/login?logout")
-//			    .and()
-//			    .rememberMe().key("uniqueAndSecret").tokenValiditySeconds(1296000)
-//	            .and()
-//			.exceptionHandling().accessDeniedPage("/403");
-//	}
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
-		 String[] resources = new String[]{
-	                "/", "/home","/pictureCheckCode","/include/**",
-	                "/css/**","/icons/**","/images/**","/js/**","/layer/**"
-	        };
+
 		http
 		    .csrf().disable()
 		    .authorizeRequests()
-		    	.antMatchers(resources).permitAll()
-				.antMatchers("/admin/**").hasAuthority("ADMIN") // fix Ở đây nè. mất 2 ngày
-				.antMatchers("/user/**").hasAnyAuthority("USER", "ADMIN") // fix Ở đây nè. mất 2 ngày
+
+				.antMatchers("/admin").hasAuthority("ADMIN") // fix Ở đây nè. mất 2 ngày
+				.antMatchers("/user").hasAnyAuthority("USER", "ADMIN") // fix Ở đây nè. mất 2 ngày
 			    .and()
 			.formLogin()
-			    .loginPage("/login")
+			    .loginPage("/login").permitAll()
 			    .usernameParameter("username")
 				.passwordParameter("password")
 				.successHandler(successHandler)
@@ -114,10 +85,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 			.exceptionHandling().accessDeniedPage("/403");
 	}
 
-	
-	@Override
-	public void configure(WebSecurity web) throws Exception {
-		web.ignoring().antMatchers("/resources/**", "/static/**","/css/**", "/js/**", "/images/**");
-	}
-
+//	
+//	@Override
+//	public void configure(WebSecurity web) throws Exception {
+//		web.ignoring().antMatchers("/resources/**", "/static/**","/css/**", "/js/**", "/images/**");
+//	}
 }
