@@ -16,6 +16,7 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -85,5 +86,12 @@ public class User implements Serializable{
 	
 	@ManyToMany(mappedBy = "user")	
 	private Set<Borrow> borrow;
+	
+	@Transient
+    public String getPhotosImagePath() {
+        if (image == null || id == null) return null;
+         
+        return "/avatar/account/" + id + "/" + image;
+    }
 
 }

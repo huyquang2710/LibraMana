@@ -16,8 +16,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -31,6 +29,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.libra.core.entities.User;
 import com.libra.core.services.IUserService;
+import com.libra.core.utils.GetPrincipal;
 import com.libra.exception.ResourceNotFoundException;
 import com.libra.web.dto.AdminDTO;
 import com.libra.web.dto.SignUpDTO;
@@ -46,36 +45,22 @@ public class AdminController {
 	@Autowired
 	private ModelMapper mapper;
 
-	// lấy được username của principal đã được xác thực
-	public String getPrincipal() {
-		String username = null;
-		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-		if (principal instanceof UserDetails) {
-			username = ((UserDetails) principal).getUsername();
-		} else {
-			username = principal.toString();
-		}
-		return username;
-	}
 
 	@GetMapping
 	public String admin(Model model, Principal principal) {
 
-		System.out.println(getPrincipal());
+		System.out.println(GetPrincipal.getPrincipal());
 
 		model.addAttribute("title", "Trang Chủ Admin");
 		return "admin/base";
 	}
 
 	// form account info
-
+ 
 	@GetMapping("/account")
-	public String accoundAdmin(Model model, Principal principal) {
+	public String accoundAdmin(Model model) {
 
-		String username = principal.getName();
-		System.out.println("username:" + username);
-
-		User account = userService.getUsernameByUsername(username);
+		User account = userService.getUsernameByUsername(GetPrincipal.getPrincipal());
 
 		// chueyẻn entity thanh dto
 		AdminDTO adminDTO = mapper.map(account, AdminDTO.class);
