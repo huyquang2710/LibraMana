@@ -127,6 +127,7 @@ public class UserServiceImpl implements IUserService{
 		}
 		
 	}
+	
 	//forgot mat khau
 	@Override
 	public void updateResetPassword(String token, String email) {
@@ -140,7 +141,7 @@ public class UserServiceImpl implements IUserService{
 		}
 	}
 	//reset pass
-	public User get(String resetPasswordToken) {
+	public User getByResetPasswordToken(String resetPasswordToken) {
 		return userRepo.findByResetPasswordToken(resetPasswordToken);
 	}
 	//new pass

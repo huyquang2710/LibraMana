@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -16,6 +17,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import com.libra.core.entities.User;
 import com.libra.core.services.IUserService;
 import com.libra.core.utils.Utility;
 import com.libra.web.message.MessageResponse;
@@ -37,42 +39,33 @@ public class ForgotPasswordController {
 		return "forgot_password_form";
 	}
 	@PostMapping("/forgot_password")
-	public String processForgotPasswordForm(Model model, HttpServletRequest request, HttpSession session) {
+	public String processForgotPasswordForm(HttpServletRequest request, Model model, HttpSession session) {
 		String email = request.getParameter("email");
 		String token = RandomString.make(45); // sinh ra mã token 45 chữ ngẫu nhiên
 		
 		System.out.println("email: " + email);
 		System.out.println("token: " + token);
-		
-		try {
-			// database sẽ sinh được add 1 fotgot_pass_token
-			userService.updateResetPassword(token, email);
-			
-			String resetPasswordLink = Utility.getSiteURL(request) + "/reset_password?token=" + token;
-			System.out.println(resetPasswordLink);
-			
-			// thuc hien gui mail
-			try {
-				sendMail(email, resetPasswordLink);
-				session.setAttribute("message", new MessageResponse("Chúng tôi đã gửi mã xác nhận đến gmail của bạn! Vui lòng kiểm tra", "alert-success"));
-			} catch (UnsupportedEncodingException | MessagingException e) {
-				e.printStackTrace();
-				session.setAttribute("message", new MessageResponse("Có lỗi khi thực hiện!!", "alert-danger"));
-			}
-			
-		} catch (UsernameNotFoundException e) {
-			session.setAttribute("message", new MessageResponse(e.getMessage(), "alert-error"));
-		}
-		
+		   
+	    try {
+	        userService.updateResetPassword(token, email);
+	        String resetPasswordLink = Utility.getSiteURL(request) + "/reset_password?token=" + token;
+	        sendMail(email, resetPasswordLink);
+	        session.setAttribute("message", new MessageResponse("Chúng tôi đã gửi mã xác nhận đến gmail của bạn! Vui lòng kiểm tra!!, vui lòng thử lại!", "danger"));
+	    } catch (UsernameNotFoundException ex) {
+	        model.addAttribute("error", ex.getMessage());
+	    } catch (UnsupportedEncodingException | MessagingException e) {
+	        model.addAttribute("error", "Có lỗi khi thực hiện!!");
+	    }
+
 		return "forgot_password_form";
 	}
 	// gui mail
-	private void sendMail(String email, String resetPasswordLink) throws UnsupportedEncodingException, MessagingException {
+	private void sendMail(String recipientEmail, String resetPasswordLink) throws UnsupportedEncodingException, MessagingException {
 		MimeMessage message = mailSender.createMimeMessage();
 		MimeMessageHelper helper = new MimeMessageHelper(message);
 		
 		helper.setFrom("contact@librarybook.com", "LibraryManager Support");
-		helper.setTo(email);
+		helper.setTo(recipientEmail);
 		
 		String subject = "đường link để reset password của bạn";
 	     
@@ -89,5 +82,37 @@ public class ForgotPasswordController {
 	    helper.setText(content, true);
 	     
 	    mailSender.send(message);
+	}
+	
+	//Khi user  nhấp vào link trong mail sẽ redirect đến đây
+	@GetMapping("/reset_password")
+	public String showResetPasswordForm(@Param(value = "token") String token, Model model, HttpSession session) {
+	    User user = userService.getByResetPasswordToken(token);
+	    model.addAttribute("token", token);
+	     
+	    if (user == null) {
+	        session.setAttribute("message", new MessageResponse("Mã Không Hợp Lệ", "danger"));
+	        return "message";
+	    }
+	     
+	    return "reset_password_form";
+	}
+	
+	//reset pass handler
+	@PostMapping("/reset_password")
+	public String processResetPassword(HttpServletRequest request, Model model, HttpSession session) {
+		 String token = request.getParameter("token");
+		 String password = request.getParameter("password");
+		 
+		 User user = userService.getByResetPasswordToken(token);
+		 model.addAttribute("title", "Đổi Mật Khẩu");
+		    if (user == null) {
+		        session.setAttribute("message", new MessageResponse("Mã Không Hợp Lệ", "danger"));
+		        return "message";
+		    } else {           
+		        userService.updateNewPassword(user, password);
+		        session.setAttribute("message", new MessageResponse("Bạn đã thay đổi thành công mật khẩu ", "success"));
+		    }  
+		    return "redirect:/login";
 	}
 }

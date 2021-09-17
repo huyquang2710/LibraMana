@@ -32,5 +32,6 @@ public interface UserRepository extends JpaRepository<User, Integer>{
 	@Query("select count(p) = 1 from User p where email = ?1")
 	boolean findExistByemail(String email);
 	
+	// quen pass
 	User findByResetPasswordToken(String token);
 }
