@@ -47,7 +47,7 @@
 						<img th:src="@{${book.photosImagePath}}" alt="amazing caves coverimage" class="img-fluid">
 					</div>
 
-					<div class="content">
+					<div class="content" style="max-width: 80%;">
 						<h3><a href="single-post.html" th:text="${book.name}" ></a></h3>
 						<p th:text="${book.description}" ></p>
 						<a class="btn btn-main" th:href="@{'/book/findById/' + ${book.id}}" >Chi Tiết</a>
@@ -56,7 +56,42 @@
 				</div>
 			</article>
 		</div>
+		<div>
+ 				<h5 style="color:red; font-weight: bold;" >Số lượng Sách: [[${totalItems}]]</h5> 
+ 				<h5 style="color:red; font-weight: bold;" >Trang [[${currentPage}]] / [[${totalPages}]]</h5> 	
+         	</div>
 	</div>
+			
+	<!-- phân trang -->
+			<div class="text-center" style="margin-left: 35%;" >
+				<nav aria-label="Page navigation example">
+				<ul class="pagination">
+				
+					<li class="page-item">
+						<a class="page-link" th:if="${currentPage > 1}" th:href="@{'/book/page/1'}">Đầu Tiên</a>
+						<span class="page-link" th:unless="${currentPage > 1}">Đầu Tiên</span>
+					</li>
+					<li class="page-item">
+						<a class="page-link"  th:if="${currentPage > 1}" th:href="@{'/book/page/' + ${currentPage - 1}}">Về Trước</a>
+						<span class="page-link" th:unless="${currentPage > 1}">Về Trước</span>
+					</li>
+					<li class="page-item" th:each="i: ${#numbers.sequence(1, totalPages)}" >
+   						<a class="page-link" th:if="${currentPage != i}" th:href="@{'/book/page/' + ${i}}">[[${i}]]</a>
+   						<span class="page-link" th:unless="${currentPage != i}">[[${i}]]</span>
+					</li>
+					<li class="page-item">
+						<a class="page-link" th:if="${currentPage < totalPages}" th:href="@{'/book/page/' + ${currentPage + 1}}">Kế Tiếp</a>
+						<span class="page-link" th:unless="${currentPage < totalPages}">Kế Tiếp</span>
+					</li>
+					<li class="page-item">
+						<a class="page-link" th:if="${currentPage < totalPages}" th:href="@{'/book/page/' + ${totalPages}}">Cuối Cùng</a>
+						<span class="page-link" th:unless="${currentPage < totalPages}">Cuối Cùng</span>
+					</li>
+				</ul>
+			</nav>
+		</div> 
+		
+		<!-- phân trang end -->
 </section>
 
 </div>    

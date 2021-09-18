@@ -91,6 +91,11 @@ public class BookServiceImpl implements IBookService{
 		Pageable pageable = PageRequest.of(pageNo - 1, 5);
 		return bookRepository.findAll(pageable);
 	}
+	@Override
+	public Page<Book> findByPageableBookHome(int pageNo) {
+		Pageable pageable = PageRequest.of(pageNo - 1, 3);
+		return bookRepository.findAll(pageable);
+	}
 
 	@Override
 	public List<Book> findByNameContaining(String name) {
