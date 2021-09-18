@@ -4,7 +4,7 @@
  layout:decorator="~{user/base.html}" >
 
 <head>
-
+	<link href="/css.css" rel="stylesheet">
 </head>
 
 <body>
@@ -39,18 +39,47 @@
             <h2 th:text="*{book.name}" ></h2>
             <!-- widget categories list -->
             <ul class="widget-categories-list">
-              <li>
-                <a>Mã: [[${book.isbn}]]</a>
+              <li class="comment-list-item">
+                <div class="comment-list-item-image">
+                  <img class="my_profile_picture" th:src="@{${book.photosImagePath}}" alt="avatar">
+                </div>
+                <div class="comment-list-item-content">
+                  <h5>Mã Sách</h5>
+                  <p>[[${book.isbn}]]</p>
+                </div>
               </li>
-              <li>
-                <a>Tác Giả: [[${book.author.name}]]</a>
+              <li class="comment-list-item">
+                <div class="comment-list-item-image">
+                  <img class="my_profile_picture" th:src="@{${book.author.photosImagePath}}" alt="avatar">
+                </div>
+                <div class="comment-list-item-content">
+                  <h5>Tác Giả</h5>
+                  <p>[[${book.author.name}]]</p>
+                </div>
               </li>
-              <li>
-                <a>Thể Loại: [[${book.category.name}]]</a>
+              <li class="comment-list-item">
+                <div class="comment-list-item-image">
+                  <img class="my_profile_picture" src="/user/images/book-icon.png" alt="avatar">
+                </div>
+                <div class="comment-list-item-content">
+                  <h5>Thể Loại</h5>
+                  <p>[[${book.category.name}]]</p>
+                </div>
               </li>
-              <li>     
-              	<span>Giới Thiệu: </span>   <br />     		
-                <p>[[${book.description}]]</p>
+              <li class="comment-list-item">
+                <div class="comment-list-item-image">
+                  <img class="my_profile_picture" th:src="@{${book.publisher.photosImagePath}}" alt="avatar">
+                </div>
+                <div class="comment-list-item-content">
+                  <h5>Nhà Xuất Bản</h5>
+                  <p>[[${book.publisher.name}]]</p>
+                </div>
+              </li>
+              <li class="comment-list-item">
+                <div class="comment-list-item-content">
+                  <h5>Giới Thiệu</h5>
+                  <p>[[${book.description}]]</p>
+                </div>
               </li>
               <li>
               	<a class="btn btn-main" href="single-post.html">Mượn</a>
