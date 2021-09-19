@@ -37,11 +37,12 @@
 		 		enctype="multipart/form-data">
 		   <div class="col-lg-8">
                 <div class="form">
+                	<input type="hidden" name="id" th:value="${category.id}"  />
                 	<!-- name -->
                     <div class="form-group ">
                       <label for="cname" class="control-label col-lg-2">Tên Thể Loại</label>
                       <div class="col-lg-10">
-                        <input class="form-control" id="cname" name="name" type="text" th:value="*{name}" 
+                        <input class="form-control" id="cname" name="name" type="text"  th:value="${category.name}" 
                         		th:errorClass="is-invalid" />
                         	<div th:if="${#fields.hasErrors('name')}" th:errors="*{name}" class="invalid-feedback"></div>
                       </div>
@@ -52,7 +53,7 @@
                     <div class="form-group ">
                       <label for="ccode" class="control-label col-lg-2">Code</label>
                       <div class="col-lg-10">
-                        <input class="form-control " id="ccode" type="text" name="code" th:value="*{code}" 
+                        <input class="form-control " id="ccode" type="text" name="code"  th:value="${category.code}" 
                         		th:errorClass="is-invalid" /> 
                          	<div th:if="${#fields.hasErrors('code')}" th:errors="*{code}" class="invalid-feedback"></div>
                       </div>

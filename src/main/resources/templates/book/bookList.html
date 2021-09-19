@@ -27,7 +27,8 @@
 
 
 <section class="posts section">
-	<div class="container">
+	<div class="container" style="padding-right: 0px;
+    							  padding-left: 60px" >
 		<!-- search -->
 			<div class="widget-search widget">
             <form action="#">
@@ -44,7 +45,7 @@
 			<!-- single blog post -->
 			<article class="col-md-4 col-sm-6 col-xs-12 clearfix  "  th:each="book : ${book}">
 				<div class="post-item"  >
-					<div class="media-wrapper" style="max-width: 80%;" >
+					<div class="media-wrapper" style="max-width: 250px;" >
 						<img th:src="@{${book.photosImagePath}}" alt="amazing caves coverimage" class="img-fluid">
 					</div>
 

@@ -7,5 +7,4 @@ import com.libra.core.entities.Category;
 
 @Repository
 public interface CategoriesRepository extends JpaRepository<Category, Integer>{
-
 }

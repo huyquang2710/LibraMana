@@ -197,7 +197,7 @@ public class BookController {
 			String errorMessage = e.getMessage();
 			session.setAttribute("message", new MessageResponse( "Thêm Sách Thất Bại, vui lòng thử lại", "danger"));
 			LOGGER.error(errorMessage);
-			return "admin/book/bookNew";
+			return "redirect:/admin/book";
 		}
 	}
 	//update

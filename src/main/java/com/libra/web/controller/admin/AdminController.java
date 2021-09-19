@@ -52,7 +52,7 @@ public class AdminController {
 		System.out.println(GetPrincipal.getPrincipal());
 
 		model.addAttribute("title", "Trang Chủ Admin");
-		return "admin/base";
+		return "admin/home";
 	}
 
 	// form account info

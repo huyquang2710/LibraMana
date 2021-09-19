@@ -11,5 +11,7 @@ public interface IBookService extends GenericService<Book>{
 	List<Book> searchBookByNameLike(String value);
 
 	Page<Book> findByPageableBookHome(int pageNo);
+	
+	List<Book> findBookByCategory(String category);
 
 }

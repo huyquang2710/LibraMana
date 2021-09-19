@@ -108,4 +108,9 @@ public class BookServiceImpl implements IBookService{
 		return bookRepository.findByNameContainingIgnoreCase(value);
 	}
 
+	@Override
+	public List<Book> findBookByCategory(String category) {
+		return bookRepository.customQueryToFindListOfBooks(category);
+	}
+
 }
